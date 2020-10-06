@@ -33,7 +33,7 @@
           <div class="main-content">
             @include('layouts.navbars.navbar')
             <router-view></router-view>
-            {{-- @yield('content') --}}
+            @yield('content')
           </div>
 
           @guest()

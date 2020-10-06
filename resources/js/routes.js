@@ -6,7 +6,7 @@ export default {
   base: '/home',
   routes: [
     {
-      path: '*',
+      path: '/home/*',
       component: Error404
     },
     {
