@@ -1,4 +1,4 @@
-import ExampleComponent from './components/ExampleComponent';
+import ExampleComponent from './pages/ExampleComponent';
 export default {
   mode: 'history',
   base: "/home",

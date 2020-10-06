@@ -17,8 +17,8 @@ Vue.use(Vuex)
 Vue.component('example-component', require('./pages/ExampleComponent.vue').default)
 
 //import out store for vuex
-import moduleA from './moduleA';
-import moduleB from './moduleB';
+import moduleA from './store/moduleA';
+import moduleB from './store/moduleB';
 
 const app = new Vue({
   el: '#app',
