@@ -10,11 +10,19 @@ import VueRouter from 'vue-router'
 import routes from './routes'
 //Import vuex
 import Vuex from 'vuex'
+//Import bootstrap-vue
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
-//Create components
+//Create components and import components
 Vue.use(VueRouter)
 Vue.use(Vuex)
+// Install BootstrapVue
+Vue.use(BootstrapVue)
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin)
 Vue.component('example-component', require('./pages/ExampleComponent.vue').default)
+Vue.component('nav-bar', require('./components/partials/NavBar.vue').default)
+Vue.component('side-bar', require('./components/partials/SideBar.vue').default)
 
 //import out store for vuex
 import moduleA from './store/moduleA';

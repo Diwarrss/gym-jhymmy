@@ -12,8 +12,8 @@ export default {
     }
   },
   getters: {
-    doubleCount (state) {
-      return state.count * 2
+    oneCount (state) {
+      return state.count * 1
     }
   }
 }

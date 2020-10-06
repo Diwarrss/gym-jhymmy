@@ -26,13 +26,14 @@
               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                   @csrf
               </form>
-              @include('layouts.navbars.sidebar')
+              <side-bar></side-bar>
+              {{-- @include('layouts.navbars.sidebar') --}}
           @endauth
 
           <div class="main-content">
-              @include('layouts.navbars.navbar')
-              <router-view></router-view>
-              @yield('content')
+            @include('layouts.navbars.navbar')
+            <router-view></router-view>
+            {{-- @yield('content') --}}
           </div>
 
           @guest()
