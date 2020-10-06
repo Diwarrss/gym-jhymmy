@@ -26,7 +26,7 @@
               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                   @csrf
               </form>
-              <side-bar></side-bar>
+              <side-bar path="{{ asset('argon') }}"></side-bar>
               {{-- @include('layouts.navbars.sidebar') --}}
           @endauth
 

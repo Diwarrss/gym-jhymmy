@@ -1,6 +1,6 @@
 @auth()
   {{-- @include('layouts.navbars.navs.auth') --}}
-  <nav-bar></nav-bar>
+  <nav-bar path="{{ asset('argon') }}"></nav-bar>
 @endauth
 
 @guest()
