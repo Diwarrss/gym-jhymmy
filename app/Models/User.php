@@ -18,8 +18,15 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'identification',
         'email',
         'password',
+        'address',
+        'phone',
+        'birthdate',
+        'pin',
+        'gender_id',
+        'state_id'
     ];
 
     /**
@@ -40,4 +47,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function gender()
+    {
+        return $this->belongsTo(\App\Models\Gender::class);
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(\App\Models\State::class);
+    }
 }
