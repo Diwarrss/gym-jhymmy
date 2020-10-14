@@ -1,5 +1,7 @@
 import ExampleComponent from './pages/ExampleComponent';
 import Perfil from './pages/Perfil';
+import Pagos from './pages/Pagos';
+import Medidas from './pages/Medidas';
 import Error404 from './pages/404';
 export default {
   mode: 'history',
@@ -23,6 +25,16 @@ export default {
       path: '/perfil',
       name: 'perfil',
       component: Perfil
+    },
+    {
+      path: '/Medidas',
+      name: 'Medidas',
+      component: Medidas
+    },
+    {
+      path: '/Pagos',
+      name: 'Pagos',
+      component: Pagos
     }
   ]
 }
