@@ -27,13 +27,13 @@ export default {
       component: Perfil
     },
     {
-      path: '/Medidas',
-      name: 'Medidas',
+      path: '/medidas',
+      name: 'medidas',
       component: Medidas
     },
     {
-      path: '/Pagos',
-      name: 'Pagos',
+      path: '/pagos',
+      name: 'pagos',
       component: Pagos
     }
   ]

@@ -85,12 +85,12 @@
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'Medidas' }">
+              <router-link class="nav-link" :to="{ name: 'medidas' }">
                   <i class="ni ni-chart-bar-32 text-primary"></i> Medidas
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'Pagos' }">
+              <router-link class="nav-link" :to="{ name: 'pagos' }">
                   <i class="ni ni-money-coins text-primary"></i> Pagos
               </router-link>
             </li>
