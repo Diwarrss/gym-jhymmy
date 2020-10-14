@@ -81,28 +81,25 @@
                   variant="primary"
                   @click="modalEdit(row.item, row.index, $event.target, true)"><i class="fas fa-eye mr-md-1"/><span class="d-none d-md-inline-block">Ver</span></b-button>
                 <b-button
-                  v-permission="'edit_dependence'"
                   variant="warning"
                   @click="modalEdit(row.item, row.index, $event.target, false)"><i class="fas fa-edit mr-md-1"/><span class="d-none d-md-inline-block">Editar</span></b-button>
                 <b-button
-                  v-if="row.item.state == 1"
-                  v-permission="'change_status_dependence'"
+                  v-if="row.item.isActive"
                   variant="danger"
                   @click="status(row.item.id, 'disable')"><i class="fas fa-times-circle mr-md-1"/><span class="d-none d-md-inline-block">Inactivar</span></b-button>
                 <b-button
-                  v-if="row.item.state == 0"
-                  v-permission="'change_status_dependence'"
+                  v-if="!row.item.isActive"
                   variant="success"
                   @click="status(row.item.id, 'enable')"><i class="fas fa-check-circle mr-md-1"/><span class="d-none d-md-inline-block">Activar</span></b-button>
               </template>
               <template v-slot:cell(state)="data">
-                <h5 v-if="data.item.state">
+                <h5 v-if="data.item.isActive">
                   <b-badge
-                    variant="success">{{ data.item.state ? 'Activo' : 'Inactivo' }} </b-badge>
+                    variant="success">{{ data.item.isActive ? 'Activo' : 'Inactivo' }} </b-badge>
                 </h5>
                 <h5 v-else>
                   <b-badge
-                    variant="danger">{{ data.item.state ? 'Activo' : 'Inactivo' }} </b-badge>
+                    variant="danger">{{ data.item.isActive ? 'Activo' : 'Inactivo' }} </b-badge>
                 </h5>
               </template>
             </b-table>
@@ -132,7 +129,37 @@ export default {
       pageOptions: [10, 20, 30],
       perPage: 10,
       currentPage: 1,
-      fields: ['first_name', 'last_name', 'age'],
+      fields: [
+        {
+          key: 'first_name',
+          label: 'Nombre',
+          sortable: true
+        },
+        {
+          key: 'last_name',
+          label: 'Apellido',
+          sortable: true
+        },
+        {
+          key: 'age',
+          label: 'Edad',
+          sortable: true
+        },
+        {
+          key: 'isActive',
+          label: 'Estado',
+          sortable: true,
+          formatter: value => {
+            return value ? 'Activo' : 'Inactivo'
+          }
+        },
+        {
+          key: 'acciones',
+          label: 'Acciones',
+          visible: false,
+          sortable: false
+        }
+      ],
       items: [
         { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
         { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
