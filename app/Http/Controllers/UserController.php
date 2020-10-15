@@ -19,7 +19,7 @@ class UserController extends Controller
      */
     public function index(User $model)
     {
-        return User::all();
+      return User::with('roles')->get();
     }
 
     /**
@@ -31,33 +31,31 @@ class UserController extends Controller
     public function store(Request $request)
     {
       //crear usuario
-      if (Auth::user()->role_id === 1) { //valida que el usuario sea tipo admin
-        try {
-          DB::beginTransaction();
-          $data = $request->all();
-          $user = User::create($data);
-          DB::commit(); //commit de la transaccion
+      try {
+        DB::beginTransaction();
+        $data = $request->all();
+        $user = User::create($data);
+        DB::commit(); //commit de la transaccion
 
-          if ($user) {
-            return response()->json([
-              'type' => 'success',
-              'message' => 'Usuario creado con éxito',
-              'data' => $user
-            ], 201);
-          }else{
-            return response()->json([
-              'type' => 'error',
-              'message' => 'Error al guardar',
-              'data' => []
-            ], 204);
-          }
-          /* return response()->json([
-            'message' => 'Seguimiento creado con éxito',
+        if ($user) {
+          return response()->json([
+            'type' => 'success',
+            'message' => 'Usuario creado con éxito',
             'data' => $user
-          ], 201); */
-        } catch (Exception $e) {
-          DB::rollBack(); //si hay error no ejecute la transaccion
+          ], 201);
+        }else{
+          return response()->json([
+            'type' => 'error',
+            'message' => 'Error al guardar',
+            'data' => []
+          ], 204);
         }
+        /* return response()->json([
+          'message' => 'Seguimiento creado con éxito',
+          'data' => $user
+        ], 201); */
+      } catch (Exception $e) {
+        DB::rollBack(); //si hay error no ejecute la transaccion
       }
     }
 

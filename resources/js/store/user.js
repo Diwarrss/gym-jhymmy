@@ -17,7 +17,6 @@ export default {
   actions: {
     getUsers: async function({ commit }) {
       const data = await axios.get('/user')
-      console.log(process.env.APP_URL)
       commit('setUsers', data.data)
     }
   },
