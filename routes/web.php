@@ -21,7 +21,9 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
   Route::get('/home/{any?}', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
+  //usuarios
+  Route::resource('user', 'App\Http\Controllers\UserController');
+
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::get('upgrade', function () {return view('pages.upgrade');})->name('upgrade');

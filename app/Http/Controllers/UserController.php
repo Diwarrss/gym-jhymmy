@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -29,7 +31,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
       //crear usuario
-      if (Auth::user()->role_id === 1) { //valida que el usuario sea tipo hospital
+      if (Auth::user()->role_id === 1) { //valida que el usuario sea tipo admin
         try {
           DB::beginTransaction();
           $data = $request->all();

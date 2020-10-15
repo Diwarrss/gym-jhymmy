@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
+  <nav class="sidebar_custom navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
       <!-- Toggler -->
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,6 +84,12 @@
                   <i class="ni ni-tv-2 text-primary"></i> Dashboard
               </router-link>
             </li>
+        </ul>
+        <!-- Divider -->
+        <hr class="my-3">
+        <!-- Heading -->
+        <h6 class="navbar-heading text-muted">ADMINISTRACIÓN</h6>
+        <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'medidas' }">
                   <i class="ni ni-chart-bar-32 text-primary"></i> Medidas
@@ -146,7 +152,29 @@
         <!-- Divider -->
         <hr class="my-3">
         <!-- Heading -->
-        <h6 class="navbar-heading text-muted">USUARIO</h6>
+        <h6 class="navbar-heading text-muted">CONFIGURACIÓN</h6>
+        <!-- Navigation -->
+        <ul class="navbar-nav mb-md-3">
+            <li class="nav-item">
+              <router-link class="nav-link" :to="{ name: 'usuarios' }">
+                  <i class="fas fa-users"></i> Usuarios
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" :to="{ name: 'generos' }">
+                  <i class="fas fa-venus-mars"></i> Generos
+              </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" :to="{ name: 'estados' }">
+                  <i class="fas fa-atom"></i> Estados
+              </router-link>
+            </li>
+        </ul>
+        <!-- Divider -->
+        <hr class="my-3">
+        <!-- Heading -->
+        <h6 class="navbar-heading text-muted">CUENTA</h6>
         <!-- Navigation -->
         <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
@@ -181,3 +209,10 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+  .sidebar_custom {
+    .fas {
+      color: #5e72e4;
+    }
+  }
+</style>

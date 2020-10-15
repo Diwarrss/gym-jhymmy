@@ -8,7 +8,7 @@ export default {
   },
   actions: {
     count ({ state }) {
-      console.log("sumando numeros")
+      console.log("sumando numeros b")
     }
   },
   getters: {

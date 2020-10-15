@@ -12,7 +12,8 @@ import routes from './routes'
 import Vuex from 'vuex'
 //Import bootstrap-vue
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-
+//definimos la baseurl para axios
+axios.defaults.baseUrl = process.env.APP_URL_AXIOS
 //Create components and import components
 Vue.use(VueRouter)
 Vue.use(Vuex)
@@ -27,6 +28,7 @@ Vue.component('side-bar', require('./components/partials/SideBar.vue').default)
 //import out store for vuex
 import moduleA from './store/moduleA';
 import moduleB from './store/moduleB';
+import user from './store/user';
 
 const app = new Vue({
   el: '#app',
@@ -34,7 +36,8 @@ const app = new Vue({
   store: new Vuex.Store({
     modules: {
       moduleA,
-      moduleB
+      moduleB,
+      user
     }
   })
 });
