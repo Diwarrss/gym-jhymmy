@@ -91,8 +91,13 @@
         <h6 class="navbar-heading text-muted">ADMINISTRACIÓN</h6>
         <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
+              <router-link class="nav-link" :to="{ name: 'usuarios' }">
+                  <i class="fas fa-users"></i> Usuarios
+              </router-link>
+            </li>
+            <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'medidas' }">
-                  <i class="ni ni-chart-bar-32 text-primary"></i> Medidas
+                  <i class="ni ni-chart-bar-32 text-primary"></i> Seguimiento
               </router-link>
             </li>
             <li class="nav-item">
@@ -155,11 +160,6 @@
         <h6 class="navbar-heading text-muted">CONFIGURACIÓN</h6>
         <!-- Navigation -->
         <ul class="navbar-nav mb-md-3">
-            <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'usuarios' }">
-                  <i class="fas fa-users"></i> Usuarios
-              </router-link>
-            </li>
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'generos' }">
                   <i class="fas fa-venus-mars"></i> Generos
