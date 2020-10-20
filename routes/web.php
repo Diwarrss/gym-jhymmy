@@ -23,6 +23,10 @@ Route::group(['middleware' => 'auth'], function () {
 
   //usuarios
   Route::resource('user', 'App\Http\Controllers\UserController');
+  //generos
+  Route::resource('genders', 'App\Http\Controllers\GenderController');
+  //estados
+  Route::resource('states', 'App\Http\Controllers\StateController');
 
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);

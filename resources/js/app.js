@@ -29,6 +29,7 @@ Vue.component('side-bar', require('./components/partials/SideBar.vue').default)
 import moduleA from './store/moduleA';
 import moduleB from './store/moduleB';
 import user from './store/user';
+import config from './store/config';
 
 const app = new Vue({
   el: '#app',
@@ -37,7 +38,8 @@ const app = new Vue({
     modules: {
       moduleA,
       moduleB,
-      user
+      user,
+      config
     }
   })
 });

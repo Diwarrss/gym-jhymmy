@@ -20,6 +20,14 @@
 </template>
 <script>
 export default {
+  computed: {
+    states(){
+      return this.$store.state.config.states
+    }
+  },
+  created() {
+    this.$store.dispatch('getStates')
+  },
   methods: {
     count(){
       this.$store.dispatch('count')

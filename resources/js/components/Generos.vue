@@ -20,6 +20,14 @@
 </template>
 <script>
 export default {
+  computed: {
+    genders(){
+      return this.$store.state.config.genders
+    }
+  },
+  created() {
+    this.$store.dispatch('getGenders')
+  },
   methods: {
     count(){
       this.$store.dispatch('count')
