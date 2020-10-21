@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
 {
@@ -25,8 +26,34 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      try {
+        DB::beginTransaction();
+        $data = $request->all();
+        $payment = Payment::create($data);
+        DB::commit(); //commit de la transaccion
+
+        if ($payment) {
+          return response()->json([
+            'type' => 'success',
+            'message' => 'Pago Realizado',
+            'data' => $payment
+          ], 201);
+        }else{
+          return response()->json([
+            'type' => 'error',
+            'message' => 'Error al Pagar',
+            'data' => []
+          ], 204);
+        }
+        /* return response()->json([
+          'message' => 'Seguimiento creado con éxito',
+          'data' => $user
+        ], 201); */
+      } catch (Exception $e) {
+        DB::rollBack(); //si hay error no ejecute la transaccion
+      }
     }
+
 
     /**
      * Display the specified resource.
