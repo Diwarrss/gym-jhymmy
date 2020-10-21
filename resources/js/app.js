@@ -30,6 +30,7 @@ import moduleA from './store/moduleA';
 import moduleB from './store/moduleB';
 import user from './store/user';
 import config from './store/config';
+import administration from './store/administration';
 
 const app = new Vue({
   el: '#app',
@@ -39,7 +40,8 @@ const app = new Vue({
       moduleA,
       moduleB,
       user,
-      config
+      config,
+      administration
     }
   })
 });

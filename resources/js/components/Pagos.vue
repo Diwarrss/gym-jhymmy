@@ -168,6 +168,14 @@ export default {
       ]
     }
   },
+  computed: {
+    payment(){
+      return this.$store.state.administration.payment
+    }
+  },
+  created() {
+    this.$store.dispatch('getPayment')
+  },
   methods: {
     count(){
       this.$store.dispatch('count')

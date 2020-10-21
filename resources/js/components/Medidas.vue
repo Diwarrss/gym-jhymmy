@@ -168,6 +168,14 @@ export default {
       ]
     }
   },
+  computed: {
+    monitoring(){
+      return this.$store.state.administration.monitoring
+    }
+  },
+  created() {
+    this.$store.dispatch('getMonitoring')
+  },
   methods: {
     count(){
       this.$store.dispatch('count')

@@ -27,6 +27,12 @@ Route::group(['middleware' => 'auth'], function () {
   Route::resource('genders', 'App\Http\Controllers\GenderController');
   //estados
   Route::resource('states', 'App\Http\Controllers\StateController');
+  //seguimineto
+  Route::resource('follow', 'App\Http\Controllers\TracingController');
+  //pagos
+  Route::resource('payments', 'App\Http\Controllers\PaymentController');
+  //perfil
+  Route::resource('profiles', 'App\Http\Controllers\ProfileController');
 
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
