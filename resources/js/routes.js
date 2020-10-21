@@ -1,10 +1,10 @@
 import ExampleComponent from './pages/ExampleComponent';
-import Perfil from './components/Perfil';
-import Pagos from './components/Pagos';
-import Medidas from './components/Medidas';
-import Usuarios from './components/Usuarios';
-import Generos from './components/Generos';
-import Estados from './components/Estados';
+import Perfil from './pages/Perfil';
+import Pagos from './pages/Pagos';
+import Medidas from './pages/Medidas';
+import Usuarios from './pages/Usuarios';
+import Generos from './pages/Generos';
+import Estados from './pages/Estados';
 import Error404 from './pages/404';
 export default {
   mode: 'history',

@@ -6,9 +6,9 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <!-- Brand -->
-      <router-link class="navbar-brand pt-0" to="/">
+      <div class="text-center">
         <img :src="path + '/img/brand/blue.png'" class="navbar-brand-img" alt="...">
-      </router-link>
+      </div>
       <!-- User -->
       <ul class="nav align-items-center d-md-none">
         <li class="nav-item dropdown">
@@ -54,9 +54,9 @@
         <div class="navbar-collapse-header d-md-none">
           <div class="row">
             <div class="col-6 collapse-brand">
-              <router-link to="/">
+              <div>
                 <img :src="path + '/img/brand/blue.png'">
-              </router-link>
+              </div>
             </div>
               <div class="col-6 collapse-close">
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">
@@ -81,7 +81,7 @@
         <ul class="navbar-nav">
             <li class="nav-item">
               <router-link class="nav-link" to="/">
-                  <i class="ni ni-tv-2 text-primary"></i> Dashboard
+                  <i class="fas fa-window-maximize"></i> Dashboard
               </router-link>
             </li>
         </ul>
@@ -97,12 +97,12 @@
             </li>
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'medidas' }">
-                  <i class="ni ni-chart-bar-32 text-primary"></i> Seguimiento
+                  <i class="fas fa-chart-line"></i> Seguimiento
               </router-link>
             </li>
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'pagos' }">
-                  <i class="ni ni-money-coins text-primary"></i> Pagos
+                  <i class="fas fa-dollar-sign"></i> Pagos
               </router-link>
             </li>
             <li class="nav-item">
@@ -179,7 +179,7 @@
         <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'perfil' }">
-                  <i class="ni ni-atom text-primary"></i> Perfil
+                  <i class="fas fa-user-circle"></i> Perfil
               </router-link>
             </li>
             <li class="nav-item">
@@ -213,6 +213,16 @@ export default {
   .sidebar_custom {
     .fas {
       color: #5e72e4;
+    }
+    .router-link-exact-active {
+      background: #825ee4 !important;
+      color: white !important;
+      .fas {
+        color: white !important;
+      }
+    }
+    .nav-item:hover {
+      background: #d9cbff !important;
     }
   }
 </style>

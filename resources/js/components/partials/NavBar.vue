@@ -1,69 +1,58 @@
 <template>
   <!-- Top navbar -->
-  <nav class="navbar bg-gradient-primary navbar-top navbar-expand-md navbar-dark" id="navbar-main">
-    <div class="container-fluid">
-        <!-- Brand -->
-        <router-link class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" to="/">Dashboard</router-link>
-        <!-- Form -->
-        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
-            <div class="form-group mb-0">
-                <div class="input-group input-group-alternative">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                    </div>
-                    <input class="form-control" placeholder="Search" type="text">
-                </div>
-            </div>
-        </form>
-        <!-- User -->
-        <ul class="navbar-nav align-items-center d-none d-md-flex">
-            <li class="nav-item dropdown">
-                <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    <div class="media align-items-center">
-                        <span class="avatar avatar-sm rounded-circle">
-                            <img alt="Image placeholder" :src="path + '/img/theme/team-4-800x800.jpg'">
-                        </span>
-                        <div class="media-body ml-2 d-none d-lg-block">
-                            <span class="mb-0 text-sm  font-weight-bold"> Name user<!-- {{ auth()->user()->name }} --></span>
-                        </div>
-                    </div>
-                </a>
-                <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-                    <div class=" dropdown-header noti-title">
-                        <h6 class="text-overflow m-0">Welcome!</h6>
-                    </div>
-                    <!-- <a href="{{ route('profile.edit') }}" class="dropdown-item">
-                        <i class="ni ni-single-02"></i>
-                        <span>{{ __('My profile') }}</span>
-                    </a> -->
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-settings-gear-65"></i>
-                        <span>Settings</span>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-calendar-grid-58"></i>
-                        <span>Activity</span>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-support-16"></i>
-                        <span>Support</span>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <!-- <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                        <i class="ni ni-user-run"></i>
-                        <span>{{ __('Logout') }}</span>
-                    </a> -->
-                </div>
-            </li>
-        </ul>
-    </div>
-  </nav>
+  <b-navbar class="navbar bg-gradient-primary navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+    <b-navbar-brand class="pl-4 pr-4" href="#">NavBar</b-navbar-brand>
+
+    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+    <b-collapse id="nav-collapse" is-nav>
+      <!-- <b-navbar-nav>
+        <b-nav-item href="#">Link</b-nav-item>
+        <b-nav-item href="#" disabled>Disabled</b-nav-item>
+      </b-navbar-nav> -->
+
+      <!-- Right aligned nav items -->
+      <b-navbar-nav class="ml-auto">
+        <!-- <b-nav-form>
+          <b-form-input size="sm" class="mr-sm-2" placeholder="Search"></b-form-input>
+          <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
+        </b-nav-form> -->
+
+        <!-- <b-nav-item-dropdown text="Lang" right>
+          <b-dropdown-item href="#">EN</b-dropdown-item>
+          <b-dropdown-item href="#">ES</b-dropdown-item>
+          <b-dropdown-item href="#">RU</b-dropdown-item>
+          <b-dropdown-item href="#">FA</b-dropdown-item>
+        </b-nav-item-dropdown> -->
+
+        <b-nav-item-dropdown right class="pr-md-4">
+          <!-- Using 'button-content' slot -->
+          <template #button-content>
+            <em><i class="fas fa-user-friends"></i> {{ userAuth.name }} </em>
+          </template>
+          <b-dropdown-item :to="{ name: 'perfil' }" class=""><i class="fas fa-user-circle"></i> Perfil</b-dropdown-item>
+          <b-dropdown-item href="#" variant="danger"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-navbar-nav>
+    </b-collapse>
+  </b-navbar>
 </template>
 <script>
 export default {
   props: {
-    path: String
-  }
+    path: String,
+    user: String
+  },
+  computed: {
+    userAuth() {
+      return JSON.parse(this.user)
+    }
+  },
 }
 </script>
+<style lang="scss">
+  .dropdown-menu {
+    top: 40px !important;
+    left: -80px !important;
+  }
+</style>
