@@ -6,7 +6,7 @@
       </div>
       <div class="card-body">
         <div>
-          <button class="btn btn-primary mb-3" @click="newState" data-toggle="modal" data-target="#exampleModal">Nuevo</button>
+          <button class="btn btn-primary mb-3" @click="newState()" data-toggle="modal" data-target="#exampleModal">Nuevo</button>
         </div>
         <div class="body_table pt-3">
           <TableCustom
@@ -17,104 +17,108 @@
         </div>
       </div>
     </div>
-    <!-- modal bootstrap -->
-    <div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3 v-if="!viewOnlly && event" class="modal-title" id="exampleModalLabel"><i class="fas fa-plus-circle"/> {{ tittleModal }}</h3>
-            <h3 v-else-if="!viewOnlly && !event" class="modal-title" id="exampleModalLabel"><i class="fas fa-edit"/> {{ tittleModal }}</h3>
-            <h3 v-else class="modal-title" id="exampleModalLabel"><i class="fas fa-plus-circle"/><i class="fas fa-eye"/> {{ tittleModal }}</h3>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <b-form
-              v-if="show">
-              <b-form-group
-                id="groupname"
-                label="Nombre:"
-                label-for="name">
-                <b-form-input
-                  id="name"
-                  v-model="form.name"
-                  autofocus
-                />
-                <!-- <template v-if="$v.form.name.$error">
-                  :class="{'is-invalid': $v.form.name.$error}"
-                  <div
-                    v-if="!$v.form.name.required"
-                    class="invalid-feedback">
-                    Digite el Número de nameo
-                  </div>
-                  <div
-                    v-if="!$v.form.name.maxLength"
-                    class="invalid-feedback">
-                    Exede los 15 Caracteres
-                  </div>
-                </template> -->
-              </b-form-group>
-              <b-form-group
-                id="groupstate"
-                label="Estado:"
-                label-for="state"
-                >
-                <b-form-select
-                  id="state"
-                  v-model="form.state"
-                >
-                  <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
-                    <b-form-select-option
-                      v-for="(item, index) in states"
-                      :key="index"
-                      :value="item.id"
-                    >{{ item.name }}
-                  </b-form-select-option>
-                </b-form-select>
-              </b-form-group>
-            </b-form>
-          </div>
-          <div class="modal-footer">
+    <!-- Info modal -->
+    <b-modal
+      ref="modal-states"
+      id="modal-states"
+      no-close-on-esc
+      no-close-on-backdrop
+      hide-backdrop
+      hide-footer>
+      <template v-slot:modal-title>
+        <i
+          v-if="!viewOnlly && event"
+          class="fas fa-plus-circle"/>
+        <i
+          v-else-if="!viewOnlly && !event"
+          class="fas fa-edit"/>
+        <i
+          v-else
+          class="fas fa-eye"/>
+        {{ tittleModal }}
+      </template>
+      <b-form
+        v-if="show">
+        <b-form-group
+          id="groupname"
+          label="Nombre:"
+          label-for="name">
+          <b-form-input
+            id="name"
+            v-model="form.name"
+            autofocus
+          />
+          <!-- <template v-if="$v.form.name.$error">
+            :class="{'is-invalid': $v.form.name.$error}"
             <div
-              v-if="!viewOnlly"
-              class="text-center">
-              <b-button
-                v-if="event"
-                @click="sendData"
-                :disabled="sending"
-                variant="success"
-                data-dismiss="modal">
-                <span v-if="sending">
-                  <b-spinner small label="Spinning"/> Guardando...
-                </span>
-                <span v-else>
-                  <i class="fas fa-save"/> Guardar
-                </span>
-              </b-button>
-              <b-button
-                v-else
-                @click="sendData"
-                :disabled="updating"
-                variant="success"
-                data-dismiss="modal">
-                <span v-if="updating">
-                  <b-spinner small label="Spinning"/> Actualizando...
-                </span>
-                <span v-else>
-                  <i class="fas fa-save"/> Actualizar
-                </span>
-              </b-button>
-              <!-- <b-button
-                v-else
-                type="submit"
-                variant="success"><i class="fas fa-sync-alt"/> Actualizar</b-button> -->
-              <button id="close" type="button" class="btn btn-danger" @click="hideModal()" data-dismiss="modal">Cancelar</button>
+              v-if="!$v.form.name.required"
+              class="invalid-feedback">
+              Digite el Número de nameo
             </div>
-          </div>
+            <div
+              v-if="!$v.form.name.maxLength"
+              class="invalid-feedback">
+              Exede los 15 Caracteres
+            </div>
+          </template> -->
+        </b-form-group>
+        <b-form-group
+          id="groupstate"
+          label="Estado:"
+          label-for="state"
+          >
+          <b-form-select
+            id="state"
+            v-model="form.state"
+          >
+            <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
+              <b-form-select-option
+                v-for="(item, index) in states"
+                :key="index"
+                :value="item.id"
+              >{{ item.name }}
+            </b-form-select-option>
+          </b-form-select>
+        </b-form-group>
+        <div
+          class="text-center">
+          <button class="btn btn-primary" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...
+          </button>
+          <b-button
+            v-if="event && !viewOnlly"
+            :disabled="sending"
+            @click="sendData()"
+            variant="success">
+            <span v-if="sending">
+              <b-spinner small type="grow"></b-spinner>
+                Guardando...
+            </span>
+            <span v-else>
+              <i class="fas fa-save"/> Guardar
+            </span>
+          </b-button>
+          <b-button
+            v-else-if="!event && !viewOnlly"
+            :disabled="updating"
+            @click="sendData()"
+            variant="success">
+            <span v-if="updating">
+              <b-spinner
+                small
+                label="Spinning"/> Actualizando...
+            </span>
+            <span v-else>
+              <i class="fas fa-save"/> Actualizar
+            </span>
+          </b-button>
+          <b-button
+            variant="danger"
+            @click="hideModal"><i class="fas fa-times-circle"/> Cancelar</b-button>
         </div>
-      </div>
-    </div>
+      </b-form>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -170,9 +174,15 @@ export default {
   },
   methods: {
     sendData(){
+      let me = this
+      me.sending = true
       console.log('guardando')
+      /* setTimeout(() => {
+        me.hideModal()
+      }, 1000); */
     },
     hideModal() {
+      this.$refs['modal-states'].hide()
       setTimeout(() => {
         //this.$v.$reset()
         this.viewOnlly = false
@@ -194,6 +204,7 @@ export default {
       this.event = 1
       this.sending = false
       this.updating = false
+      this.$refs['modal-states'].show()
     },
     modalEdit(item, index, button, view) {
       if (view) {
@@ -219,7 +230,7 @@ export default {
       this.event = 0
       this.sending = false
       this.updating = false
-      this.$refs['modal-dependence'].show()
+      this.$refs['modal-states'].show()
     },
   },
   watch: {
@@ -235,4 +246,10 @@ export default {
       border-top: 1px solid #cec6c6;
     }
   }
+  .modal-header {
+      border-bottom: 1px solid #cac4c4;
+      h5 {
+        font-size: 18px;
+      }
+    }
 </style>
