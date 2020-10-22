@@ -6,6 +6,7 @@ import Usuarios from './pages/Usuarios';
 import Generos from './pages/Generos';
 import Estados from './pages/Estados';
 import Error404 from './pages/404';
+import Acceso from './pages/Acceso';
 export default {
   mode: 'history',
   base: '/home',
@@ -53,6 +54,11 @@ export default {
       path: '/estados',
       name: 'estados',
       component: Estados
+    },
+    {
+      path: '/acceso',
+      name: 'acceso',
+      component: Acceso
     }
   ]
 }

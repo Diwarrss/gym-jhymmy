@@ -17,6 +17,7 @@ class CreateDietsTable extends Migration
             $table->id();
             $table->string('name')->unique();  ///nombre de la dieta
             $table->string('description');  ///descripción
+            $table->string('state');
             $table->timestamps();
         });
     }

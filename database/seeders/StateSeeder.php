@@ -18,11 +18,13 @@ class StateSeeder extends Seeder
         [
           [
             'name' => 'Activo',
+            'state' => true,
             'created_at' => now(),
             'updated_at' => now()
           ],
           [
             'name' => 'Inactivo',
+            'state' => true,
             'created_at' => now(),
             'updated_at' => now()
           ]

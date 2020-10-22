@@ -17,6 +17,7 @@ class CreateRoutinesTable extends Migration
             $table->id();
             $table->string('name')->unique();  ///nombre de la rutina
             $table->string('description');  ///descripción
+            $table->string('state');
             $table->timestamps();
         });
     }

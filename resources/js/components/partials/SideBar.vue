@@ -88,11 +88,22 @@
         <!-- Divider -->
         <hr class="my-3">
         <!-- Heading -->
+        <h6 class="navbar-heading text-muted">ACCESO</h6>
+         <ul class="navbar-nav mb-md-3">
+            <li class="nav-item">
+              <router-link class="nav-link" :to="{ name: 'acceso' }">
+                <i class="fas fa-calendar-check"></i> Control de Ingreso
+              </router-link>
+            </li>
+        </ul>
+        <!-- Divider -->
+        <hr class="my-3">
+        <!-- Heading -->
         <h6 class="navbar-heading text-muted">ADMINISTRACIÓN</h6>
         <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'usuarios' }">
-                  <i class="fas fa-users"></i> Usuarios
+                <i class="fas fa-users"></i> Usuarios
               </router-link>
             </li>
             <li class="nav-item">

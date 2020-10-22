@@ -22,6 +22,8 @@ class CreatePaymentsTable extends Migration
             $table->foreignId('user_id')->constrained('users');
             //relacion con usuario
             $table->foreignId('creator_user_id')->constrained('users');
+            //relacion con estado
+            $table->foreignId('state_id')->constrained('states');
             $table->timestamps();
         });
     }

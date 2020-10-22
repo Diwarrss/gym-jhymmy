@@ -26,6 +26,8 @@ class CreateTracingsTable extends Migration
             $table->double('size');//talla
             //relacion con usuario
             $table->foreignId('user_id')->constrained('users');
+            //relacion con estado
+            $table->foreignId('state_id')->constrained('states');
             $table->timestamps();
         });
     }
