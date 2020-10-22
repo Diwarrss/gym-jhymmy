@@ -23,7 +23,7 @@
       id="modal-states"
       no-close-on-esc
       no-close-on-backdrop
-      hide-backdrop
+
       hide-footer>
       <template v-slot:modal-title>
         <i
@@ -218,15 +218,8 @@ export default {
       //this.$store.dispatch('config/getGender')
       //this.$store.dispatch('config/getTypeIdentification')
       this.form.id = item.id
-      this.form.identification = item.identification
-      this.form.names = item.names
-      this.form.telephone = item.telephone
-      this.form.address = item.address
+      this.form.name = item.name
       this.form.state = item.state
-      this.form.type = item.type
-      this.form.dependence_id = item.dependence_id
-      this.form.type_identification_id = item.type_identification_id
-      this.form.gender_id = item.gender_id
       this.event = 0
       this.sending = false
       this.updating = false
@@ -247,9 +240,12 @@ export default {
     }
   }
   .modal-header {
-      border-bottom: 1px solid #cac4c4;
-      h5 {
-        font-size: 18px;
-      }
+    border-bottom: 1px solid #cac4c4;
+    h5 {
+      font-size: 18px;
     }
+  }
+  .modal-backdrop {
+    background-color: #0000001c;
+  }
 </style>
