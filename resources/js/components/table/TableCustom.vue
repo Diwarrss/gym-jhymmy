@@ -31,7 +31,7 @@
       </b-col>
       <!-- Perpage -->
       <b-col
-        lg="4"
+        lg="5"
         class="my-1">
         <b-form-group
           label="Por página"
@@ -84,7 +84,7 @@
           @click="status(row.item.id, 'enable')"><i class="fas fa-check-circle mr-md-1"/><span class="d-none d-md-inline-block">Activar</span></b-button>
       </template>
       <template #empty="scope">
-        <h4 class="text-center text-primary"><b-spinner variant="primary" label="Spinning"></b-spinner> Cargando</h4>
+        <h4 class="text-center text-primary"><b-spinner variant="primary" label="Spinning"></b-spinner> Sin Resultados</h4>
       </template>
       <!-- <template v-slot:cell(state)="data">
         <h5 v-if="data.item.status">

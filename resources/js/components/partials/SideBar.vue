@@ -181,6 +181,11 @@
                   <i class="fas fa-atom"></i> Estados
               </router-link>
             </li>
+            <li class="nav-item">
+              <router-link class="nav-link" :to="{ name: 'cancellation_reason' }">
+                  <i class="fas fa-ban"></i> Motivo de Cancelación
+              </router-link>
+            </li>
         </ul>
         <!-- Divider -->
         <hr class="my-3">

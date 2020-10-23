@@ -4,6 +4,7 @@ export default {
   state: {
     states: [],
     genders: [],
+    cancellationReason: [],
     allRow: 0
   },
   mutations: {
@@ -13,6 +14,10 @@ export default {
     },
     setGenders(state, data) {
       state.genders = data
+      state.allRow = data.length
+    },
+    setCancellationReason(state, data) {
+      state.cancellationReason = data
       state.allRow = data.length
     }
   },
@@ -24,6 +29,10 @@ export default {
     getGenders: async function({ commit }) {
       const data = await axios.get('/genders')
       commit('setGenders', data.data)
+    },
+    getCancellationReason: async function({ commit }) {
+      const data = await axios.get('/cancellationReason')
+      commit('setCancellationReason', data.data)
     }
   },
   getters: {}

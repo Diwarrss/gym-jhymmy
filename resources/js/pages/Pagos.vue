@@ -1,157 +1,175 @@
 <template>
-  <div class="p-4 medidas_custom">
-    <b-card>
-      <div>
-        <b-button
-          variant="primary"><i class="fas fa-plus-circle"/> Nuevo Pago</b-button>
-        <!-- <b-button
-          v-permission="'export_dependence'"
-          variant="success"><i class="fas fa-file-csv"/> Exportar</b-button> -->
+  <div class="p-4 payments_component">
+    <div class="card">
+      <div class="card-header">
+        <h1>Componente de Pagos</h1>
       </div>
-      <div class="mt-2 pt-3 body_medidas">
-        <template>
-          <div class="container-fluid overflow-auto">
-            <b-row>
-              <!-- sector de filtrar -->
-              <b-col
-                lg="4"
-                class="my-1">
-                <b-form-group
-                  label="Filtrar:"
-                  label-cols-sm="3"
-                  label-align-sm="right"
-                  label-size="mb"
-                  label-for="filterInput"
-                  class="mb-0"
-                >
-                  <b-input-group size="mb">
-                    <b-form-input
-                      id="filterInput"
-                      v-model="filter"
-                      type="search"
-                      placeholder="Buscar..."
-                    />
-                    <b-input-group-append>
-                      <b-button
-                        variant="info"
-                        :disabled="!filter"
-                        @click="filter = ''">Limpiar</b-button>
-                    </b-input-group-append>
-                  </b-input-group>
-                </b-form-group>
-              </b-col>
-              <!-- Perpage -->
-              <!-- <b-col
-                lg="4"
-                class="my-1">
-                <b-form-group
-                  label="Por página"
-                  label-cols-sm="3"
-                  label-align-sm="right"
-                  label-size="mb"
-                  label-for="perPageSelect"
-                  class="mb-0"
-                >
-                  <b-form-select
-                    id="perPageSelect"
-                    v-model="perPage"
-                    :options="pageOptions"
-                    class="select_custom"
-                    size="mb"/>
-                </b-form-group>
-              </b-col> -->
-            </b-row>
-            <!-- Pintar Tabla -->
-            <b-table
-              id="table-dependence"
-              :fields="fields"
-              :items="items"
-              :filter="filter"
-              :current-page="currentPage"
-              :sort-by.sync="sortBy"
-              :sort-desc.sync="sortDesc"
-              class="mt-3 table_custom"
-              striped
-              small
-              responsive
-              @filtered="onFiltered">
-              <!-- se pinta el componente para el slot acciones -->
-              <template v-slot:cell(acciones)="row">
-                <b-button
-                  variant="primary"
-                  @click="modalEdit(row.item, row.index, $event.target, true)"><i class="fas fa-eye mr-md-1"/><span class="d-none d-md-inline-block">Ver</span></b-button>
-                <b-button
-                  variant="warning"
-                  @click="modalEdit(row.item, row.index, $event.target, false)"><i class="fas fa-edit mr-md-1"/><span class="d-none d-md-inline-block">Editar</span></b-button>
-               <!--  <b-button
-                  v-if="row.item.isActive"
-                  variant="danger"
-                  @click="status(row.item.id, 'disable')"><i class="fas fa-times-circle mr-md-1"/><span class="d-none d-md-inline-block">Inactivar</span></b-button>
-                <b-button
-                  v-if="!row.item.isActive"
-                  variant="success"
-                  @click="status(row.item.id, 'enable')"><i class="fas fa-check-circle mr-md-1"/><span class="d-none d-md-inline-block">Activar</span></b-button>
-               --></template>
-              <template v-slot:cell(state)="data">
-                <h5 v-if="data.item.isActive">
-                  <b-badge
-                    variant="success">{{ data.item.isActive ? 'Activo' : 'Inactivo' }} </b-badge>
-                </h5>
-                <h5 v-else>
-                  <b-badge
-                    variant="danger">{{ data.item.isActive ? 'Activo' : 'Inactivo' }} </b-badge>
-                </h5>
-              </template>
-            </b-table>
-            <!-- Info Paginacion -->
-            <b-pagination
-              class="mt-4"
-              v-model="currentPage"
-              :total-rows="rows"
-              :per-page="perPage"
-              aria-controls="table-dependence"
-            />
-          </div>
-        </template>
+      <div class="card-body">
+        <div>
+          <button class="btn btn-primary mb-3" @click="newPay()">Nuevo Pago</button>
+        </div>
+        <div class="body_table pt-3">
+          <TableCustom
+            :fields="fields"
+            :items="payments"
+            :rows="allRow"
+            :per-page="10"/>
+        </div>
       </div>
-    </b-card>
+    </div>
+    <!-- Info modal -->
+    <b-modal
+      ref="modal-payments"
+      id="modal-payments"
+      no-close-on-esc
+      no-close-on-backdrop
+      hide-footer>
+      <template v-slot:modal-title>
+        <i
+          v-if="!viewOnlly && event"
+          class="fas fa-plus-circle"/>
+        <i
+          v-else-if="!viewOnlly && !event"
+          class="fas fa-edit"/>
+        <i
+          v-else
+          class="fas fa-eye"/>
+        {{ tittleModal }}
+      </template>
+      <b-form
+        v-if="show">
+        <!-- usuario -->
+        <b-form-group
+          id="groupstate"
+          label="Usuario:"
+          label-for="user"
+          >
+          <b-form-select
+            id="user"
+            v-model="form.user"
+          >
+            <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
+              <b-form-select-option
+                v-for="(item, index) in states"
+                :key="index"
+                :value="item.id"
+              >{{ item.name }}
+            </b-form-select-option>
+          </b-form-select>
+        </b-form-group>
+        <!-- fecha de pago -->
+        <b-form-group
+          id="groupname"
+          label="Fecha de Pago:"
+          label-for="from_date">
+          <b-form-input
+            id="from_date"
+            v-model="form.from_date"
+            autofocus
+          />
+        </b-form-group>
+         <!-- valor pagar -->
+        <b-form-group
+          id="groupname"
+          label="Valor a Pagar:"
+          label-for="payment">
+          <b-form-input
+            id="from_date"
+            v-model="form.from_date"
+            autofocus
+          />
+        </b-form-group>
+        <!-- estado -->
+        <b-form-group
+          id="groupstate"
+          label="Estado:"
+          label-for="state"
+          >
+          <b-form-select
+            id="state"
+            v-model="form.state"
+          >
+            <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
+              <b-form-select-option
+                v-for="(item, index) in states"
+                :key="index"
+                :value="item.id"
+              >{{ item.name }}
+            </b-form-select-option>
+          </b-form-select>
+        </b-form-group>
+        <div
+          class="text-center">
+          <button class="btn btn-primary" type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Loading...
+          </button>
+          <b-button
+            v-if="event && !viewOnlly"
+            :disabled="sending"
+            @click="sendData()"
+            variant="success">
+            <span v-if="sending">
+              <b-spinner small type="grow"></b-spinner>
+                Guardando...
+            </span>
+            <span v-else>
+              <i class="fas fa-save"/> Guardar
+            </span>
+          </b-button>
+          <b-button
+            v-else-if="!event && !viewOnlly"
+            :disabled="updating"
+            @click="sendData()"
+            variant="success">
+            <span v-if="updating">
+              <b-spinner
+                small
+                label="Spinning"/> Actualizando...
+            </span>
+            <span v-else>
+              <i class="fas fa-save"/> Actualizar
+            </span>
+          </b-button>
+          <b-button
+            variant="danger"
+            @click="hideModal"><i class="fas fa-times-circle"/> Cancelar</b-button>
+        </div>
+      </b-form>
+    </b-modal>
   </div>
 </template>
 <script>
+import TableCustom from '../components/table/TableCustom'
 export default {
+  components: {
+    TableCustom
+  },
   data() {
     return {
       // Note `isActive` is left out and will not appear in the rendered table
-      rows: 4,
-      sortBy: 'first_name',
-      sortDesc: false,
-      filter: null,
-      pageOptions: [10, 20, 30],
-      perPage: 10,
-      currentPage: 1,
+      allRows: this.row,
+      show: true,
+      form: {
+        id: '',
+        name: '',
+        from_date: '',
+        state: ''
+      },
       fields: [
         {
-          key: 'first_name',
+          key: 'id',
+          label: 'ID'
+        },
+        {
+          key: 'name',
           label: 'Nombre',
           sortable: true
         },
         {
-          key: 'last_name',
-          label: 'Apellido',
-          sortable: true
-        },
-        {
-          key: 'date',
+          key: 'created_at',
           label: 'Fecha de Pago',
           sortable: true
-        },
-        {
-          key: 'isActive',
-          label: 'Estado',
-          sortable: true,
-          formatter: value => {
-            return value ? 'Activo' : 'Inactivo'
-          }
         },
         {
           key: 'acciones',
@@ -160,16 +178,15 @@ export default {
           sortable: false
         }
       ],
-      items: [
-        { isActive: true, date: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-        { isActive: false, date: 21, first_name: 'Larsen', last_name: 'Shaw' },
-        { isActive: false, date: 89, first_name: 'Geneva', last_name: 'Wilson' },
-        { isActive: true, date: 38, first_name: 'Jami', last_name: 'Carney' }
-      ]
+      sending: false,
+      updating: false,
+      event: '',
+      viewOnlly: false,
+      tittleModal : ''
     }
   },
   computed: {
-    payment(){
+    payments(){
       return this.$store.state.administration.payment
     }
   },
@@ -185,26 +202,82 @@ export default {
       this.rows = filteredItems.length
       this.currentPage = 1
     },
+    sendData(){
+      let me = this
+      me.sending = true
+      console.log('guardando')
+      /* setTimeout(() => {
+        me.hideModal()
+      }, 1000); */
+    },
+    hideModal() {
+      this.$refs['modal-payments'].hide()
+      setTimeout(() => {
+        //this.$v.$reset()
+        this.viewOnlly = false
+        this.updating = false
+        this.sending = false
+        this.form = {
+          id: null,
+          name: null,
+          date: null,
+          state: null
+        }
+        //this.$store.dispatch('api/clearErrors') //clean errors of back
+      }, 500)
+    },
+    newPay(view) {
+      this.form.id = null
+      this.form.name = null
+      this.form.from_date = null
+      this.form.state = null
+      this.tittleModal = 'Nuevo Registro'
+      this.event = 1
+      this.sending = false
+      this.updating = false
+      this.$refs['modal-payments'].show()
+    },
+    modalEdit(item, index, button, view) {
+      if (view) {
+        this.tittleModal = 'Ver ' + item.names
+        this.viewOnlly = true
+      } else {
+        this.viewOnlly = false
+        this.tittleModal = 'Editar ' + item.names
+      }
+      //this.$store.dispatch('api/clearErrors') //clean errors of back
+      //this.$store.dispatch('config/getGender')
+      //this.$store.dispatch('config/getTypeIdentification')
+      this.form.id = item.id
+      this.form.name = item.name
+      this.form.from_date = item.from_date
+      this.form.state = item.state
+      this.event = 0
+      this.sending = false
+      this.updating = false
+      this.$refs['modal-payments'].show()
+    },
   },
-
+   watch: {
+    row() {
+      this.allRow = this.row
+    }
+  },
 }
 </script>
 <style lang="scss">
-  .medidas_custom {
-    .card-header {
-      h1{
-        margin-bottom: 0px;
-        font-size: 18px;
-      }
+  .payments_component {
+    .body_table {
+      border-top: 1px solid #cec6c6;
     }
-    .body_medidas {
-      border-top: 1px solid #d0c9c9;
+  }
+  .modal-header {
+    border-bottom: 1px solid #cac4c4;
+    h5 {
+      font-size: 18px;
     }
-    .table_custom {
-      th {
-        font-size: 16px;
-        font-weight: 700;
-      }
-    }
+  }
+  .modal-backdrop {
+    background-color: #0000001c;
   }
 </style>

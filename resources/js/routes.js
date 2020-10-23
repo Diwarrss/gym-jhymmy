@@ -7,6 +7,7 @@ import Generos from './pages/Generos';
 import Estados from './pages/Estados';
 import Error404 from './pages/404';
 import Acceso from './pages/Acceso';
+import CancellationReason from './pages/CancellationReason';
 export default {
   mode: 'history',
   base: '/home',
@@ -59,6 +60,11 @@ export default {
       path: '/acceso',
       name: 'acceso',
       component: Acceso
+    },
+    {
+      path: '/cancellation_reason',
+      name: 'cancellation_reason',
+      component: CancellationReason
     }
   ]
 }
