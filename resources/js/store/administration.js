@@ -14,6 +14,10 @@ export default {
     setPayment(state, data) {
       state.payment = data
       state.allRow = data.length
+    },
+    setAccess(state, data) {
+      state.access = data
+      state.allRow = data.length
     }
   },
   actions: {
@@ -24,6 +28,10 @@ export default {
     getPayment: async function({ commit }) {
       const data = await axios.get('/payments')
       commit('setPayment', data.data)
+    },
+    getAccess: async function({ commit }) {
+      const data = await axios.get('/accesses')
+      commit('setAccess', data.data)
     }
   },
   getters: {}

@@ -33,6 +33,8 @@ Route::group(['middleware' => 'auth'], function () {
   Route::resource('payments', 'App\Http\Controllers\PaymentController');
   //perfil
   Route::resource('profiles', 'App\Http\Controllers\ProfileController');
+  //acceso
+  Route::resource('accesses', 'App\Http\Controllers\AccessControlController');
   //motivo de cancelación
   Route::resource('cancellationReason', 'App\Http\Controllers\CancellationReasonController');
 
