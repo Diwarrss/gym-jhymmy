@@ -131,7 +131,9 @@ export default {
       form: {
         id: '',
         name: '',
-        from_date: '',
+        user: '',
+        date: '',
+        temperature:'',
         state: ''
       },
       fields: [
@@ -217,7 +219,9 @@ export default {
     newAccess(view) {
       this.form.id = null
       this.form.name = null
-      this.form.from_date = null
+      this.form.user = null
+      this.form.date = null
+      this.form.temperature = null
       this.form.state = null
       this.tittleModal = 'Nuevo Registro'
       this.event = 1
@@ -238,7 +242,9 @@ export default {
       //this.$store.dispatch('config/getTypeIdentification')
       this.form.id = item.id
       this.form.name = item.name
-      this.form.from_date = item.from_date
+      this.form.user = item.user
+      this.form.user = item.date
+      this.form.user = item.temperature
       this.form.state = item.state
       this.event = 0
       this.sending = false

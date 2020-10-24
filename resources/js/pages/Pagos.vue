@@ -74,8 +74,8 @@
           label="Valor a Pagar:"
           label-for="payment">
           <b-form-input
-            id="from_date"
-            v-model="form.from_date"
+            id="payment"
+            v-model="form.payment"
             autofocus
           />
         </b-form-group>
@@ -221,6 +221,7 @@ export default {
           id: null,
           name: null,
           date: null,
+          create_ad: null,
           state: null
         }
         //this.$store.dispatch('api/clearErrors') //clean errors of back
@@ -229,7 +230,7 @@ export default {
     newPay(view) {
       this.form.id = null
       this.form.name = null
-      this.form.from_date = null
+      this.form.created_ad = null
       this.form.state = null
       this.tittleModal = 'Nuevo Registro'
       this.event = 1
@@ -250,7 +251,7 @@ export default {
       //this.$store.dispatch('config/getTypeIdentification')
       this.form.id = item.id
       this.form.name = item.name
-      this.form.from_date = item.from_date
+      this.form.from_date = item.created_ad
       this.form.state = item.state
       this.event = 0
       this.sending = false
