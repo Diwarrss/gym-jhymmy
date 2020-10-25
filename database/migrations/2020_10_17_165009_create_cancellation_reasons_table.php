@@ -15,10 +15,10 @@ class CreateCancellationReasonsTable extends Migration
     {
         Schema::create('cancellation_reasons', function (Blueprint $table) {
             $table->id();
-            $table->string('name');//nombre
-            $table->integer('state');//estado
+            $table->string('name')->unique();//nombre
+            $table->boolean('state');//estado
             //relacion con usuario
-            $table->foreignId('user_id')->constrained('users');
+            //$table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }

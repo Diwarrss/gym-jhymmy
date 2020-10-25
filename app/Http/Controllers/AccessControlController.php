@@ -16,7 +16,7 @@ class AccessControlController extends Controller
      */
     public function index()
     {
-      return AccessControl::all();
+      return AccessControl::with('user')->get();
     }
 
     /**

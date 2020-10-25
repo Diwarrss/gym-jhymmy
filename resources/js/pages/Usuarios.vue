@@ -173,7 +173,7 @@ export default {
   data() {
     return {
       // Note `isActive` is left out and will not appear in the rendered table
-      allRows: this.row,
+      allRow: this.row,
       show: true,
       form: {
         id: '',
@@ -210,16 +210,23 @@ export default {
       updating: false,
       event: '',
       viewOnlly: false,
-      tittleModal : ''
+      tittleModal : '',
+      states: [
+        { "id" : "1", "name" : "Activo"},
+        { "id" : "2", "name" : "Inactivo"}
+      ],
     }
   },
   computed: {
     users(){
       return this.$store.state.user.users
+    },
+    row() {
+      return this.$store.state.user.allRow
     }
   },
   created() {
-    this.$store.dispatch('getPayment')
+    this.$store.dispatch('getUsers')
   },
   methods: {
     count(){

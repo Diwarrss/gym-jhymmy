@@ -1,123 +1,22 @@
 <template>
-  <div class="p-4 medidas_custom">
-    <b-card>
-      <!-- <div>
-        <b-button
-          variant="primary"><i class="fas fa-plus-circle"/> Nuevo</b-button>
-        <b-button
-          v-permission="'export_dependence'"
-          variant="success"><i class="fas fa-file-csv"/> Exportar</b-button>
-      </div> -->
-      <div>
-        <button class="btn btn-primary mb-3" @click="newMedidas()">Nueva Medida</button>
+  <div class="p-4 tracing_component">
+    <div class="card">
+      <div class="card-header">
+        <h1>Componente Seguimiento</h1>
       </div>
-      <div class="mt-2 pt-3 body_medidas">
-        <template>
-          <div class="container-fluid overflow-auto">
-            <b-row>
-              <!-- sector de filtrar -->
-              <b-col
-                lg="4"
-                class="my-1">
-                <b-form-group
-                  label="Filtrar:"
-                  label-cols-sm="3"
-                  label-align-sm="right"
-                  label-size="mb"
-                  label-for="filterInput"
-                  class="mb-0"
-                >
-                  <b-input-group size="mb">
-                    <b-form-input
-                      id="filterInput"
-                      v-model="filter"
-                      type="search"
-                      placeholder="Buscar..."
-                    />
-                    <b-input-group-append>
-                      <b-button
-                        variant="info"
-                        :disabled="!filter"
-                        @click="filter = ''">Limpiar</b-button>
-                    </b-input-group-append>
-                  </b-input-group>
-                </b-form-group>
-              </b-col>
-              <!-- Perpage -->
-              <!-- <b-col
-                lg="4"
-                class="my-1">
-                <b-form-group
-                  label="Por página"
-                  label-cols-sm="3"
-                  label-align-sm="right"
-                  label-size="mb"
-                  label-for="perPageSelect"
-                  class="mb-0"
-                >
-                  <b-form-select
-                    id="perPageSelect"
-                    v-model="perPage"
-                    :options="pageOptions"
-                    class="select_custom"
-                    size="mb"/>
-                </b-form-group>
-              </b-col> -->
-            </b-row>
-            <!-- Pintar Tabla -->
-            <b-table
-              id="table-dependence"
-              :fields="fields"
-              :items="items"
-              :filter="filter"
-              :current-page="currentPage"
-              :sort-by.sync="sortBy"
-              :sort-desc.sync="sortDesc"
-              class="mt-3 table_custom"
-              striped
-              small
-              responsive
-              @filtered="onFiltered">
-              <!-- se pinta el componente para el slot acciones -->
-              <template v-slot:cell(acciones)="row">
-                <b-button
-                  variant="primary"
-                  @click="modalEdit(row.item, row.index, $event.target, true)"><i class="fas fa-eye mr-md-1"/><span class="d-none d-md-inline-block">Ver</span></b-button>
-                <b-button
-                  variant="warning"
-                  @click="modalEdit(row.item, row.index, $event.target, false)"><i class="fas fa-edit mr-md-1"/><span class="d-none d-md-inline-block">Editar</span></b-button>
-                <b-button
-                  v-if="row.item.isActive"
-                  variant="danger"
-                  @click="status(row.item.id, 'disable')"><i class="fas fa-times-circle mr-md-1"/><span class="d-none d-md-inline-block">Inactivar</span></b-button>
-                <b-button
-                  v-if="!row.item.isActive"
-                  variant="success"
-                  @click="status(row.item.id, 'enable')"><i class="fas fa-check-circle mr-md-1"/><span class="d-none d-md-inline-block">Activar</span></b-button>
-              </template>
-              <template v-slot:cell(state)="data">
-                <h5 v-if="data.item.isActive">
-                  <b-badge
-                    variant="success">{{ data.item.isActive ? 'Activo' : 'Inactivo' }} </b-badge>
-                </h5>
-                <h5 v-else>
-                  <b-badge
-                    variant="danger">{{ data.item.isActive ? 'Activo' : 'Inactivo' }} </b-badge>
-                </h5>
-              </template>
-            </b-table>
-            <!-- Info Paginacion -->
-            <b-pagination
-              class="mt-4"
-              v-model="currentPage"
-              :total-rows="rows"
-              :per-page="perPage"
-              aria-controls="table-dependence"
-            />
-          </div>
-        </template>
+      <div class="card-body">
+        <div>
+          <button class="btn btn-primary mb-3" @click="newTracing()"> Nuevo</button>
+        </div>
+        <div class="body_table pt-3">
+          <TableCustom
+            :fields="fields"
+            :items="tracings"
+            :rows="allRow"
+            :per-page="10"/>
+        </div>
       </div>
-    </b-card>
+    </div>
     <b-modal
       size="lg"
       ref="modal-medidas"
@@ -342,23 +241,26 @@
   </div>
 </template>
 <script>
+import TableCustom from '../components/table/TableCustom'
 export default {
+  components: {
+    TableCustom
+  },
   data() {
     return {
       // Note `isActive` is left out and will not appear in the rendered table
+      states: [
+        { "id" : "1", "name" : "Activo"},
+        { "id" : "2", "name" : "Inactivo"}
+      ],
       show: true,
       sending: false,
       updating: false,
       event: '',
       viewOnlly: false,
       tittleModal : '',
+      allRow: this.row,
       rows: 4,
-      sortBy: 'first_name',
-      sortDesc: false,
-      filter: null,
-      pageOptions: [10, 20, 30],
-      perPage: 10,
-      currentPage: 1,
       form: {
         user: '',
         state:'',
@@ -373,27 +275,19 @@ export default {
       },
       fields: [
         {
-          key: 'first_name',
-          label: 'Nombre',
+          key: 'id',
+          label: '#',
           sortable: true
         },
         {
-          key: 'last_name',
-          label: 'Apellido',
+          key: 'user.name',
+          label: 'Usuario',
           sortable: true
         },
         {
-          key: 'age',
-          label: 'Edad',
+          key: 'created_at',
+          label: 'Fecha',
           sortable: true
-        },
-        {
-          key: 'isActive',
-          label: 'Estado',
-          sortable: true,
-          formatter: value => {
-            return value ? 'Activo' : 'Inactivo'
-          }
         },
         {
           key: 'acciones',
@@ -411,22 +305,20 @@ export default {
     }
   },
   computed: {
-    monitoring(){
-      return this.$store.state.administration.monitoring
-    }
+    tracings(){
+      return this.$store.state.administration.tracings
+    },
+    row() {
+      return this.$store.state.administration.allRow
+    },
+    users(){
+      return this.$store.state.user.users
+    },
   },
   created() {
-    this.$store.dispatch('getMonitoring')
+    this.$store.dispatch('getTracing')
   },
   methods: {
-    count(){
-      this.$store.dispatch('count')
-    },
-    onFiltered(filteredItems) {
-      // actualiza la paginacion cuando se usa el filtro
-      this.rows = filteredItems.length
-      this.currentPage = 1
-    },
     hideModal() {
       this.$refs['modal-medidas'].hide()
       setTimeout(() => {
@@ -441,7 +333,7 @@ export default {
         //this.$store.dispatch('api/clearErrors') //clean errors of back
       }, 500)
     },
-    newMedidas(view) {
+    newTracing(view) {
       this.form.user = null
       this.form.state = null
       this.form.back = null
@@ -485,25 +377,26 @@ export default {
       this.$refs['modal-medidas'].show()
     },
   },
-
+  watch: {
+    row() {
+      this.allRow = this.row
+    }
+  },
 }
 </script>
 <style lang="scss">
-  .medidas_custom {
-    .card-header {
-      h1{
-        margin-bottom: 0px;
-        font-size: 18px;
-      }
+  .tracing_component {
+    .body_table {
+      border-top: 1px solid #cec6c6;
     }
-    .body_medidas {
-      border-top: 1px solid #d0c9c9;
+  }
+  .modal-header {
+    border-bottom: 1px solid #cac4c4;
+    h5 {
+      font-size: 18px;
     }
-    .table_custom {
-      th {
-        font-size: 16px;
-        font-weight: 700;
-      }
-    }
+  }
+  .modal-backdrop {
+    background-color: #0000001c;
   }
 </style>

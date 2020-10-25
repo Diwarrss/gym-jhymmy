@@ -15,8 +15,6 @@ class AccessControl extends Model
      * @var array
      */
     protected $fillable = [
-      'access_controls',
-      'departure_date',
       'temperature',
       'user_id'
     ];

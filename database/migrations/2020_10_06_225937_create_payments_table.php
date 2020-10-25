@@ -18,12 +18,13 @@ class CreatePaymentsTable extends Migration
             $table->integer('value');  ///valor a pagar
             $table->date('to_date');  ///fecha inicio
             $table->date('from_date');  ///fecha terminacion
-            //relacion con usuario
+            $table->boolean('state');  ///fecha terminacion
+            //relacion con usuario que pago
             $table->foreignId('user_id')->constrained('users');
-            //relacion con usuario
+            //relacion con usuario creador
             $table->foreignId('creator_user_id')->constrained('users');
             //relacion con estado
-            $table->foreignId('state_id')->constrained('states');
+            //$table->foreignId('state_id')->constrained('states');
             $table->timestamps();
         });
     }

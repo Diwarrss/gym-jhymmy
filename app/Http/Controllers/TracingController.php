@@ -14,7 +14,7 @@ class TracingController extends Controller
      */
     public function index()
     {
-      return Tracing::all();
+      return Tracing::with('user')->get();
     }
 
     /**

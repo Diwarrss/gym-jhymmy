@@ -15,7 +15,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-      return Payment::all();
+      return Payment::with('userAdm', 'userCli')->get();
 
     }
 

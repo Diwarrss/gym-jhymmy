@@ -22,21 +22,21 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/home/{any?}', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
   //usuarios
-  Route::resource('user', 'App\Http\Controllers\UserController');
+  Route::resource('users', 'App\Http\Controllers\UserController');
   //generos
   Route::resource('genders', 'App\Http\Controllers\GenderController');
   //estados
   Route::resource('states', 'App\Http\Controllers\StateController');
   //seguimineto
-  Route::resource('follow', 'App\Http\Controllers\TracingController');
+  Route::resource('tracings', 'App\Http\Controllers\TracingController');
   //pagos
   Route::resource('payments', 'App\Http\Controllers\PaymentController');
   //perfil
-  Route::resource('profiles', 'App\Http\Controllers\ProfileController');
+  //Route::resource('profiles', 'App\Http\Controllers\ProfileController');
   //acceso
-  Route::resource('accesses', 'App\Http\Controllers\AccessControlController');
+  Route::resource('access-controlls', 'App\Http\Controllers\AccessControlController');
   //motivo de cancelación
-  Route::resource('cancellationReason', 'App\Http\Controllers\CancellationReasonController');
+  Route::resource('cancellation-reasons', 'App\Http\Controllers\CancellationReasonController');
 
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);

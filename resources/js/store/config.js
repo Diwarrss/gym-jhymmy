@@ -31,7 +31,7 @@ export default {
       commit('setGenders', data.data)
     },
     getCancellationReason: async function({ commit }) {
-      const data = await axios.get('/cancellationReason')
+      const data = await axios.get('/cancellation-reasons')
       commit('setCancellationReason', data.data)
     }
   },

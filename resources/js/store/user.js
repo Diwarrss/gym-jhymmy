@@ -16,7 +16,7 @@ export default {
   },
   actions: {
     getUsers: async function({ commit }) {
-      const data = await axios.get('/user')
+      const data = await axios.get('/users')
       commit('setUsers', data.data)
     }
   },

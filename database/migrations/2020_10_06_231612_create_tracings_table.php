@@ -17,17 +17,18 @@ class CreateTracingsTable extends Migration
             $table->id();
             $table->double('back');//espalda
             $table->double('chest');//pecho
-            $table->double('claf');//pantorrilla
+            $table->double('calf');//pantorrilla
             $table->double('leg');//pierna
             $table->double('abdomen');//abdomen
             $table->double('arm');//brazo
             $table->double('waist');//cintura
             $table->double('weight');//peso
             $table->double('size');//talla
+            $table->boolean('state');//talla
             //relacion con usuario
             $table->foreignId('user_id')->constrained('users');
             //relacion con estado
-            $table->foreignId('state_id')->constrained('states');
+            //$table->foreignId('state_id')->constrained('states');
             $table->timestamps();
         });
     }

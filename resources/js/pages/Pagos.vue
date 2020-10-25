@@ -148,7 +148,7 @@ export default {
   data() {
     return {
       // Note `isActive` is left out and will not appear in the rendered table
-      allRows: this.row,
+      allRow: this.row,
       show: true,
       form: {
         id: '',
@@ -162,7 +162,7 @@ export default {
           label: 'ID'
         },
         {
-          key: 'name',
+          key: 'user_cli.name',
           label: 'Nombre',
           sortable: true
         },
@@ -182,7 +182,11 @@ export default {
       updating: false,
       event: '',
       viewOnlly: false,
-      tittleModal : ''
+      tittleModal : '',
+      states: [
+        { "id" : "1", "name" : "Activo"},
+        { "id" : "2", "name" : "Inactivo"}
+      ],
     }
   },
   computed: {

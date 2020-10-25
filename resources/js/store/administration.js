@@ -2,13 +2,13 @@
 import axios from 'axios'
 export default {
   state: {
-    monitoring: [],//seguiminetos
+    tracings: [],//seguiminetos
     payment: [],//pagos
     allRow: 0
   },
   mutations: {
-    setMonitoring(state, data) {
-      state.monitoring = data
+    setTracings(state, data) {
+      state.tracings = data
       state.allRow = data.length
     },
     setPayment(state, data) {
@@ -21,9 +21,9 @@ export default {
     }
   },
   actions: {
-    getMonitoring: async function({ commit }) {
-      const data = await axios.get('/follow')
-      commit('setMonitoring', data.data)
+    getTracing: async function({ commit }) {
+      const data = await axios.get('/tracings')
+      commit('setTracings', data.data)
     },
     getPayment: async function({ commit }) {
       const data = await axios.get('/payments')
