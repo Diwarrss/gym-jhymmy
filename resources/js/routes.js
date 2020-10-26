@@ -1,12 +1,12 @@
 import ExampleComponent from './pages/ExampleComponent';
-import Perfil from './pages/Perfil';
-import Pagos from './pages/Pagos';
-import Medidas from './pages/Medidas';
-import Usuarios from './pages/Usuarios';
-import Generos from './pages/Generos';
-import Estados from './pages/Estados';
+import Profile from './pages/Profile';
+import Payment from './pages/Payment';
+import Tracing from './pages/Tracing';
+import User from './pages/User';
+import Gender from './pages/Gender';
+import State from './pages/State';
 import Error404 from './pages/404';
-import Acceso from './pages/Acceso';
+import AccessControl from './pages/AccessControl';
 import CancellationReason from './pages/CancellationReason';
 export default {
   mode: 'history',
@@ -27,39 +27,39 @@ export default {
       component: ExampleComponent
     },
     {
-      path: '/perfil',
-      name: 'perfil',
-      component: Perfil
+      path: '/profile',
+      name: 'profile',
+      component: Profile
     },
     {
-      path: '/medidas',
-      name: 'medidas',
-      component: Medidas
+      path: '/tracing',
+      name: 'tracing',
+      component: Tracing
     },
     {
-      path: '/pagos',
-      name: 'pagos',
-      component: Pagos
+      path: '/payment',
+      name: 'payment',
+      component: Payment
     },
     {
-      path: '/usuarios',
-      name: 'usuarios',
-      component: Usuarios
+      path: '/user',
+      name: 'user',
+      component: User
     },
     {
-      path: '/generos',
-      name: 'generos',
-      component: Generos
+      path: '/gender',
+      name: 'gender',
+      component: Gender
     },
     {
-      path: '/estados',
-      name: 'estados',
-      component: Estados
+      path: '/state',
+      name: 'state',
+      component: State
     },
     {
-      path: '/acceso',
-      name: 'acceso',
-      component: Acceso
+      path: '/access_control',
+      name: 'access_control',
+      component: AccessControl
     },
     {
       path: '/cancellation_reason',

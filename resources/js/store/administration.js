@@ -4,6 +4,7 @@ export default {
   state: {
     tracings: [],//seguiminetos
     payment: [],//pagos
+    access_control: [],
     allRow: 0
   },
   mutations: {
@@ -15,8 +16,8 @@ export default {
       state.payment = data
       state.allRow = data.length
     },
-    setAccess(state, data) {
-      state.access = data
+    setAccessControl(state, data) {
+      state.access_control = data
       state.allRow = data.length
     }
   },
@@ -29,9 +30,9 @@ export default {
       const data = await axios.get('/payments')
       commit('setPayment', data.data)
     },
-    getAccess: async function({ commit }) {
-      const data = await axios.get('/accesses')
-      commit('setAccess', data.data)
+    getAccessCotrol: async function({ commit }) {
+      const data = await axios.get('/access-controlls')
+      commit('setAccessControl', data.data)
     }
   },
   getters: {}

@@ -91,7 +91,7 @@
         <h6 class="navbar-heading text-muted">ACCESO</h6>
          <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'acceso' }">
+              <router-link class="nav-link" :to="{ name: 'access_control' }">
                 <i class="fas fa-calendar-check"></i> Control de Ingreso
               </router-link>
             </li>
@@ -102,17 +102,17 @@
         <h6 class="navbar-heading text-muted">ADMINISTRACIÓN</h6>
         <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'usuarios' }">
+              <router-link class="nav-link" :to="{ name: 'user' }">
                 <i class="fas fa-users"></i> Usuarios
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'medidas' }">
+              <router-link class="nav-link" :to="{ name: 'tracing' }">
                   <i class="fas fa-chart-line"></i> Seguimiento
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'pagos' }">
+              <router-link class="nav-link" :to="{ name: 'payment' }">
                   <i class="fas fa-dollar-sign"></i> Pagos
               </router-link>
             </li>
@@ -172,12 +172,12 @@
         <!-- Navigation -->
         <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'generos' }">
+              <router-link class="nav-link" :to="{ name: 'gender' }">
                   <i class="fas fa-venus-mars"></i> Generos
               </router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'estados' }">
+              <router-link class="nav-link" :to="{ name: 'state' }">
                   <i class="fas fa-atom"></i> Estados
               </router-link>
             </li>
@@ -194,7 +194,7 @@
         <!-- Navigation -->
         <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'perfil' }">
+              <router-link class="nav-link" :to="{ name: 'profile' }">
                   <i class="fas fa-user-circle"></i> Perfil
               </router-link>
             </li>
