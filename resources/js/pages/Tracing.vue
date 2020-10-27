@@ -81,6 +81,19 @@
             </b-form-select>
           </b-form-group>
           </b-col>
+           <b-col cols="md-4">
+             <!-- Fecha -->
+            <b-form-group
+              id="date"
+              label="Fecha:"
+              label-for="date">
+              <b-form-input
+                id="date"
+                v-model="form.date"
+                autofocus
+              />
+            </b-form-group>
+          </b-col>
           <b-col cols="md-4">
              <!-- Espalda -->
             <b-form-group
@@ -129,19 +142,6 @@
               <b-form-input
                 id="leg"
                 v-model="form.leg"
-                autofocus
-              />
-            </b-form-group>
-          </b-col>
-          <b-col cols="4">
-            <!-- Adbdomen -->
-            <b-form-group
-              id="groupname"
-              label="Abdomen:"
-              label-for="abdomen">
-              <b-form-input
-                id="abdomen"
-                v-model="form.abdomen"
                 autofocus
               />
             </b-form-group>
@@ -267,7 +267,7 @@ export default {
         back: '',
         calf: '',
         leg: '',
-        abdomen: '',
+        date: '',
         arm: '',
         waist: '',
         weigth: '',
@@ -275,13 +275,33 @@ export default {
       },
       fields: [
         {
-          key: 'id',
-          label: '#',
+          key: 'back',
+          label: 'Espalda',
           sortable: true
         },
         {
-          key: 'user.name',
-          label: 'Usuario',
+          key: 'chest',
+          label: 'Pecho',
+          sortable: true
+        },
+        {
+          key: 'leg',
+          label: 'Pierna',
+          sortable: true
+        },
+        {
+          key: 'arm',
+          label: 'Brazo',
+          sortable: true
+        },
+        {
+          key: 'waist',
+          label: 'cintura',
+          sortable: true
+        },
+        {
+          key: 'weight',
+          label: 'Peso',
           sortable: true
         },
         {
@@ -339,7 +359,7 @@ export default {
       this.form.back = null
       this.form.calf = null
       this.form.leg = null
-      this.form.abdomen = null
+      this.form.date = null
       this.form.arm = null
       this.form.waist = null
       this.form.weigth = null
@@ -366,7 +386,7 @@ export default {
       this.form.back = item.back
       this.form.calf = item.calf
       this.form.leg = item.leg
-      this.form.abdomen = item.abdomen
+      this.form.date = item.date
       this.form.arm = item.arm
       this.form.waist = item.waist
       this.form.weigth = item.weigth
