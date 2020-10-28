@@ -12,6 +12,14 @@ import routes from './routes'
 import Vuex from 'vuex'
 //Import bootstrap-vue
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+//vue-select
+import vSelect from 'vue-select'
+import "vue-select/dist/vue-select.css";
+//vue-calendar
+/* import VCalendar from 'v-calendar';
+Vue.use(VCalendar); */
+
+Vue.component('v-select', vSelect)
 //definimos la baseurl para axios
 axios.defaults.baseUrl = process.env.APP_URL_AXIOS
 //Create components and import components

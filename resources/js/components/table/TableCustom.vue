@@ -176,9 +176,24 @@ export default {
         //console.log('cambio de pagina', this.currentPage)
       }, 100);
     },
-    /* linkGen(pageNum) {
-      return pageNum === 1 ? '?' : `?page=${pageNum}`
-    } */
+    modalEdit(item, index, button, view) {
+      if (view) {
+        this.tittleModal = 'Ver ' + item.name
+        this.viewOnlly = true
+      } else {
+        this.viewOnlly = false
+        this.tittleModal = 'Editar ' + item.name
+      }
+      this.$store.dispatch('api/clearErrors') //clean errors of back
+      this.form.id = item.id
+      this.form.name = item.name
+      this.form.state = item.state
+      this.form.initials = item.initials
+      this.event = 0
+      this.sending = false
+      this.updating = false
+      this.$refs['modal-genders'].show()
+    },
   },
   watch: {
     items() {
