@@ -43,9 +43,7 @@
           id="groupname"
           label="Fecha de Inicio:"
           label-for="from_date">
-        <template>
-          <date-pick v-model="form.from_date"></date-pick>
-        </template>
+          <b-form-datepicker id="from_date" v-model="form.from_date"></b-form-datepicker>
         </b-form-group>
           <!-- valor pagar -->
         <b-form-group
@@ -114,12 +112,7 @@
 </template>
 <script>
 import EventBus from '../../bus'
-import DatePick from 'vue-date-pick';
-import 'vue-date-pick/dist/vueDatePick.css';
 export default {
-  components: {
-    DatePick
-  },
   props: {
     viewOnlly: {
       type: Boolean,
@@ -182,7 +175,7 @@ export default {
         height: 46px !important;
       }
     }
-    .vdpComponent.vdpWithInput>input {
+    /* .vdpComponent.vdpWithInput>input {
       height: 46px;
       width: 100%;
       border-radius: 5px;
@@ -190,10 +183,10 @@ export default {
       font-size: 16px;
       padding-left: 10px;
       color: black;
-    }
-    .vdpComponent {
+    } */
+    /* .vdpComponent {
       width: 100%;
-    }
+    } */
   }
 
 </style>

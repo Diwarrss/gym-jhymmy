@@ -26,7 +26,6 @@
     "dependencies": {
         "bootstrap-vue": "^2.17.3",
         "vue-axios": "^3.0.1",
-        "vue-date-pick": "^1.4.1",
         "vue-router": "^3.4.5",
         "vue-select": "^3.10.8",
         "vuex": "^3.5.1"
