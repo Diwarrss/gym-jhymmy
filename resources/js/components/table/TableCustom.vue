@@ -3,6 +3,7 @@
     <b-row>
       <!-- sector de filtrar -->
       <b-col
+        v-if="showFilter"
         lg="4"
         class="my-1">
         <b-form-group
@@ -147,6 +148,14 @@ export default {
     },
     data: {
 
+    },
+    showFilter: {
+      type: Boolean,
+      default: () => true
+    },
+    perPagination: {
+      type: Boolean,
+      default: () => true
     }
   },
   data() {

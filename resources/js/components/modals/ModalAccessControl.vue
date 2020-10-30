@@ -61,10 +61,6 @@
         </b-form-group>
         <div
           class="text-center">
-          <button class="btn btn-primary" type="button" disabled>
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            Loading...
-          </button>
           <b-button
             v-if="event && !viewOnlly"
             :disabled="sending"
@@ -136,9 +132,6 @@ export default {
       },
       sending: false,
       updating: false,
-      event: '',
-      viewOnlly: false,
-      tittleModal : '',
       states: [
         { "id" : "1", "name" : "Activo"},
         { "id" : "2", "name" : "Inactivo"}

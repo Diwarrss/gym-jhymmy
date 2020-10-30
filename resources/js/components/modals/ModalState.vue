@@ -31,19 +31,6 @@
             v-model="form.name"
             autofocus
           />
-          <!-- <template v-if="$v.form.name.$error">
-            :class="{'is-invalid': $v.form.name.$error}"
-            <div
-              v-if="!$v.form.name.required"
-              class="invalid-feedback">
-              Digite el Número de nameo
-            </div>
-            <div
-              v-if="!$v.form.name.maxLength"
-              class="invalid-feedback">
-              Exede los 15 Caracteres
-            </div>
-          </template> -->
         </b-form-group>
         <b-form-group
           id="groupstate"
@@ -65,10 +52,6 @@
         </b-form-group>
         <div
           class="text-center">
-          <button class="btn btn-primary" type="button" disabled>
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            Loading...
-          </button>
           <b-button
             v-if="event && !viewOnlly"
             :disabled="sending"
@@ -139,10 +122,7 @@ export default {
         { "id": 2, "name": "Inactivo"}
       ],
       sending: false,
-      updating: false,
-      event: '',
-      viewOnlly: false,
-      tittleModal : ''
+      updating: false
     }
   },
   computed: {

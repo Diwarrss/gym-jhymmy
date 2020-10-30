@@ -22,17 +22,21 @@
       <b-form
         v-if="show">
         <!-- usuario -->
-       <b-form-group
-          id="groupname"
-          label="Nombre:"
-          label-for="name">
-          <b-form-input
-            id="name"
-            v-model="form.name"
-            autofocus
-          />
-        </b-form-group>
+        <b-row>
+          <b-col cols="md-6">
+            <b-form-group
+                id="groupname"
+                label="Nombre:"
+                label-for="name">
+                <b-form-input
+                  id="name"
+                  v-model="form.name"
+                  autofocus
+                />
+              </b-form-group>
+          </b-col>
         <!-- cedula -->
+        <b-col cols="md-6">
          <b-form-group
           id="groupname"
           label="Cedula:"
@@ -43,7 +47,9 @@
             autofocus
           />
         </b-form-group>
+        </b-col>
         <!-- Dirección -->
+        <b-col cols="md-6">
          <b-form-group
           id="groupname"
           label="Dirección:"
@@ -54,7 +60,9 @@
             autofocus
           />
         </b-form-group>
+        </b-col>
         <!-- Numero del celula -->
+        <b-col cols="md-6">
          <b-form-group
           id="groupname"
           label="Numero Telefonico:"
@@ -65,7 +73,9 @@
             autofocus
           />
         </b-form-group>
+        </b-col>
         <!-- fecha de nacimiento -->
+        <b-col cols="md-6">
         <b-form-group
           id="groupname"
           label="Fecha de Nacimiento:"
@@ -76,7 +86,9 @@
             autofocus
           />
         </b-form-group>
+        </b-col>
         <!-- correo electronico -->
+        <b-col cols="md-6">
         <b-form-group
           id="groupname"
           label="E-mail:"
@@ -87,7 +99,9 @@
             autofocus
           />
         </b-form-group>
+        </b-col>
         <!-- estado -->
+        <b-col cols="md-6">
         <b-form-group
           id="groupstate"
           label="Estado:"
@@ -106,12 +120,10 @@
             </b-form-select-option>
           </b-form-select>
         </b-form-group>
+        </b-col>
+        </b-row>
         <div
           class="text-center">
-          <button class="btn btn-primary" type="button" disabled>
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            Loading...
-          </button>
           <b-button
             v-if="event && !viewOnlly"
             :disabled="sending"
@@ -181,9 +193,6 @@ export default {
       },
       sending: false,
       updating: false,
-      event: '',
-      viewOnlly: false,
-      tittleModal : '',
       states: [
         { "id" : "1", "name" : "Activo"},
         { "id" : "2", "name" : "Inactivo"}

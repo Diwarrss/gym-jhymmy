@@ -5,15 +5,40 @@
         <h1>Componente Seguimiento</h1>
       </div>
       <div class="card-body">
-        <div>
-          <button class="btn btn-primary mb-3" @click="newTracing()">Nuevo</button>
-        </div>
+        <b-row>
+          <b-col>
+            <b-form>
+              <b-form-group
+                id="group1"
+                label-cols-md="3"
+                label="Usuario:"
+                label-for="user_id">
+                <v-select id="user_id"
+                  v-model="form.user_id"
+                  :options="users"
+                  placeholder="Seleccionar..."
+                  :reduce="users => users.id"
+                  label="name"
+                  name="user"
+                >
+                <div slot="no-options">No hay Resultados!</div>
+                </v-select>
+              </b-form-group>
+            </b-form>
+          </b-col>
+          <b-col>
+            <button class="btn btn-primary mb-3" @click="newTracing()">Nuevo</button>
+          </b-col>
+        </b-row>
         <div class="body_table pt-3">
           <TableCustom
             :fields="fields"
             :items="tracings"
             :rows="allRow"
-            :per-page="10"/>
+            :per-page="10"
+            :show-filter="false"
+            :per-pagination="false"
+            />
         </div>
       </div>
     </div>
