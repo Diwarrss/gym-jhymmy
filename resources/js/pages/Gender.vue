@@ -10,6 +10,7 @@
         </div>
         <div class="body_table pt-3">
           <TableCustom
+            type-page="gender"
             :fields="fields"
             :items="allGenders"
             :rows="allRow"
@@ -17,7 +18,7 @@
         </div>
       </div>
     </div>
-    <ModalGender :viewOnlly="false" :event="true" tittleModal="Nuevo Registro"/>
+    <ModalGender :viewOnlly="false" :event="true" tittleModal="Nuevo Registro" :modal="modal"/>
   </div>
 </template>
 <script>
@@ -33,6 +34,7 @@ export default {
     return {
       show: true,
       allRow: this.row,
+      modal: 'modal-gender',
       form: {
         id: '',
         name: '',
@@ -88,7 +90,7 @@ export default {
         me.hideModal()
       }, 1000); */
     },
-    hideModal() {
+    /* hideModal() {
       this.$refs['modal-genders'].hide()
       setTimeout(() => {
         //this.$v.$reset()
@@ -103,7 +105,7 @@ export default {
         }
         //this.$store.dispatch('api/clearErrors') //clean errors of back
       }, 500)
-    },
+    }, */
     newGender(view) {
       EventBus.$emit('show-modal-gender')
     },

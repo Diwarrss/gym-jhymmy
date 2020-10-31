@@ -57,10 +57,10 @@
                         ></b-form-input>
                       </b-form-group>
                       <!-- Dependencia -->
-                      <b-form-group
-                      id="groupname"
-                      label="Dependencia:"
-                      label-for="dependencia">
+                      <!-- <b-form-group
+                        id="groupname"
+                        label="Dependencia:"
+                        label-for="dependencia">
                         <b-form-select
                           id="groupname"
                           v-model="form.dependencia"
@@ -68,7 +68,7 @@
                           placeholder="Seleecione Uno"
                           required
                         ></b-form-select>
-                      </b-form-group>
+                      </b-form-group> -->
                       <div class="text-center">
                         <b-button type="submit" variant="dark" class="far fa-save"> Actualizar Datos</b-button>
                       </div>
@@ -110,7 +110,7 @@
                       >
                         <b-form-input
                           id="password"
-                          v-model="form.password"
+                          v-model="form.old_password"
                           type="password"
                           placeholder="Ingrese Contraseña Anterior"
                           required
@@ -125,7 +125,7 @@
                       >
                         <b-form-input
                           id="passNew"
-                          v-model="form.passNew"
+                          v-model="form.password_new"
                           type="password"
                           placeholder="Ingrese Contraseña Nueva"
                           required
@@ -136,11 +136,11 @@
                       <b-form-group
                       id="groupname"
                       label="Confirmar Contraseña:"
-                      label-for="rol"
+                      label-for="confirm_password"
                       >
                         <b-form-input
-                          id="rol"
-                          v-model="form.rol"
+                          id="confirm_password"
+                          v-model="form.confirm_password"
                           type="password"
                           placeholder="Confirme Contraseña"
                           required
@@ -166,10 +166,14 @@
         form: {
           email: '',
           name: '',
-          food: null,
-          checked: []
+          //food: null,
+          //checked: []
+          rol: null,
+          old_password: '',
+          password_new: '',
+          confirm_password: ''
         },
-        foods: [{ text: '', value: null }, 'Soltero', 'Casado', 'Muerto', 'No sabe'],
+        /* foods: [{ text: '', value: null }, 'Soltero', 'Casado', 'Muerto', 'No sabe'], */
         show: true
       }
     },

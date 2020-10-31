@@ -106,17 +106,21 @@
       aria-controls="table-dependence"
       @change="getData"
     />
-    <!-- <b-pagination-nav
-      :link-gen="linkGen"
-      :number-of-pages="data.last_page"
-      use-router
-      @change="getData">
-    </b-pagination-nav> -->
+    <ModalGenderTable :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" :modal="modal"/>
   </div>
 </template>
 <script>
+import ModalGenderTable from '../modals/ModalGender'
+import EventBus from '../../bus'
 export default {
+  components: {
+    ModalGenderTable
+  },
   props: {
+    typePage: {
+      type: String,
+      default: () => ''
+    },
     items: {
       type: Array,
       default: ()=> [
@@ -164,7 +168,11 @@ export default {
       filter: null,
       currentPage: 1,
       pageOptions: [10, 20, 30],
-      sortDesc: false
+      sortDesc: false,
+      viewOnlly: null,
+      tittleModal: null,
+      dataModal: {},
+      modal: 'modal-gender-table',
     }
   },
   methods: {
@@ -193,15 +201,13 @@ export default {
         this.viewOnlly = false
         this.tittleModal = 'Editar ' + item.name
       }
-      this.$store.dispatch('api/clearErrors') //clean errors of back
-      this.form.id = item.id
-      this.form.name = item.name
-      this.form.state = item.state
-      this.form.initials = item.initials
-      this.event = 0
-      this.sending = false
-      this.updating = false
-      this.$refs['modal-genders'].show()
+      //this.$refs['modal-genders'].show()
+      if (this.typePage == 'gender') {
+        this.dataModal = item
+        //console.log(this.dataModal)
+        EventBus.$emit('show-modal-gender-table')
+      }
+
     },
   },
   watch: {
@@ -209,6 +215,10 @@ export default {
       this.allData = this.items
     },
   },
-
+  created() {
+    EventBus.$on('clear-data-modal', () => {
+      this.dataModal = {}
+    })
+  },
 }
 </script>

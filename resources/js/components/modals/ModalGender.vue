@@ -3,10 +3,9 @@
     <!-- Info modal -->
     <b-modal
       ref="modal-genders"
-      id="modal-genders"
+      :id="modal"
       no-close-on-esc
       no-close-on-backdrop
-
       hide-footer>
       <template v-slot:modal-title>
         <i
@@ -109,13 +108,17 @@ export default {
       type: Boolean,
       default: ()=> false
     },
-    item: {
+    items: {
       type: Object,
       default: ()=> {}
     },
     tittleModal: {
       type: String,
       default: ()=> 'Titulo'
+    },
+    modal: {
+      type: String,
+      default: () => ''
     }
   },
   data() {
@@ -133,7 +136,8 @@ export default {
         { "id": 2, "name": "Inactivo"}
       ],
       sending: false,
-      updating: false
+      updating: false,
+      allData: this.items
     }
   },
   computed: {
@@ -145,14 +149,32 @@ export default {
     }
   },
   created() {
+    EventBus.$on('show-modal-gender-table', () => {
+      this.$bvModal.show('modal-gender-table')
+      console.log(this.items)
+    })
     EventBus.$on('show-modal-gender', () => {
-      this.$bvModal.show('modal-genders')
+      this.$bvModal.show('modal-gender')
     })
     this.$store.dispatch('getGenders')
   },
   methods: {
     hideModal() {
-      this.$bvModal.hide('modal-genders')
+      this.form.id = ''
+      this.form.name = ''
+      this.form.initials = ''
+      this.form.state = ''
+      this.$bvModal.hide(this.modal)
+      EventBus.$emit('clear-data-modal')
+    }
+  },
+  watch: {
+    items(){
+      //console.log('items')
+      this.form.id = this.items.id
+      this.form.initials = this.items.initials
+      this.form.name = this.items.name
+      this.form.state = this.items.state
     }
   },
 }
