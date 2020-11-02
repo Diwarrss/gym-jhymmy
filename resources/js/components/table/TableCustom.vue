@@ -108,16 +108,25 @@
     />
     <ModalGenderTable v-if="typePage=='gender'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-gender-table"/>
     <ModalUserTable v-if="typePage=='user'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-users-table"/>
+    <ModalTracingTable v-if="typePage=='tracing'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-tracing-table"/>
+    <ModalStateTable v-if="typePage=='state'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-state-table"/>
+    <ModalPaymentTable v-if="typePage=='payment'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-payment-table"/>
   </div>
 </template>
 <script>
 import ModalGenderTable from '../modals/ModalGender'
 import ModalUserTable from '../modals/ModalUser'
+import ModalTracingTable from '../modals/ModalTracing'
+import ModalStateTable from '../modals/ModalState'
+import ModalPaymentTable from '../modals/ModalPayment'
 import EventBus from '../../bus'
 export default {
   components: {
     ModalGenderTable,
-    ModalUserTable
+    ModalUserTable,
+    ModalTracingTable,
+    ModalStateTable,
+    ModalPaymentTable
   },
   props: {
     typePage: {
@@ -213,6 +222,18 @@ export default {
         this.dataModal = item
         //console.log(this.dataModal)
         EventBus.$emit('show-modal-user-table')
+      }else if (this.typePage == 'tracing'){
+        this.dataModal = item
+        //console.log(this.dataModal)
+        EventBus.$emit('show-modal-tracing-table')
+      }else if (this.typePage == 'state'){
+        this.dataModal = item
+        //console.log(this.dataModal)
+        EventBus.$emit('show-modal-state-table')
+      }else if (this.typePage == 'payment'){
+        this.dataModal = item
+        //console.log(this.dataModal)
+        EventBus.$emit('show-modal-payment-table')
       }
 
     },

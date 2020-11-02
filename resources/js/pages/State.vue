@@ -10,6 +10,7 @@
         </div>
         <div class="body_table pt-3">
           <TableCustom
+            type-page="state"
             :fields="fields"
             :items="allStates"
             :rows="allRow"
@@ -17,7 +18,7 @@
         </div>
       </div>
     </div>
-    <ModalState :viewOnlly="false" :event="true" tittleModal="Nuevo Registro"/>
+    <ModalState :viewOnlly="false" :event="true" tittleModal="Nuevo Registro" :modal="modal"/>
   </div>
 </template>
 <script>
@@ -33,6 +34,12 @@ export default {
     return {
       show: true,
       allRow: this.row,
+      modal: 'modal-state',
+      sending: false,
+      updating: false,
+      event: '',
+      viewOnlly: false,
+      tittleModal : '',
       form: {
         id: '',
         name: '',
@@ -56,11 +63,6 @@ export default {
           label: 'Acciones'
         }
       ],
-      sending: false,
-      updating: false,
-      event: '',
-      viewOnlly: false,
-      tittleModal : ''
     }
   },
   computed: {
@@ -75,21 +77,6 @@ export default {
     this.$store.dispatch('getStates')
   },
   methods: {
-    hideModal() {
-      this.$refs['modal-states'].hide()
-      setTimeout(() => {
-        //this.$v.$reset()
-        this.viewOnlly = false
-        this.updating = false
-        this.sending = false
-        this.form = {
-          id: null,
-          name: null,
-          state: null
-        }
-        //this.$store.dispatch('api/clearErrors') //clean errors of back
-      }, 500)
-    },
     newState(view) {
       EventBus.$emit('show-modal-state')
     },

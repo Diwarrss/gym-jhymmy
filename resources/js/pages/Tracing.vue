@@ -32,6 +32,7 @@
         </b-row>
         <div class="body_table pt-3">
           <TableCustom
+            type-page="tracing"
             :fields="fields"
             :items="tracings"
             :rows="allRow"
@@ -42,7 +43,7 @@
         </div>
       </div>
     </div>
-    <ModalTracing :viewOnlly="false" :event="true" tittleModal="Nuevo Registro"/>
+    <ModalTracing :viewOnlly="false" :event="true" tittleModal="Nuevo Registro" :modal="modal"/>
   </div>
 </template>
 <script>
@@ -69,6 +70,7 @@ export default {
       tittleModal : '',
       allRow: this.row,
       rows: 4,
+      modal: 'modal-tracing',
       form: {
         user: '',
         state:'',
@@ -147,20 +149,6 @@ export default {
     this.$store.dispatch('getTracing')
   },
   methods: {
-    hideModal() {
-      this.$refs['modal-medidas'].hide()
-      setTimeout(() => {
-        //this.$v.$reset()
-        this.viewOnlly = false
-        this.updating = false
-        this.sending = false
-        this.form = {
-          user: null,
-          back: null,
-        }
-        //this.$store.dispatch('api/clearErrors') //clean errors of back
-      }, 500)
-    },
     newTracing(view) {
       EventBus.$emit('show-modal-tracing')
     },
@@ -188,7 +176,7 @@ export default {
       this.event = 0
       this.sending = false
       this.updating = false
-      this.$refs['modal-medidas'].show()
+      this.$refs['modal-tracing'].show()
     },
   },
   watch: {

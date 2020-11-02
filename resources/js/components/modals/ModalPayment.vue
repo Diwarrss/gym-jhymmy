@@ -2,7 +2,7 @@
   <div>
     <b-modal
       ref="modal-payments"
-      id="modal-payments"
+      :id="modal"
       no-close-on-esc
       no-close-on-backdrop
       hide-footer>
@@ -34,6 +34,7 @@
             :reduce="users => users.id"
             label="name"
             name="user"
+            :disabled="viewOnlly"
           >
             <div slot="no-options">No hay Resultados!</div>
           </v-select>
@@ -53,7 +54,7 @@
           <b-form-input
             id="payment"
             v-model="form.payment"
-            autofocus
+            :disabled="viewOnlly"
           />
         </b-form-group>
         <!-- estado -->
@@ -66,6 +67,7 @@
           <b-form-select
             id="state"
             v-model="form.state"
+            :disabled="viewOnlly"
           >
             <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
               <b-form-select-option
@@ -122,14 +124,19 @@ export default {
       type: Boolean,
       default: ()=> false
     },
-    item: {
+    items: {
       type: Object,
       default: ()=> {}
     },
     tittleModal: {
       type: String,
       default: ()=> 'Titulo'
+    },
+    modal: {
+      type: String,
+      default: () => ''
     }
+
   },
   data() {
     return {
@@ -157,14 +164,36 @@ export default {
   },
   methods: {
     hideModal() {
-      this.$bvModal.hide('modal-payments')
+      this.form.id = ''
+      this.form.user_id = ''
+      this.form.to_date = ''
+      this.form.from_date = ''
+      this.form.state = ''
+      this.form.value = ''
+      this.$bvModal.hide(this.modal)
+      EventBus.$emit('clear-data-modal')
     }
   },
   created() {
-    EventBus.$on('show-modal-payment', () => {
-      this.$bvModal.show('modal-payments')
+    EventBus.$on('show-modal-payment-table', () => {
+      this.$bvModal.show('modal-payment-table')
+      console.log(this.items)
     })
-    this.$store.dispatch('getUsers')
+    EventBus.$on('show-modal-payment', () => {
+      this.$bvModal.show('modal-payment')
+    })
+    this.$store.dispatch('getPayment')
+},
+watch: {
+    items(){
+      //console.log('items')
+      this.form.id = this.items.id
+      this.form.user_id = this.items.user_id
+      this.form.to_date = this.items.to_date
+      this.form.from_date = this.items.from_date
+      this.form.state = this.items.state
+      this.form.value = this.items.value
+    }
   },
 }
 </script>

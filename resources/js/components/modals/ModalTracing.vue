@@ -2,8 +2,8 @@
   <div>
     <b-modal
       size="lg"
-      ref="modal-tracings"
-      id="modal-tracings"
+      ref="modal-tracing"
+      :id="modal"
       no-close-on-esc
       no-close-on-backdrop
       hide-footer>
@@ -37,6 +37,7 @@
                 :reduce="users => users.id"
                 label="name"
                 name="user"
+                :disabled="viewOnlly"
               >
                 <div slot="no-options">No hay Resultados!</div>
               </v-select>
@@ -52,6 +53,7 @@
             <b-form-select
               id="state"
               v-model="form.state"
+              :disabled="viewOnlly"
             >
               <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
                 <b-form-select-option
@@ -68,11 +70,11 @@
             <b-form-group
               id="date"
               label="Fecha:"
-              label-for="date">
+              label-for="created_at">
               <b-form-input
-                id="date"
-                v-model="form.date"
-                autofocus
+                id="created_at"
+                v-model="form.created_at"
+                :disabled="viewOnlly"
               />
             </b-form-group>
           </b-col>
@@ -85,7 +87,7 @@
               <b-form-input
                 id="back"
                 v-model="form.back"
-                autofocus
+                :disabled="viewOnlly"
               />
             </b-form-group>
           </b-col>
@@ -98,7 +100,7 @@
               <b-form-input
                 id="chest"
                 v-model="form.chest"
-                autofocus
+                :disabled="viewOnlly"
               />
             </b-form-group>
           </b-col>
@@ -111,7 +113,7 @@
               <b-form-input
                 id="calf"
                 v-model="form.calf"
-                autofocus
+                :disabled="viewOnlly"
               />
             </b-form-group>
           </b-col>
@@ -124,7 +126,7 @@
               <b-form-input
                 id="leg"
                 v-model="form.leg"
-                autofocus
+                :disabled="viewOnlly"
               />
             </b-form-group>
           </b-col>
@@ -137,7 +139,7 @@
               <b-form-input
                 id="arm"
                 v-model="form.arm"
-                autofocus
+                :disabled="viewOnlly"
               />
             </b-form-group>
           </b-col>
@@ -150,7 +152,7 @@
               <b-form-input
                 id="waist"
                 v-model="form.waist"
-                autofocus
+                :disabled="viewOnlly"
               />
             </b-form-group>
           </b-col>
@@ -159,11 +161,11 @@
             <b-form-group
               id="groupname"
               label="Peso:"
-              label-for="weigth">
+              label-for="weight">
               <b-form-input
-                id="weigth"
-                v-model="form.weigth"
-                autofocus
+                id="weight"
+                v-model="form.weight"
+                :disabled="viewOnlly"
               />
             </b-form-group>
           </b-col>
@@ -176,7 +178,7 @@
               <b-form-input
                 id="size"
                 v-model="form.size"
-                autofocus
+                :disabled="viewOnlly"
               />
             </b-form-group>
           </b-col>
@@ -230,13 +232,17 @@ export default {
       type: Boolean,
       default: ()=> false
     },
-    item: {
+    items: {
       type: Object,
       default: ()=> {}
     },
     tittleModal: {
       type: String,
       default: ()=> 'Titulo'
+    },
+    modal: {
+      type: String,
+      default: () => ''
     }
   },
   data() {
@@ -252,15 +258,17 @@ export default {
       allRow: this.row,
       rows: 4,
       form: {
+        id: '',
         user: '',
         state:'',
         back: '',
+        chest: '',
         calf: '',
         leg: '',
-        date: '',
+        created_at: '',
         arm: '',
         waist: '',
-        weigth: '',
+        weight: '',
         size: ''
       },
     }
@@ -272,14 +280,48 @@ export default {
   },
   methods: {
     hideModal() {
-      this.$bvModal.hide('modal-tracings')
+      this.form.id = ''
+      this.form.user = ''
+      this.form.state = ''
+      this.form.back = ''
+      this.form.chest = ''
+      this.form.calf = ''
+      this.form.leg = ''
+      this.form.created_at = ''
+      this.form.arm = ''
+      this.form.waist = ''
+      this.form.weight = ''
+      this.form.size = ''
+      this.$bvModal.hide(this.modal)
+      EventBus.$emit('clear-data-modal')
     }
   },
   created() {
-    EventBus.$on('show-modal-tracing', () => {
-      this.$bvModal.show('modal-tracings')
+    EventBus.$on('show-modal-tracing-table', () => {
+      this.$bvModal.show('modal-tracing-table')
+      console.log(this.items)
     })
-    this.$store.dispatch('getUsers')
+    EventBus.$on('show-modal-tracing', () => {
+      this.$bvModal.show('modal-tracing')
+    })
+    this.$store.dispatch('getTracing')
+  },
+  watch: {
+    items(){
+      //console.log('items')
+      this.form.id = this.items.id
+      this.form.user = this.items.user
+      this.form.state = this.items.state
+      this.form.back = this.items.back
+      this.form.chest = this.items.chest
+      this.form.calf =  this.items.calf
+      this.form.leg = this.items.leg
+      this.form.created_at = this.items.created_at
+      this.form.arm = this.items.arm
+      this.form.waist = this.items.waist
+      this.form.weight = this.items.weight
+      this.form.size = this.items.size
+    }
   },
 }
 </script>

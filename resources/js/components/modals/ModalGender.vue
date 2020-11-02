@@ -127,6 +127,9 @@ export default {
     return {
       show: true,
       allRow: this.row,
+      sending: false,
+      updating: false,
+      allData: this.items,
       form: {
         id: '',
         name: '',
@@ -137,9 +140,6 @@ export default {
         { "id": 1, "name": "Activo"},
         { "id": 2, "name": "Inactivo"}
       ],
-      sending: false,
-      updating: false,
-      allData: this.items
     }
   },
   computed: {

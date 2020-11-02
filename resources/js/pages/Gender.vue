@@ -6,7 +6,7 @@
       </div>
       <div class="card-body">
         <div>
-          <button class="btn btn-primary mb-3" @click="newGender()" data-toggle="modal" data-target="#exampleModal">Nuevo</button>
+          <button class="btn btn-primary mb-3" @click="newGender()" >Nuevo</button>
         </div>
         <div class="body_table pt-3">
           <TableCustom
@@ -35,6 +35,11 @@ export default {
       show: true,
       allRow: this.row,
       modal: 'modal-gender',
+      sending: false,
+      updating: false,
+      event: '',
+      viewOnlly: false,
+      tittleModal : '',
       form: {
         id: '',
         name: '',
@@ -62,12 +67,7 @@ export default {
           key: 'acciones',
           label: 'Acciones'
         }
-      ],
-      sending: false,
-      updating: false,
-      event: '',
-      viewOnlly: false,
-      tittleModal : ''
+      ]
     }
   },
   computed: {

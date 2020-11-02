@@ -10,6 +10,7 @@
         </div>
         <div class="body_table pt-3">
           <TableCustom
+          type-page="payment"
             :fields="fields"
             :items="payments"
             :rows="allRow"
@@ -17,7 +18,7 @@
         </div>
       </div>
     </div>
-    <ModalPayment :viewOnlly="false" :event="true" tittleModal="Nuevo Registro"/>
+    <ModalPayment :viewOnlly="false" :event="true" tittleModal="Nuevo Registro" :modal="modal"/>
   </div>
 </template>
 <script>
@@ -32,6 +33,10 @@ export default {
   data() {
     return {
       allRow: this.row,
+      modal: 'modal-payment',
+      event: null,
+      viewOnlly: false,
+      tittleModal : '',
       form: {
         id: '',
         name: '',
@@ -60,9 +65,6 @@ export default {
           sortable: false
         }
       ],
-      event: null,
-      viewOnlly: false,
-      tittleModal : ''
     }
   },
   computed: {
