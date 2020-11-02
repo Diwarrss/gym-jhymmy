@@ -13,11 +13,12 @@
             :fields="fields"
             :items="users"
             :rows="allRow"
-            :per-page="10"/>
+            :per-page="10"
+            type-page="user"/>
         </div>
       </div>
     </div>
-    <ModalUser :viewOnlly="false" :event="true" tittleModal="Nuevo Registro"/>
+    <ModalUser :viewOnlly="false" :event="true" tittleModal="Nuevo Registro" :modal="modal"/>
   </div>
 </template>
 <script>
@@ -34,6 +35,7 @@ export default {
       // Note `isActive` is left out and will not appear in the rendered table
       allRow: this.row,
       show: true,
+      modal: 'modal-user',
       form: {
         id: '',
         name: '',

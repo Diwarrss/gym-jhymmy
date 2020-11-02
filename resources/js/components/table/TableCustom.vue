@@ -107,14 +107,17 @@
       @change="getData"
     />
     <ModalGenderTable :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" :modal="modal"/>
+    <ModalUserTable :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" :modal="modal"/>
   </div>
 </template>
 <script>
 import ModalGenderTable from '../modals/ModalGender'
+import ModalUserTable from '../modals/ModalUser'
 import EventBus from '../../bus'
 export default {
   components: {
-    ModalGenderTable
+    ModalGenderTable,
+    ModalUserTable
   },
   props: {
     typePage: {
@@ -172,7 +175,7 @@ export default {
       viewOnlly: null,
       tittleModal: null,
       dataModal: {},
-      modal: 'modal-gender-table',
+      modal: '',
     }
   },
   methods: {
@@ -203,9 +206,15 @@ export default {
       }
       //this.$refs['modal-genders'].show()
       if (this.typePage == 'gender') {
+        this.modal = 'modal-gender-table'
         this.dataModal = item
         //console.log(this.dataModal)
         EventBus.$emit('show-modal-gender-table')
+      }else if (this.typePage == 'user'){
+        this.dataModal = item
+        this.modal = 'modal-user-table'
+        //console.log(this.dataModal)
+        EventBus.$emit('show-modal-user-table')
       }
 
     },

@@ -3,7 +3,7 @@
     <!-- Info modal -->
     <b-modal
       ref="modal-users"
-      id="modal-users"
+      :id="modal"
       no-close-on-esc
       no-close-on-backdrop
       hide-footer>
@@ -100,6 +100,19 @@
           />
         </b-form-group>
         </b-col>
+        <!-- Genero -->
+        <b-col cols="md-6">
+            <b-form-group
+                id="groupname"
+                label="Genero:"
+                label-for="gender">
+                <b-form-input
+                  id="gender"
+                  v-model="form.gender"
+                  autofocus
+                />
+              </b-form-group>
+          </b-col>
         <!-- estado -->
         <b-col cols="md-6">
         <b-form-group
@@ -178,6 +191,10 @@ export default {
     tittleModal: {
       type: String,
       default: ()=> 'Titulo'
+    },
+    modal: {
+      type: String,
+      default: () => ''
     }
   },
   data() {
@@ -202,16 +219,23 @@ export default {
   computed: {
     users(){
       return this.$store.state.user.users
+    },
+    row() {
+      return this.$store.state.config.allRow
     }
   },
   methods: {
     hideModal() {
-      this.$bvModal.hide('modal-users')
+      this.$bvModal.hide(this.modal)
+      EventBus.$emit('clear-data-modal')
     }
   },
   created() {
+    EventBus.$on('show-modal-user-table', () => {
+      this.$bvModal.show('modal-users-table')
+    })
     EventBus.$on('show-modal-user', () => {
-      this.$bvModal.show('modal-users')
+    this.$bvModal.show('modal-users')
     })
     this.$store.dispatch('getUsers')
   },
