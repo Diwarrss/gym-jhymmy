@@ -35,7 +35,7 @@ export default {
       // Note `isActive` is left out and will not appear in the rendered table
       allRow: this.row,
       show: true,
-      modal: 'modal-user',
+      modal: 'modal-users',
       form: {
         id: '',
         name: '',

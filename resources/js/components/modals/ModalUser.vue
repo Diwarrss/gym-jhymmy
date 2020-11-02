@@ -25,15 +25,16 @@
         <b-row>
           <b-col cols="md-6">
             <b-form-group
-                id="groupname"
-                label="Nombre:"
-                label-for="name">
-                <b-form-input
-                  id="name"
-                  v-model="form.name"
-                  autofocus
-                />
-              </b-form-group>
+              id="groupname"
+              label="Nombre:"
+              label-for="name">
+              <b-form-input
+                id="name"
+                :disabled="viewOnlly"
+                v-model="form.name"
+                autofocus
+              />
+            </b-form-group>
           </b-col>
         <!-- cedula -->
         <b-col cols="md-6">
@@ -43,8 +44,8 @@
           label-for="identification">
           <b-form-input
             id="identification"
+            :disabled="viewOnlly"
             v-model="form.identification"
-            autofocus
           />
         </b-form-group>
         </b-col>
@@ -56,8 +57,8 @@
           label-for="address">
           <b-form-input
             id="address"
+            :disabled="viewOnlly"
             v-model="form.address"
-            autofocus
           />
         </b-form-group>
         </b-col>
@@ -69,8 +70,8 @@
           label-for="phone">
           <b-form-input
             id="phone"
+            :disabled="viewOnlly"
             v-model="form.phone"
-            autofocus
           />
         </b-form-group>
         </b-col>
@@ -82,8 +83,8 @@
           label-for="birthdate">
           <b-form-input
             id="birthdate"
+            :disabled="viewOnlly"
             v-model="form.birthdate"
-            autofocus
           />
         </b-form-group>
         </b-col>
@@ -95,8 +96,8 @@
           label-for="email">
           <b-form-input
             id="email"
+            :disabled="viewOnlly"
             v-model="form.email"
-            autofocus
           />
         </b-form-group>
         </b-col>
@@ -108,8 +109,8 @@
                 label-for="gender">
                 <b-form-input
                   id="gender"
-                  v-model="form.gender"
-                  autofocus
+                  :disabled="viewOnlly"
+                  v-model="form.gender_id"
                 />
               </b-form-group>
           </b-col>
@@ -122,7 +123,8 @@
           >
           <b-form-select
             id="state"
-            v-model="form.state"
+            :disabled="viewOnlly"
+            v-model="form.state_id"
           >
             <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
               <b-form-select-option
@@ -184,7 +186,7 @@ export default {
       type: Boolean,
       default: ()=> false
     },
-    item: {
+    items: {
       type: Object,
       default: ()=> {}
     },
@@ -205,8 +207,13 @@ export default {
       form: {
         id: '',
         name: '',
-        from_date: '',
-        state: ''
+        identification: '',
+        address: '',
+        phone: '',
+        birthdate: '',
+        email: '',
+        gender_id: '',
+        state_id: ''
       },
       sending: false,
       updating: false,
@@ -238,6 +245,21 @@ export default {
     this.$bvModal.show('modal-users')
     })
     this.$store.dispatch('getUsers')
+  },
+  watch: {
+    items(){
+      //console.log('items')
+      this.form.id = this.items.id
+      this.form.name = this.items.name
+      this.form.identification = this.items.identification
+      this.form.address = this.items.address
+      this.form.phone = this.items.phone
+      this.form.birthdate = this.items.birthdate
+      this.form.email = this.items.email
+      this.form.gender_id = this.items.gender_id
+      this.form.state_id = this.items.state_id
+
+    }
   },
 }
 </script>

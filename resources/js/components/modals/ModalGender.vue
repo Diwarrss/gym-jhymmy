@@ -28,6 +28,7 @@
           <b-form-input
             id="name"
             v-model="form.name"
+            :disabled="viewOnlly"
             autofocus
           />
         </b-form-group>
@@ -38,7 +39,7 @@
           <b-form-input
             id="initials"
             v-model="form.initials"
-            autofocus
+            :disabled="viewOnlly"
           />
         </b-form-group>
         <b-form-group
@@ -49,6 +50,7 @@
           <b-form-select
             id="state"
             v-model="form.state"
+            :disabled="viewOnlly"
           >
             <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
               <b-form-select-option
