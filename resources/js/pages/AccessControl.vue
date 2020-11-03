@@ -10,6 +10,7 @@
         </div>
         <div class="body_table pt-3">
           <TableCustom
+            type-page="access"
             :fields="fields"
             :items="AccessCotrol"
             :rows="allRow"
@@ -17,7 +18,7 @@
         </div>
       </div>
     </div>
-    <ModalAccessControl :viewOnlly="false" :event="true" tittleModal="Nuevo Registro"/>
+    <ModalAccessControl :viewOnlly="false" :event="true" tittleModal="Nuevo Registro" :modal="modal"/>
   </div>
 </template>
 <script>
@@ -34,6 +35,7 @@ export default {
       // Note `isActive` is left out and will not appear in the rendered table
       allRow: this.row,
       show: true,
+      modal: 'modal-access',
       form: {
         id: '',
         name: '',
@@ -86,7 +88,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('getAccessCotrol')
+    this.$store.dispatch('getAccessControl')
   },
   methods: {
     sendData(){
@@ -114,7 +116,7 @@ export default {
       }, 500)
     },
     newAccess(view) {
-      EventBus.$emit('show-modal-accessControl')
+      EventBus.$emit('show-modal-access')
     },
     modalEdit(item, index, button, view) {
       if (view) {

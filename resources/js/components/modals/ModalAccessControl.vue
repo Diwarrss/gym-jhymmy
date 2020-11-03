@@ -3,7 +3,7 @@
     <!-- Info modal -->
     <b-modal
       ref="modal-access"
-      id="modal-access"
+      :id="modal"
       no-close-on-esc
       no-close-on-backdrop
       hide-footer>
@@ -29,6 +29,7 @@
           >
           <b-form-select
             id="user"
+            :disabled="viewOnlly"
             v-model="form.user"
           >
             <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
@@ -115,6 +116,10 @@ export default {
     tittleModal: {
       type: String,
       default: ()=> 'Titulo'
+    },
+    modal: {
+      type: String,
+      default: () => ''
     }
   },
   data() {
@@ -145,19 +150,33 @@ export default {
   },
   methods: {
     hideModal() {
-      this.$bvModal.hide('modal-access')
+      this.form.id = ''
+      this.form.name = ''
+      this.form.date = ''
+      this.form.temperature = ''
+      this.form.state = ''
+      this.$bvModal.hide(this.modal)
+      EventBus.$emit('clear-data-modal')
     },
   },
    watch: {
     row() {
-      this.allRow = this.row
+      this.form.id = this.items.id
+      this.form.name = this.items.name
+      this.form.date = this.items.date
+      this.form.temperature = this.items.temperature
+      this.form.state = this.items.state
     }
   },
   created() {
-    EventBus.$on('show-modal-accessControl', () => {
+    EventBus.$on('show-modal-access-table', () => {
+      this.$bvModal.show('modal-access-table')
+      console.log(this.items)
+    })
+    EventBus.$on('show-modal-access', () => {
       this.$bvModal.show('modal-access')
     })
-    this.$store.dispatch('getAccessCotrol')
+    this.$store.dispatch('getAccessControl')
   },
 }
 </script>

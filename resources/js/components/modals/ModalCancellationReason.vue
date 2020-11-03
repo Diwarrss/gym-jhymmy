@@ -3,7 +3,7 @@
     <!-- Info modal -->
     <b-modal
       ref="modal-cancellationReason"
-      id="modal-cancellationReason"
+      :id="modal"
       no-close-on-esc
       no-close-on-backdrop
 
@@ -29,6 +29,7 @@
           <b-form-input
             id="name"
             v-model="form.name"
+            :disabled="viewOnlly"
             autofocus
           />
         </b-form-group>
@@ -39,6 +40,7 @@
           >
           <b-form-select
             id="state"
+            :disabled="viewOnlly"
             v-model="form.state"
           >
             <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
@@ -106,12 +108,18 @@ export default {
     tittleModal: {
       type: String,
       default: ()=> 'Titulo'
+    },
+    modal: {
+      type: String,
+      default: () => ''
     }
   },
   data() {
     return {
       show: true,
       allRow: this.row,
+      sending: false,
+      updating: false,
       form: {
         id: '',
         name: '',
@@ -121,8 +129,7 @@ export default {
         { "id": 1, "name": "Activo"},
         { "id": 2, "name": "Inactivo"}
       ],
-      sending: false,
-      updating: false
+
     }
   },
   computed: {
@@ -132,10 +139,26 @@ export default {
   },
   methods: {
     hideModal() {
-      this.$bvModal.hide('modal-cancellationReason')
+      this.form.id = ''
+      this.form.name = ''
+      this.form.state = ''
+      this.$bvModal.hide(this.modal)
+      EventBus.$emit('clear-data-modal')
+    }
+  },
+  watch: {
+    items(){
+      //console.log('items')
+      this.form.id = this.items.id
+      this.form.name = this.items.name
+      this.form.state = this.items.state
     }
   },
   created() {
+    EventBus.$on('show-modal-cancellationReason-table', () => {
+      this.$bvModal.show('modal-cancellationReason-table')
+      console.log(this.items)
+    })
     EventBus.$on('show-modal-cancellationReason', () => {
       this.$bvModal.show('modal-cancellationReason')
     })

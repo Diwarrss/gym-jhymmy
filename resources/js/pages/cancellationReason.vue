@@ -10,6 +10,7 @@
         </div>
         <div class="body_table pt-3">
           <TableCustom
+          type-page="cancellationReason"
             :fields="fields"
             :items="allCancellationReason"
             :rows="allRow"
@@ -17,7 +18,7 @@
         </div>
       </div>
     </div>
-    <ModalCancellationReason :viewOnlly="false" :event="true" tittleModal="Nuevo Registro"/>
+    <ModalCancellationReason :viewOnlly="false" :event="true" tittleModal="Nuevo Registro" :modal="modal"/>
   </div>
 </template>
 <script>
@@ -33,10 +34,16 @@ export default {
     return {
       show: true,
       allRow: this.row,
+      modal: 'modal-cancellationReason',
       form: {
         id: '',
         name: '',
-        state: ''
+        state: '',
+        sending: false,
+        updating: false,
+        event: '',
+        viewOnlly: false,
+        tittleModal : ''
       },
       states: [
         { "id": 1, "name": "Activo"},
@@ -56,11 +63,6 @@ export default {
           label: 'Acciones'
         }
       ],
-      sending: false,
-      updating: false,
-      event: '',
-      viewOnlly: false,
-      tittleModal : ''
     }
   },
   computed: {
@@ -82,21 +84,6 @@ export default {
       /* setTimeout(() => {
         me.hideModal()
       }, 1000); */
-    },
-    hideModal() {
-      this.$refs['modal-cancellationReason'].hide()
-      setTimeout(() => {
-        //this.$v.$reset()
-        this.viewOnlly = false
-        this.updating = false
-        this.sending = false
-        this.form = {
-          id: null,
-          name: null,
-          state: null
-        }
-        //this.$store.dispatch('api/clearErrors') //clean errors of back
-      }, 500)
     },
     newCancellationReason(view) {
       EventBus.$emit('show-modal-cancellationReason')

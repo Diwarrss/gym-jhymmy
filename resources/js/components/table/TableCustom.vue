@@ -111,6 +111,8 @@
     <ModalTracingTable v-if="typePage=='tracing'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-tracing-table"/>
     <ModalStateTable v-if="typePage=='state'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-state-table"/>
     <ModalPaymentTable v-if="typePage=='payment'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-payment-table"/>
+    <ModalCancellationReasonTable v-if="typePage=='cancellationReason'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-cancellationReason-table"/>
+    <ModalAccessControlTable v-if="typePage=='access'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-access-table"/>
   </div>
 </template>
 <script>
@@ -119,6 +121,8 @@ import ModalUserTable from '../modals/ModalUser'
 import ModalTracingTable from '../modals/ModalTracing'
 import ModalStateTable from '../modals/ModalState'
 import ModalPaymentTable from '../modals/ModalPayment'
+import ModalCancellationReasonTable from '../modals/ModalCancellationReason'
+import ModalAccessControlTable from '../modals/ModalAccessControl'
 import EventBus from '../../bus'
 export default {
   components: {
@@ -126,7 +130,9 @@ export default {
     ModalUserTable,
     ModalTracingTable,
     ModalStateTable,
-    ModalPaymentTable
+    ModalPaymentTable,
+    ModalCancellationReasonTable,
+    ModalAccessControlTable
   },
   props: {
     typePage: {
@@ -234,6 +240,14 @@ export default {
         this.dataModal = item
         //console.log(this.dataModal)
         EventBus.$emit('show-modal-payment-table')
+      }else if (this.typePage == 'cancellationReason'){
+        this.dataModal = item
+        //console.log(this.dataModal)
+        EventBus.$emit('show-modal-cancellationReason-table')
+      }else if (this.typePage == 'access'){
+        this.dataModal = item
+        //console.log(this.dataModal)
+        EventBus.$emit('show-modal-access-table')
       }
 
     },
