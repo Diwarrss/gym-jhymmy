@@ -24,30 +24,29 @@
         v-if="show">
         <!-- usuario -->
         <b-form-group
-          id="groupuser"
-          label="Usuario:"
-          label-for="user"
-          >
-          <b-form-select
-            id="user"
-            :disabled="viewOnlly"
-            v-model="form.user"
-            :class="{ 'is-invalid': $v.form.user.$error }"
-          >
-            <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
-              <b-form-select-option
-                v-for="(item, index) in users"
-                :key="index"
-                :value="item.id"
-              >{{ item.name }}
-            </b-form-select-option>
-          </b-form-select>
-          <template v-if="$v.form.user.$error">
-            <div class="invalid-feedback" v-if="!$v.form.user.required">
-              Seleccione Usuario
-            </div>
-          </template>
-        </b-form-group>
+              id="groupusers"
+              label="Usuario:"
+              label-for="user_id"
+              >
+              <v-select
+                id="user_id"
+                v-model="form.user_id"
+                :class="{ 'is-invalid': $v.form.user_id.$error }"
+                :options="users"
+                placeholder="Seleccionar..."
+                :reduce="users => users.id"
+                label="name"
+                name="user"
+                :disabled="viewOnlly"
+              >
+                <div slot="no-options">No hay Resultados!</div>
+              </v-select>
+              <template v-if="$v.form.user_id.$error">
+                <div class="invalid-feedback" v-if="!$v.form.user_id.required">
+                  Seleccione Usuario
+                </div>
+              </template>
+            </b-form-group>
         <!-- temperatura -->
         <b-form-group
           id="groupname"
@@ -78,12 +77,8 @@
             :class="{ 'is-invalid': $v.form.state.$error }"
           >
             <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
-              <b-form-select-option
-                v-for="(item, index) in users"
-                :key="index"
-                :value="item.id"
-              >{{ item.name }}
-            </b-form-select-option>
+            <b-form-select-option :value="1">Activo</b-form-select-option>
+            <b-form-select-option :value="0">Inactivo</b-form-select-option>
           </b-form-select>
           <template v-if="$v.form.state.$error">
             <div class="invalid-feedback" v-if="!$v.form.state.required">
@@ -161,24 +156,20 @@ export default {
       show: true,
       form: {
         id: '',
-        user: '',
+        user_id: null,
         date: '',
         temperature:'',
-        state: ''
+        state: null
       },
       sending: false,
-      updating: false,
-      users: [
-        { "id" : "1", "name" : "Activo"},
-        { "id" : "2", "name" : "Inactivo"}
-      ],
+      updating: false
     }
   },
   validations() {
     let form = {
       form: {
 
-        user: {
+        user_id: {
           required
         },
         temperature: {
@@ -194,15 +185,18 @@ export default {
   computed: {
     AccessCotrol(){
       return this.$store.state.administration.access_control
+    },
+    users() {
+      return this.$store.state.user.users
     }
   },
   methods: {
     hideModal() {
       this.form.id = ''
-      this.form.name = ''
+      this.form.user_id = null
       this.form.date = ''
       this.form.temperature = ''
-      this.form.state = ''
+      this.form.state = null
       this.$bvModal.hide(this.modal)
       this.$v.$reset()
       EventBus.$emit('clear-data-modal')
@@ -210,8 +204,6 @@ export default {
     sendData(evt) {
       evt.preventDefault()
       let me = this
-      me.form.name = me.form.name ? me.form.name.toUpperCase() : ''
-      me.form.initials = me.form.initials ? me.form.initials.toUpperCase() : ''
       this.$v.$touch()
       if (this.$v.$invalid) {
         return
@@ -280,6 +272,7 @@ export default {
       this.$bvModal.show('modal-access')
     })
     this.$store.dispatch('getAccessControl')
+    this.$store.dispatch('getUsers')
   },
 }
 </script>

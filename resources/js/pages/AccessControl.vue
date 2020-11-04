@@ -8,6 +8,7 @@
         <div>
           <button class="btn btn-primary mb-3" @click="newAccess()">Nuevo Ingreso</button>
         </div>
+
         <div class="body_table pt-3">
           <TableCustom
             type-page="access"
@@ -76,7 +77,7 @@ export default {
       event: '',
       viewOnlly: false,
       tittleModal : '',
-      states: [
+      users: [
         { "id" : "1", "name" : "Activo"},
         { "id" : "2", "name" : "Inactivo"}
       ],
@@ -85,7 +86,10 @@ export default {
   computed: {
     AccessCotrol(){
       return this.$store.state.administration.access_control
-    }
+    },
+    users(){
+      return this.$store.state.user.users
+    },
   },
   created() {
     this.$store.dispatch('getAccessControl')
@@ -110,6 +114,7 @@ export default {
           id: null,
           name: null,
           date: null,
+          temperature: null,
           state: null
         }
         //this.$store.dispatch('api/clearErrors') //clean errors of back
