@@ -168,7 +168,61 @@ export default {
       this.form.state = ''
       this.$bvModal.hide(this.modal)
       EventBus.$emit('clear-data-modal')
-    }
+    },
+    sendData(evt) {
+      evt.preventDefault()
+      let me = this
+      me.form.name = me.form.name ? me.form.name.toUpperCase() : ''
+      me.form.initials = me.form.initials ? me.form.initials.toUpperCase() : ''
+      this.$v.$touch()
+      if (this.$v.$invalid) {
+        return
+      } else {
+        //Crear
+        me.sending = true
+        if (me.event) {
+          let params = {
+            url: 'genders',
+            data: me.form,
+            files: false
+          }
+          me.$store.dispatch('api/create', params)
+          setTimeout(() => {
+            if (Object.keys(me.errors).length >= 1) {
+              //validation back
+              me.sending = false
+              return
+            } else {
+              me.sending = false
+              me.$store.dispatch('config/getGender')
+              me.hideModal()
+            }
+          }, 2000)
+        } else {
+          me.updating = true
+          //actualizar
+          let params = {
+            url: `genders/${me.form.id}`,
+            data: me.form,
+            action: 'config/getGender'
+          }
+          me.$store.dispatch('api/update', params)
+          setTimeout(() => {
+            if (Object.keys(me.errors).length !== 0) {
+              //validation back
+              me.updating = false
+              //console.log('Paso el front')
+              return
+            } else {
+              //console.log('errors vacio')
+              me.updating = false
+              //me.$store.dispatch('config/getGender')
+              me.hideModal()
+            }
+          }, 2000)
+        }
+      }
+    },
   },
   watch: {
     items(){
