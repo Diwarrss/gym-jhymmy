@@ -29,6 +29,7 @@ class GenderController extends Controller
      */
     public function store(Request $request)
     {
+      return Auth::user()->id;
       try {
         DB::beginTransaction();
 

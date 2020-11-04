@@ -18,6 +18,9 @@ import "vue-select/dist/vue-select.css";
 //vue-calendar
 /* import VCalendar from 'v-calendar';
 Vue.use(VCalendar); */
+//vuelidate
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
 
 Vue.component('v-select', vSelect)
 //definimos la baseurl para axios

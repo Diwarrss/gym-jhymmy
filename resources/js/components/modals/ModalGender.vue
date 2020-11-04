@@ -20,6 +20,7 @@
         {{ tittleModal }}
       </template>
       <b-form
+        @submit="sendData"
         v-if="show">
         <b-form-group
           id="groupname"
@@ -28,9 +29,18 @@
           <b-form-input
             id="name"
             v-model="form.name"
+            :class="{ 'is-invalid': $v.form.name.$error }"
             :disabled="viewOnlly"
             autofocus
           />
+          <template v-if="$v.form.name.$error">
+            <div class="invalid-feedback" v-if="!$v.form.name.required">
+              Digite el Nombre
+            </div>
+            <div class="invalid-feedback" v-if="!$v.form.name.maxLength">
+              Exede los 200 Caracteres
+            </div>
+          </template>
         </b-form-group>
         <b-form-group
           id="groupname"
@@ -39,8 +49,17 @@
           <b-form-input
             id="initials"
             v-model="form.initials"
+            :class="{ 'is-invalid': $v.form.initials.$error }"
             :disabled="viewOnlly"
           />
+          <template v-if="$v.form.initials.$error">
+            <div class="invalid-feedback" v-if="!$v.form.initials.required">
+              Digite las Iniciales
+            </div>
+            <div class="invalid-feedback" v-if="!$v.form.initials.maxLength">
+              Exede los 5 Caracteres
+            </div>
+          </template>
         </b-form-group>
         <b-form-group
           id="groupstate"
@@ -50,6 +69,7 @@
           <b-form-select
             id="state"
             v-model="form.state"
+            :class="{ 'is-invalid': $v.form.state.$error }"
             :disabled="viewOnlly"
           >
             <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
@@ -60,13 +80,18 @@
               >{{ item.name }}
             </b-form-select-option>
           </b-form-select>
+          <template v-if="$v.form.state.$error">
+            <div class="invalid-feedback" v-if="!$v.form.state.required">
+              Seleccione el Estado
+            </div>
+          </template>
         </b-form-group>
         <div
           class="text-center">
           <b-button
             v-if="event && !viewOnlly"
             :disabled="sending"
-            @click="sendData()"
+            type="submit"
             variant="success">
             <span v-if="sending">
               <b-spinner small type="grow"></b-spinner>
@@ -79,7 +104,7 @@
           <b-button
             v-else-if="!event && !viewOnlly"
             :disabled="updating"
-            @click="sendData()"
+            type="submit"
             variant="success">
             <span v-if="updating">
               <b-spinner
@@ -99,6 +124,7 @@
   </div>
 </template>
 <script>
+import { required, minLength, maxLength, between, integer, email } from 'vuelidate/lib/validators'
 import EventBus from '../../bus'
 export default {
   props: {
@@ -133,7 +159,7 @@ export default {
       form: {
         id: '',
         name: '',
-        initial: '',
+        initials: '',
         state: ''
       },
       states: [
@@ -141,6 +167,24 @@ export default {
         { "id": 2, "name": "Inactivo"}
       ],
     }
+  },
+  validations() {
+    let form = {
+      form: {
+        name: {
+          required,
+          maxLength: maxLength(200)
+        },
+        initials: {
+          required,
+          maxLength: maxLength(5)
+        },
+        state: {
+          required
+        }
+      }
+    }
+    return form
   },
   computed: {
     allGenders(){
@@ -162,11 +206,12 @@ export default {
   },
   methods: {
     hideModal() {
+      this.$bvModal.hide(this.modal)
       this.form.id = ''
       this.form.name = ''
       this.form.initials = ''
       this.form.state = ''
-      this.$bvModal.hide(this.modal)
+      this.$v.$reset()
       EventBus.$emit('clear-data-modal')
     },
     sendData(evt) {
