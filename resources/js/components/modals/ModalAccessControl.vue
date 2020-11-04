@@ -20,10 +20,11 @@
         {{ tittleModal }}
       </template>
       <b-form
+        @submit="sendData"
         v-if="show">
         <!-- usuario -->
         <b-form-group
-          id="groupstate"
+          id="groupuser"
           label="Usuario:"
           label-for="user"
           >
@@ -31,15 +32,39 @@
             id="user"
             :disabled="viewOnlly"
             v-model="form.user"
+            :class="{ 'is-invalid': $v.form.user.$error }"
           >
             <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
               <b-form-select-option
-                v-for="(item, index) in states"
+                v-for="(item, index) in users"
                 :key="index"
                 :value="item.id"
               >{{ item.name }}
             </b-form-select-option>
           </b-form-select>
+          <template v-if="$v.form.user.$error">
+            <div class="invalid-feedback" v-if="!$v.form.user.required">
+              Seleccione Usuario
+            </div>
+          </template>
+        </b-form-group>
+        <!-- temperatura -->
+        <b-form-group
+          id="groupname"
+          label="Temperatura:"
+          label-for="temperature">
+          <b-form-input
+            id="temperature"
+            v-model="form.temperature"
+            :class="{ 'is-invalid': $v.form.temperature.$error }"
+            :disabled="viewOnlly"
+            autofocus
+          />
+          <template v-if="$v.form.temperature.$error">
+            <div class="invalid-feedback" v-if="!$v.form.temperature.required">
+              Digite la Temperatura
+            </div>
+          </template>
         </b-form-group>
         <!-- estado -->
         <b-form-group
@@ -50,22 +75,28 @@
           <b-form-select
             id="state"
             v-model="form.state"
+            :class="{ 'is-invalid': $v.form.state.$error }"
           >
             <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
               <b-form-select-option
-                v-for="(item, index) in states"
+                v-for="(item, index) in users"
                 :key="index"
                 :value="item.id"
               >{{ item.name }}
             </b-form-select-option>
           </b-form-select>
+          <template v-if="$v.form.state.$error">
+            <div class="invalid-feedback" v-if="!$v.form.state.required">
+              Seleccione el Estado
+            </div>
+          </template>
         </b-form-group>
         <div
           class="text-center">
           <b-button
             v-if="event && !viewOnlly"
             :disabled="sending"
-            @click="sendData()"
+            type="submit"
             variant="success">
             <span v-if="sending">
               <b-spinner small type="grow"></b-spinner>
@@ -78,7 +109,7 @@
           <b-button
             v-else-if="!event && !viewOnlly"
             :disabled="updating"
-            @click="sendData()"
+            type="submit"
             variant="success">
             <span v-if="updating">
               <b-spinner
@@ -98,6 +129,7 @@
   </div>
 </template>
 <script>
+import { required, minLength, maxLength, between, integer, email } from 'vuelidate/lib/validators'
 import EventBus from '../../bus'
 export default {
   props: {
@@ -129,7 +161,6 @@ export default {
       show: true,
       form: {
         id: '',
-        name: '',
         user: '',
         date: '',
         temperature:'',
@@ -137,11 +168,28 @@ export default {
       },
       sending: false,
       updating: false,
-      states: [
+      users: [
         { "id" : "1", "name" : "Activo"},
         { "id" : "2", "name" : "Inactivo"}
       ],
     }
+  },
+  validations() {
+    let form = {
+      form: {
+
+        user: {
+          required
+        },
+        temperature: {
+          required
+        },
+        state: {
+          required
+        }
+      }
+    }
+    return form
   },
   computed: {
     AccessCotrol(){
@@ -156,7 +204,62 @@ export default {
       this.form.temperature = ''
       this.form.state = ''
       this.$bvModal.hide(this.modal)
+      this.$v.$reset()
       EventBus.$emit('clear-data-modal')
+    },
+    sendData(evt) {
+      evt.preventDefault()
+      let me = this
+      me.form.name = me.form.name ? me.form.name.toUpperCase() : ''
+      me.form.initials = me.form.initials ? me.form.initials.toUpperCase() : ''
+      this.$v.$touch()
+      if (this.$v.$invalid) {
+        return
+      } else {
+        //Crear
+        me.sending = true
+        if (me.event) {
+          let params = {
+            url: 'access_control',
+            data: me.form,
+            files: false
+          }
+          me.$store.dispatch('api/create', params)
+          setTimeout(() => {
+            if (Object.keys(me.errors).length >= 1) {
+              //validation back
+              me.sending = false
+              return
+            } else {
+              me.sending = false
+              me.$store.dispatch('config/getAccessControl')
+              me.hideModal()
+            }
+          }, 2000)
+        } else {
+          me.updating = true
+          //actualizar
+          let params = {
+            url: `access_control/${me.form.id}`,
+            data: me.form,
+            action: 'config/getAccessControl'
+          }
+          me.$store.dispatch('api/update', params)
+          setTimeout(() => {
+            if (Object.keys(me.errors).length !== 0) {
+              //validation back
+              me.updating = false
+              //console.log('Paso el front')
+              return
+            } else {
+              //console.log('errors vacio')
+              me.updating = false
+              //me.$store.dispatch('config/getGender')
+              me.hideModal()
+            }
+          }, 2000)
+        }
+      }
     },
   },
    watch: {

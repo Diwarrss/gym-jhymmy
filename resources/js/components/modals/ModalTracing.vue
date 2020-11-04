@@ -20,18 +20,20 @@
         {{ tittleModal }}
       </template>
       <b-form
+        @submit="sendData"
         v-if="show">
         <!-- usuario -->
         <b-row >
           <b-col cols="md-6">
             <b-form-group
-              id="groupstate"
+              id="groupusers"
               label="Usuario:"
-              label-for="user"
+              label-for="user_id"
               >
               <v-select
-                id="user"
+                id="user_id"
                 v-model="form.user_id"
+                :class="{ 'is-invalid': $v.form.user_id.$error }"
                 :options="users"
                 placeholder="Seleccionar..."
                 :reduce="users => users.id"
@@ -41,6 +43,11 @@
               >
                 <div slot="no-options">No hay Resultados!</div>
               </v-select>
+              <template v-if="$v.form.user_id.$error">
+                <div class="invalid-feedback" v-if="!$v.form.user_id.required">
+                  Seleccione Usuario
+                </div>
+              </template>
             </b-form-group>
           </b-col>
           <!-- estado -->
@@ -53,6 +60,7 @@
             <b-form-select
               id="state"
               v-model="form.state"
+              :class="{ 'is-invalid': $v.form.state.$error }"
               :disabled="viewOnlly"
             >
               <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
@@ -63,6 +71,11 @@
                 >{{ item.name }}
               </b-form-select-option>
             </b-form-select>
+             <template v-if="$v.form.state.$error">
+              <div class="invalid-feedback" v-if="!$v.form.state.required">
+                Seleccione el Estado
+              </div>
+            </template>
           </b-form-group>
           </b-col>
            <b-col cols="md-4">
@@ -74,8 +87,14 @@
               <b-form-input
                 id="created_at"
                 v-model="form.created_at"
+                :class="{ 'is-invalid': $v.form.created_at.$error }"
                 :disabled="viewOnlly"
               />
+              <template v-if="$v.form.created_at.$error">
+                <div class="invalid-feedback" v-if="!$v.form.created_at.required">
+                  Seleccione fecha
+                </div>
+              </template>
             </b-form-group>
           </b-col>
           <b-col cols="md-4">
@@ -87,8 +106,14 @@
               <b-form-input
                 id="back"
                 v-model="form.back"
+                :class="{ 'is-invalid': $v.form.back.$error }"
                 :disabled="viewOnlly"
               />
+              <template v-if="$v.form.back.$error">
+                <div class="invalid-feedback" v-if="!$v.form.back.required">
+                  Digite la Medida
+                </div>
+              </template>
             </b-form-group>
           </b-col>
           <b-col cols="4">
@@ -100,8 +125,14 @@
               <b-form-input
                 id="chest"
                 v-model="form.chest"
+                :class="{ 'is-invalid': $v.form.chest.$error }"
                 :disabled="viewOnlly"
               />
+              <template v-if="$v.form.chest.$error">
+                <div class="invalid-feedback" v-if="!$v.form.chest.required">
+                  Digite la Medida
+                </div>
+              </template>
             </b-form-group>
           </b-col>
           <b-col cols="4">
@@ -113,8 +144,14 @@
               <b-form-input
                 id="calf"
                 v-model="form.calf"
+                :class="{ 'is-invalid': $v.form.calf.$error }"
                 :disabled="viewOnlly"
               />
+              <template v-if="$v.form.calf.$error">
+                <div class="invalid-feedback" v-if="!$v.form.calf.required">
+                  Digite la Medida
+                </div>
+              </template>
             </b-form-group>
           </b-col>
           <b-col cols="4">
@@ -126,8 +163,14 @@
               <b-form-input
                 id="leg"
                 v-model="form.leg"
+                :class="{ 'is-invalid': $v.form.leg.$error }"
                 :disabled="viewOnlly"
               />
+              <template v-if="$v.form.leg.$error">
+                <div class="invalid-feedback" v-if="!$v.form.leg.required">
+                  Digite la Medida
+                </div>
+              </template>
             </b-form-group>
           </b-col>
           <b-col cols="4">
@@ -139,8 +182,14 @@
               <b-form-input
                 id="arm"
                 v-model="form.arm"
+                :class="{ 'is-invalid': $v.form.arm.$error }"
                 :disabled="viewOnlly"
               />
+              <template v-if="$v.form.arm.$error">
+                <div class="invalid-feedback" v-if="!$v.form.arm.required">
+                  Digite la Medida
+                </div>
+              </template>
             </b-form-group>
           </b-col>
           <b-col cols="4">
@@ -152,8 +201,14 @@
               <b-form-input
                 id="waist"
                 v-model="form.waist"
+                :class="{ 'is-invalid': $v.form.waist.$error }"
                 :disabled="viewOnlly"
               />
+              <template v-if="$v.form.waist.$error">
+                <div class="invalid-feedback" v-if="!$v.form.waist.required">
+                  Digite la Medida
+                </div>
+              </template>
             </b-form-group>
           </b-col>
           <b-col cols="4">
@@ -165,8 +220,14 @@
               <b-form-input
                 id="weight"
                 v-model="form.weight"
+                :class="{ 'is-invalid': $v.form.weight.$error }"
                 :disabled="viewOnlly"
               />
+              <template v-if="$v.form.weight.$error">
+                <div class="invalid-feedback" v-if="!$v.form.weight.required">
+                  Digite la Medida
+                </div>
+              </template>
             </b-form-group>
           </b-col>
           <b-col cols="4">
@@ -178,8 +239,14 @@
               <b-form-input
                 id="size"
                 v-model="form.size"
+                :class="{ 'is-invalid': $v.form.size.$error }"
                 :disabled="viewOnlly"
               />
+              <template v-if="$v.form.size.$error">
+                <div class="invalid-feedback" v-if="!$v.form.size.required">
+                  Digite la Medida
+                </div>
+              </template>
             </b-form-group>
           </b-col>
         </b-row>
@@ -188,7 +255,7 @@
           <b-button
             v-if="event && !viewOnlly"
             :disabled="sending"
-            @click="sendData()"
+            type="submit"
             variant="success">
             <span v-if="sending">
               <b-spinner small type="grow"></b-spinner>
@@ -201,7 +268,7 @@
           <b-button
             v-else-if="!event && !viewOnlly"
             :disabled="updating"
-            @click="sendData()"
+            type="submit"
             variant="success">
             <span v-if="updating">
               <b-spinner
@@ -221,6 +288,7 @@
   </div>
 </template>
 <script>
+import { required, minLength, maxLength, between, integer, email } from 'vuelidate/lib/validators'
 import EventBus from '../../bus'
 export default {
   props: {
@@ -259,7 +327,7 @@ export default {
       rows: 4,
       form: {
         id: '',
-        user: '',
+        user_id: '',
         state:'',
         back: '',
         chest: '',
@@ -272,6 +340,46 @@ export default {
         size: ''
       },
     }
+  },
+  validations() {
+    let form = {
+      form: {
+        user_id: {
+          required
+        },
+        back: {
+          required
+        },
+        chest: {
+          required
+        },
+        calf: {
+          required
+        },
+        leg: {
+          required
+        },
+        created_at: {
+          required
+        },
+        arm: {
+          required
+        },
+        waist: {
+          required
+        },
+        weight: {
+          required
+        },
+        size: {
+          required
+        },
+        state: {
+          required
+        }
+      }
+    }
+    return form
   },
   computed: {
     users() {
@@ -293,8 +401,61 @@ export default {
       this.form.weight = ''
       this.form.size = ''
       this.$bvModal.hide(this.modal)
+      this.$v.$reset()
       EventBus.$emit('clear-data-modal')
-    }
+    },
+    sendData(evt) {
+      evt.preventDefault()
+      let me = this
+      this.$v.$touch()
+      if (this.$v.$invalid) {
+        return
+      } else {
+        //Crear
+        me.sending = true
+        if (me.event) {
+          let params = {
+            url: 'tracings',
+            data: me.form,
+            files: false
+          }
+          me.$store.dispatch('api/create', params)
+          setTimeout(() => {
+            if (Object.keys(me.errors).length >= 1) {
+              //validation back
+              me.sending = false
+              return
+            } else {
+              me.sending = false
+              me.$store.dispatch('config/getTracing')
+              me.hideModal()
+            }
+          }, 2000)
+        } else {
+          me.updating = true
+          //actualizar
+          let params = {
+            url: `tracings/${me.form.id}`,
+            data: me.form,
+            action: 'config/getTracing'
+          }
+          me.$store.dispatch('api/update', params)
+          setTimeout(() => {
+            if (Object.keys(me.errors).length !== 0) {
+              //validation back
+              me.updating = false
+              //console.log('Paso el front')
+              return
+            } else {
+              //console.log('errors vacio')
+              me.updating = false
+              //me.$store.dispatch('config/getGender')
+              me.hideModal()
+            }
+          }, 2000)
+        }
+      }
+    },
   },
   created() {
     EventBus.$on('show-modal-tracing-table', () => {

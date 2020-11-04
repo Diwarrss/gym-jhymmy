@@ -19,16 +19,18 @@
         {{ tittleModal }}
       </template>
       <b-form
+        @submit="sendData"
         v-if="show">
         <!-- usuario -->
         <b-form-group
           id="groupstate"
           label="Usuario:"
-          label-for="user"
+          label-for="user_id"
           >
           <v-select
-            id="user"
+            id="user_id"
             v-model="form.user_id"
+            :class="{ 'is-invalid': $v.form.user_id.$error }"
             :options="users"
             placeholder="Seleccionar..."
             :reduce="users => users.id"
@@ -38,6 +40,11 @@
           >
             <div slot="no-options">No hay Resultados!</div>
           </v-select>
+          <template v-if="$v.form.user_id.$error">
+            <div class="invalid-feedback" v-if="!$v.form.user_id.required">
+              Seleccione el usuario
+            </div>
+          </template>
         </b-form-group>
         <!-- fecha de pago -->
         <b-form-group
@@ -50,12 +57,18 @@
         <b-form-group
           id="groupname"
           label="Valor a Pagar:"
-          label-for="payment">
+          label-for="value">
           <b-form-input
-            id="payment"
-            v-model="form.payment"
+            id="value"
+            v-model="form.value"
+            :class="{ 'is-invalid': $v.form.value.$error }"
             :disabled="viewOnlly"
           />
+          <template v-if="$v.form.value.$error">
+            <div class="invalid-feedback" v-if="!$v.form.value.required">
+              Digite Valor
+            </div>
+          </template>
         </b-form-group>
         <!-- estado -->
         <b-form-group
@@ -67,6 +80,7 @@
           <b-form-select
             id="state"
             v-model="form.state"
+            :class="{ 'is-invalid': $v.form.state.$error }"
             :disabled="viewOnlly"
           >
             <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
@@ -77,13 +91,18 @@
               >{{ item.name }}
             </b-form-select-option>
           </b-form-select>
+          <template v-if="$v.form.state.$error">
+            <div class="invalid-feedback" v-if="!$v.form.state.required">
+              Seleccione el Estado
+            </div>
+          </template>
         </b-form-group>
         <div
           class="text-center">
           <b-button
             v-if="event && !viewOnlly"
             :disabled="sending"
-            @click="sendData()"
+            type="submit"
             variant="success">
             <span v-if="sending">
               Guardando...
@@ -95,7 +114,7 @@
           <b-button
             v-else-if="!event && !viewOnlly"
             :disabled="updating"
-            @click="sendData()"
+            type="submit"
             variant="success">
             <span v-if="updating">
               Actualizando...
@@ -113,6 +132,7 @@
   </div>
 </template>
 <script>
+import { required, minLength, maxLength, between, integer, email } from 'vuelidate/lib/validators'
 import EventBus from '../../bus'
 export default {
   props: {
@@ -157,6 +177,22 @@ export default {
       },
     }
   },
+  validations() {
+    let form = {
+      form: {
+        user_id: {
+          required
+        },
+        value: {
+          required
+        },
+        state: {
+          required
+        }
+      }
+    }
+    return form
+  },
   computed: {
     users() {
       return this.$store.state.user.users
@@ -171,8 +207,61 @@ export default {
       this.form.state = ''
       this.form.value = ''
       this.$bvModal.hide(this.modal)
+      this.$v.$reset()
       EventBus.$emit('clear-data-modal')
-    }
+    },
+    sendData(evt) {
+      evt.preventDefault()
+      let me = this
+      this.$v.$touch()
+      if (this.$v.$invalid) {
+        return
+      } else {
+        //Crear
+        me.sending = true
+        if (me.event) {
+          let params = {
+            url: 'payments',
+            data: me.form,
+            files: false
+          }
+          me.$store.dispatch('api/create', params)
+          setTimeout(() => {
+            if (Object.keys(me.errors).length >= 1) {
+              //validation back
+              me.sending = false
+              return
+            } else {
+              me.sending = false
+              me.$store.dispatch('config/getPayment')
+              me.hideModal()
+            }
+          }, 2000)
+        } else {
+          me.updating = true
+          //actualizar
+          let params = {
+            url: `payments/${me.form.id}`,
+            data: me.form,
+            action: 'config/getPayment'
+          }
+          me.$store.dispatch('api/update', params)
+          setTimeout(() => {
+            if (Object.keys(me.errors).length !== 0) {
+              //validation back
+              me.updating = false
+              //console.log('Paso el front')
+              return
+            } else {
+              //console.log('errors vacio')
+              me.updating = false
+              //me.$store.dispatch('config/getGender')
+              me.hideModal()
+            }
+          }, 2000)
+        }
+      }
+    },
   },
   created() {
     EventBus.$on('show-modal-payment-table', () => {
