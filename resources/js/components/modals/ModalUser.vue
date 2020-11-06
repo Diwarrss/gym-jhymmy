@@ -348,7 +348,7 @@ export default {
         confirm_password: '',
         password: '',
         gender_id: '',
-        state_id: ''
+        state_id: null
       },
       sending: false,
       updating: false,
