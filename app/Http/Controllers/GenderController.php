@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RequestGender;
 use App\Models\Gender;
 use Exception;
 use Illuminate\Http\Request;
@@ -27,15 +28,13 @@ class GenderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RequestGender $request)
     {
-      return Auth::user()->id;
       try {
         DB::beginTransaction();
 
         $data = $request->all();
-        $data['user_id'] = Auth::user()->id; //trae el usuario que esta autenticado
-        $gender = Gender::created($data);
+        $gender = Gender::create($data);
         DB::commit();
 
         if ($gender) {

@@ -29,7 +29,7 @@
           <b-form-input
             id="name"
             v-model="form.name"
-            :class="{ 'is-invalid': $v.form.name.$error }"
+            :class="{ 'is-invalid': $v.form.name.$error || errors.name }"
             :disabled="viewOnlly"
             autofocus
           />
@@ -41,6 +41,11 @@
               Exede los 200 Caracteres
             </div>
           </template>
+          <template v-if="errors.name">
+            <div class="invalid-feedback">
+              {{ errors.name[0] }}
+            </div>
+          </template>
         </b-form-group>
         <b-form-group
           id="groupname"
@@ -49,7 +54,7 @@
           <b-form-input
             id="initials"
             v-model="form.initials"
-            :class="{ 'is-invalid': $v.form.initials.$error }"
+            :class="{ 'is-invalid': $v.form.initials.$error || errors.initials }"
             :disabled="viewOnlly"
           />
           <template v-if="$v.form.initials.$error">
@@ -58,6 +63,11 @@
             </div>
             <div class="invalid-feedback" v-if="!$v.form.initials.maxLength">
               Exede los 5 Caracteres
+            </div>
+          </template>
+          <template v-if="errors.initials">
+            <div class="invalid-feedback">
+              {{ errors.initials[0] }}
             </div>
           </template>
         </b-form-group>
@@ -163,8 +173,8 @@ export default {
         state: ''
       },
       states: [
-        { "id": 1, "name": "Activo"},
-        { "id": 2, "name": "Inactivo"}
+        { "id": true, "name": "Activo"},
+        { "id": false, "name": "Inactivo"}
       ],
     }
   },
@@ -192,6 +202,9 @@ export default {
     },
     row() {
       return this.$store.state.config.allRow
+    },
+    errors() {
+      return this.$store.state.actions.errors
     }
   },
   created() {
@@ -202,7 +215,7 @@ export default {
     EventBus.$on('show-modal-gender', () => {
       this.$bvModal.show('modal-gender')
     })
-    this.$store.dispatch('getGenders')
+    //this.$store.dispatch('getGenders')
   },
   methods: {
     hideModal() {
@@ -227,11 +240,12 @@ export default {
         me.sending = true
         if (me.event) {
           let params = {
-            url: 'genders',
+            url: '/genders',
             data: me.form,
-            files: false
+            files: false,
+            action: 'getGenders'
           }
-          me.$store.dispatch('api/create', params)
+          me.$store.dispatch('create', params)
           setTimeout(() => {
             if (Object.keys(me.errors).length >= 1) {
               //validation back
@@ -239,7 +253,7 @@ export default {
               return
             } else {
               me.sending = false
-              me.$store.dispatch('config/getGender')
+              //me.$store.dispatch('config/getGender')
               me.hideModal()
             }
           }, 2000)

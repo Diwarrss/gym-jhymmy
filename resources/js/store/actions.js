@@ -1,38 +1,83 @@
-export const state = () => ({
-  result: [],
-  errors: {}
-})
+//import axios from 'axios'
+export default {
+  state: {
+    result: [],
+    errors: {}
+  },
 
-export const getters = {}
+  getters: {},
 
-export const actions = {
-  create: function({ commit, state }, params) {
-    commit('setErrors', {})
-    let me = this
-    let url = params.url
-    let getData = params.data
-    let files = params.files
-    if (files) {
-      me.$axios
-        .post(url, getData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })
-        .then(res => {
-          if (res.data.type === 'success') {
-            if (res.data.notify) {
-              me.$swal({
-                toast: true,
-                position: 'top-end',
-                icon: 'success',
-                title: res.data.message,
-                showConfirmButton: false,
-                timer: 3000
-              })
+  actions: {
+    create: function({ commit, dispatch }, params) {
+      commit('setErrors', {})
+      let me = this
+      let url = params.url
+      let getData = params.data
+      let files = params.files
+      let action = params.action
+      if (files) {
+        axios
+          .post(url, getData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          })
+          .then(res => {
+            console.log(res)
+          })
+          .catch(err => {
+            console.error(err)
+          })
+      } else {
+        axios
+          .post(url, getData)
+          .then(res => {
+            if (res.data.type === 'success') {
+              setTimeout(() => {
+                Vue.swal({
+                  icon: 'success',
+                  title: res.data.message,
+                  showConfirmButton: true,
+                  timer: 2000
+                })
+              }, 2000);
+              dispatch(action, null, {root:true})
             } else {
               setTimeout(() => {
-                me.$swal({
+                Vue.swal({
+                  icon: 'error',
+                  title: res.data.message,
+                  showConfirmButton: true,
+                  timer: 2000
+                })
+              }, 2000);
+            }
+          })
+          .catch(err => {
+            if (err.response.status == 422) {
+              commit('setErrors', err.response.data.errors)
+            }
+            console.error(err)
+          })
+      }
+    },
+    update: function({ dispatch, commit }, params) {
+      commit('setErrors', {})
+      console.log(params.data)
+      let url = params.url
+      let getData = params.data
+      let files = params.files
+      if (files) {
+        axios
+          .post(url, getData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          })
+          .then(res => {
+            if (res.data.type === 'success') {
+              setTimeout(() => {
+                this.$swal({
                   title: res.data.message,
                   icon: 'success',
                   confirmButtonColor: '#4dbd74',
@@ -41,11 +86,90 @@ export const actions = {
                   timer: 2000
                 })
               }, 1000)
+              if (params.dispatchParams) {
+                dispatch(params.action, params.actionDispatch, {root:true})
+              }else{
+                dispatch(params.action, null, {root:true})
+              }
+              commit('setResult', res.data.data)
+            } else {
+              this.$swal({
+                title: res.data.message,
+                icon: 'error',
+                confirmButtonColor: '#4dbd74',
+                confirmButtonText: '<i class="far fa-check-circle"></i> Aceptar',
+                timer: 2000
+              })
+            }
+            console.log(res)
+          })
+          .catch(err => {
+            if (err.response.status == 422) {
+              commit('setErrors', err.response.data.errors)
+            }
+            console.error(err)
+          })
+      } else {
+        axios
+          .put(url, getData)
+          .then(res => {
+            if (res.data.type === 'success') {
+              setTimeout(() => {
+                this.$swal({
+                  title: res.data.message,
+                  icon: 'success',
+                  confirmButtonColor: '#4dbd74',
+                  confirmButtonText:
+                    '<i class="far fa-check-circle"></i> Aceptar',
+                  timer: 2000
+                })
+              }, 1000)
+              if (params.dispatchParams) {
+                dispatch(params.action, params.actionDispatch, {root:true})
+              }else{
+                dispatch(params.action, null, {root:true})
+              }
+              commit('setResult', res.data.data)
+            } else {
+              this.$swal({
+                title: res.data.message,
+                icon: 'error',
+                confirmButtonColor: '#4dbd74',
+                confirmButtonText: '<i class="far fa-check-circle"></i> Aceptar',
+                timer: 2000
+              })
+            }
+            console.log(res)
+          })
+          .catch(err => {
+            if (err.response.status == 422) {
+              commit('setErrors', err.response.data.errors)
+            }
+            console.error(err)
+          })
+      }
+    },
+    status: function({ dispatch, commit }, params) {
+      console.log(params.url)
+      axios
+        .put(params.url)
+        .then(res => {
+          if (res.data.type === 'success') {
+            this.$swal({
+              title: res.data.message,
+              icon: 'success',
+              confirmButtonColor: '#4dbd74',
+              confirmButtonText: '<i class="far fa-check-circle"></i> Aceptar',
+              timer: 2000
+            })
+            if (params.dispatchParams) {
+              dispatch(params.action, params.actionDispatch, {root:true})
+            }else{
+              dispatch(params.action, null, {root:true})
             }
             commit('setResult', res.data.data)
-            /* me.$store.dispatch('config/getDependence') */
           } else {
-            me.$swal({
+            this.$swal({
               title: res.data.message,
               icon: 'error',
               confirmButtonColor: '#4dbd74',
@@ -56,91 +180,68 @@ export const actions = {
           console.log(res)
         })
         .catch(err => {
-          //preguntamos si el error es 422
-          if (err.response.status == 422) {
-            commit('setErrors', err.response.data.errors)
-          }
           console.error(err)
         })
-    } else {
-      me.$axios
+    },
+    delete: function({ commit }, params) {
+      console.log(params)
+      let url = params.url
+      let getData = params.data
+      axios
         .post(url, getData)
         .then(res => {
           if (res.data.type === 'success') {
-            if (res.data.notify) {
-              //mensanje flotante superior derecho
-              me.$swal({
-                toast: true,
-                position: 'top-end',
-                icon: 'success',
-                title: res.data.message,
-                showConfirmButton: false,
-                timer: 3000
-              })
-            } else {
-              setTimeout(() => {
-                //mensanje Central en la pagina como Modal
-                me.$swal({
-                  title: res.data.message,
-                  icon: 'success',
-                  confirmButtonColor: '#4dbd74',
-                  confirmButtonText:
-                    '<i class="far fa-check-circle"></i> Aceptar',
-                  timer: 2000
-                })
-              }, 1000)
-            }
+            this.$swal({
+              toast: true,
+              position: 'top-end',
+              icon: 'error',
+              title: res.data.message,
+              showConfirmButton: false,
+              timer: 4000
+            })
             commit('setResult', res.data.data)
-            /* me.$store.dispatch('config/getDependence') */
           } else {
-            me.$swal({
+            this.$swal({
               title: res.data.message,
               icon: 'error',
               confirmButtonColor: '#4dbd74',
-              confirmButtonText: '<i class="far fa-check-circle"></i> Aceptar',
-              timer: 2000
+              confirmButtonText: 'Aceptar',
+              timer: 3000
             })
           }
           console.log(res)
         })
         .catch(err => {
-          //preguntamos si el error es 422
-          if (err.response.status == 422) {
-            commit('setErrors', err.response.data.errors)
-          }
           console.error(err)
         })
-    }
-  },
-  update: function({ dispatch, commit }, params) {
-    commit('setErrors', {})
-    console.log(params.data)
-    let url = params.url
-    let getData = params.data
-    let files = params.files
-    if (files) {
-      this.$axios
-        .post(url, getData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })
+    },
+    clearErrors: function({ commit }) {
+      commit('setErrors', {})
+    },
+    cancelFiling: function({ dispatch, commit }, params) {
+      commit('setErrors', {})
+      let me = this
+      let url = params.url
+      let getData = params.data
+      axios
+        .post(url, getData)
         .then(res => {
           if (res.data.type === 'success') {
-            setTimeout(() => {
-              this.$swal({
-                title: res.data.message,
-                icon: 'success',
-                confirmButtonColor: '#4dbd74',
-                confirmButtonText:
-                  '<i class="far fa-check-circle"></i> Aceptar',
-                timer: 2000
-              })
-            }, 1000)
-            if (params.dispatchParams) {
-              dispatch(params.action, params.actionDispatch, {root:true})
+            this.$swal({
+              title: res.data.message,
+              icon: 'success',
+              confirmButtonColor: '#4dbd74',
+              confirmButtonText: '<i class="far fa-check-circle"></i> Aceptar',
+              timer: 4000
+            })
+            if (params.paramsrStatus) {
+              dispatch(params.action, params.paramsr, {root:true})
             }else{
-              dispatch(params.action, null, {root:true})
+              if (params.dateRange.length > 0) {
+                dispatch(params.action, params.dateRange, {root:true})
+              } else {
+                dispatch(params.action, null, {root:true})
+              }
             }
             commit('setResult', res.data.data)
           } else {
@@ -149,180 +250,29 @@ export const actions = {
               icon: 'error',
               confirmButtonColor: '#4dbd74',
               confirmButtonText: '<i class="far fa-check-circle"></i> Aceptar',
-              timer: 2000
+              timer: 3000
             })
           }
           console.log(res)
         })
         .catch(err => {
-          if (err.response.status == 422) {
-            commit('setErrors', err.response.data.errors)
-          }
           console.error(err)
         })
-    } else {
-      this.$axios
-        .put(url, getData)
-        .then(res => {
-          if (res.data.type === 'success') {
-            setTimeout(() => {
-              this.$swal({
-                title: res.data.message,
-                icon: 'success',
-                confirmButtonColor: '#4dbd74',
-                confirmButtonText:
-                  '<i class="far fa-check-circle"></i> Aceptar',
-                timer: 2000
-              })
-            }, 1000)
-            if (params.dispatchParams) {
-              dispatch(params.action, params.actionDispatch, {root:true})
-            }else{
-              dispatch(params.action, null, {root:true})
-            }
-            commit('setResult', res.data.data)
-          } else {
-            this.$swal({
-              title: res.data.message,
-              icon: 'error',
-              confirmButtonColor: '#4dbd74',
-              confirmButtonText: '<i class="far fa-check-circle"></i> Aceptar',
-              timer: 2000
-            })
-          }
-          console.log(res)
-        })
-        .catch(err => {
-          if (err.response.status == 422) {
-            commit('setErrors', err.response.data.errors)
-          }
-          console.error(err)
-        })
+    },
+    clearResult: function ({ commit }){
+      commit('setClearResult', {})
     }
   },
-  status: function({ dispatch, commit }, params) {
-    console.log(params.url)
-    this.$axios
-      .put(params.url)
-      .then(res => {
-        if (res.data.type === 'success') {
-          this.$swal({
-            title: res.data.message,
-            icon: 'success',
-            confirmButtonColor: '#4dbd74',
-            confirmButtonText: '<i class="far fa-check-circle"></i> Aceptar',
-            timer: 2000
-          })
-          if (params.dispatchParams) {
-            dispatch(params.action, params.actionDispatch, {root:true})
-          }else{
-            dispatch(params.action, null, {root:true})
-          }
-          commit('setResult', res.data.data)
-        } else {
-          this.$swal({
-            title: res.data.message,
-            icon: 'error',
-            confirmButtonColor: '#4dbd74',
-            confirmButtonText: '<i class="far fa-check-circle"></i> Aceptar',
-            timer: 2000
-          })
-        }
-        console.log(res)
-      })
-      .catch(err => {
-        console.error(err)
-      })
-  },
-  delete: function({ commit }, params) {
-    console.log(params)
-    let url = params.url
-    let getData = params.data
-    this.$axios
-      .post(url, getData)
-      .then(res => {
-        if (res.data.type === 'success') {
-          this.$swal({
-            toast: true,
-            position: 'top-end',
-            icon: 'error',
-            title: res.data.message,
-            showConfirmButton: false,
-            timer: 4000
-          })
-          commit('setResult', res.data.data)
-        } else {
-          this.$swal({
-            title: res.data.message,
-            icon: 'error',
-            confirmButtonColor: '#4dbd74',
-            confirmButtonText: 'Aceptar',
-            timer: 3000
-          })
-        }
-        console.log(res)
-      })
-      .catch(err => {
-        console.error(err)
-      })
-  },
-  clearErrors: function({ commit }) {
-    commit('setErrors', {})
-  },
-  cancelFiling: function({ dispatch, commit }, params) {
-    commit('setErrors', {})
-    let me = this
-    let url = params.url
-    let getData = params.data
-    me.$axios
-      .post(url, getData)
-      .then(res => {
-        if (res.data.type === 'success') {
-          this.$swal({
-            title: res.data.message,
-            icon: 'success',
-            confirmButtonColor: '#4dbd74',
-            confirmButtonText: '<i class="far fa-check-circle"></i> Aceptar',
-            timer: 4000
-          })
-          if (params.paramsrStatus) {
-            dispatch(params.action, params.paramsr, {root:true})
-          }else{
-            if (params.dateRange.length > 0) {
-              dispatch(params.action, params.dateRange, {root:true})
-            } else {
-              dispatch(params.action, null, {root:true})
-            }
-          }
-          commit('setResult', res.data.data)
-        } else {
-          this.$swal({
-            title: res.data.message,
-            icon: 'error',
-            confirmButtonColor: '#4dbd74',
-            confirmButtonText: '<i class="far fa-check-circle"></i> Aceptar',
-            timer: 3000
-          })
-        }
-        console.log(res)
-      })
-      .catch(err => {
-        console.error(err)
-      })
-  },
-  clearResult: function ({ commit }){
-    commit('setClearResult', {})
-  }
-}
 
-export const mutations = {
-  setResult(state, data) {
-    state.result = data
-  },
-  setErrors(state, data) {
-    state.errors = data
-  },
-  setClearResult(state, data) {
-    state.result = []
+  mutations: {
+    setResult(state, data) {
+      state.result = data
+    },
+    setErrors(state, data) {
+      state.errors = data
+    },
+    setClearResult(state, data) {
+      state.result = []
+    }
   }
 }

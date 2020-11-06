@@ -1,5 +1,5 @@
 //store para usuario
-import axios from 'axios'
+//import axios from 'axios'
 export default {
   state: {
     tracings: [],//seguiminetos

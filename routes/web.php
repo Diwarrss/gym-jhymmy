@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GenderController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,7 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
   //usuarios
   Route::resource('users', 'App\Http\Controllers\UserController');
   //generos
-  Route::resource('genders', 'App\Http\Controllers\GenderController');
+  Route::resource('genders', GenderController::class);
   //estados
   Route::resource('states', 'App\Http\Controllers\StateController');
   //seguimineto

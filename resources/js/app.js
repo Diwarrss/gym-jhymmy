@@ -20,16 +20,24 @@ import "vue-select/dist/vue-select.css";
 Vue.use(VCalendar); */
 //vuelidate
 import Vuelidate from 'vuelidate'
-Vue.use(Vuelidate)
-
+//VueSweetalert2
+import VueSweetalert2 from 'vue-sweetalert2';
+const options = {
+  confirmButtonColor: '#41b882',
+  cancelButtonColor: '#ff7674',
+};
+// If you don't need the styles, do not connect
+import 'sweetalert2/dist/sweetalert2.min.css';
 Vue.component('v-select', vSelect)
-//definimos la baseurl para axios
-axios.defaults.baseUrl = process.env.APP_URL_AXIOS
 //Create components and import components
 Vue.use(VueRouter)
 Vue.use(Vuex)
 // Install BootstrapVue
 Vue.use(BootstrapVue)
+//vuelidate
+Vue.use(Vuelidate)
+//VueSweetalert2
+Vue.use(VueSweetalert2, options);
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
 Vue.component('example-component', require('./pages/ExampleComponent.vue').default)
@@ -37,22 +45,20 @@ Vue.component('nav-bar', require('./components/partials/NavBar.vue').default)
 Vue.component('side-bar', require('./components/partials/SideBar.vue').default)
 
 //import out store for vuex
-import moduleA from './store/moduleA';
-import moduleB from './store/moduleB';
 import user from './store/user';
 import config from './store/config';
 import administration from './store/administration';
+import actions from './store/actions';
 
 const app = new Vue({
   el: '#app',
   router: new VueRouter(routes),
   store: new Vuex.Store({
     modules: {
-      moduleA,
-      moduleB,
       user,
       config,
-      administration
+      administration,
+      actions
     }
   })
 });
