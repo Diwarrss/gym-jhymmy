@@ -78,15 +78,15 @@
             </div>
         </form>
         <!-- Navigation -->
-        <ul class="navbar-nav">
+        <!-- <ul class="navbar-nav">
             <li class="nav-item">
               <router-link class="nav-link" to="/">
                   <i class="fas fa-window-maximize"></i> Dashboard
               </router-link>
             </li>
-        </ul>
+        </ul> -->
         <!-- Divider -->
-        <hr class="my-3">
+        <!-- <hr class="my-3"> -->
         <!-- Heading -->
         <h6 class="navbar-heading text-muted">ACCESO</h6>
          <ul class="navbar-nav mb-md-3">

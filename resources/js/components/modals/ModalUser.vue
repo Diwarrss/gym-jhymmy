@@ -227,12 +227,20 @@
               id="groupname"
               label="Genero:"
               label-for="gender">
-              <b-form-input
+              <b-form-select
                 id="gender"
                 :disabled="viewOnlly"
                 v-model="form.gender_id"
                 :class="{ 'is-invalid': $v.form.gender_id.$error }"
-              />
+              >
+                <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
+                  <b-form-select-option
+                    v-for="(item, index) in genders"
+                    :key="index"
+                    :value="item.id"
+                  >{{ item.name }}
+                </b-form-select-option>
+              </b-form-select>
               <template v-if="$v.form.gender_id.$error">
                 <div class="invalid-feedback" v-if="!$v.form.gender_id.required">
                   Seleccione el Genero
@@ -351,11 +359,11 @@ export default {
         state_id: null
       },
       sending: false,
-      updating: false,
-      states: [
+      updating: false
+      /* states: [
         { "id" : "1", "name" : "Activo"},
         { "id" : "2", "name" : "Inactivo"}
-      ]
+      ] */
     }
   },
   computed: {
@@ -363,10 +371,16 @@ export default {
       return this.$store.state.user.users
     },
     row() {
-      return this.$store.state.config.allRow
+      return this.$store.state.user.allRow
     },
     errors() {
       return this.$store.state.actions.errors
+    },
+    states(){
+      return this.$store.state.config.states
+    },
+    genders(){
+      return this.$store.state.config.genders
     }
   },
   validations() {
@@ -496,11 +510,14 @@ export default {
   created() {
     EventBus.$on('show-modal-user-table', () => {
       this.$bvModal.show('modal-users-table')
+      this.$store.dispatch('getStates')
+      this.$store.dispatch('getGenders')
     })
     EventBus.$on('show-modal-user', () => {
-    this.$bvModal.show('modal-users')
+      this.$bvModal.show('modal-users')
+      this.$store.dispatch('getStates')
+      this.$store.dispatch('getGenders')
     })
-    //this.$store.dispatch('getUsers')
   },
   watch: {
     items(){

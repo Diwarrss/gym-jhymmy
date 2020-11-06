@@ -1,4 +1,3 @@
-import ExampleComponent from './pages/ExampleComponent';
 import Profile from './pages/Profile';
 import Payment from './pages/Payment';
 import Tracing from './pages/Tracing';
@@ -19,12 +18,7 @@ export default {
     {
       path: '/',
       name: 'home',
-      component: ExampleComponent
-    },
-    {
-      path: '/exampleComponent',
-      name: 'example-component',
-      component: ExampleComponent
+      component: AccessControl
     },
     {
       path: '/profile',

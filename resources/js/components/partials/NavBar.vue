@@ -1,7 +1,6 @@
 <template>
   <!-- Top navbar -->
   <b-navbar class="navbar bg-gradient-primary navbar-top navbar-expand-md navbar-dark" id="navbar-main">
-    <b-navbar-brand class="pl-4 pr-4" href="#">NavBar</b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
