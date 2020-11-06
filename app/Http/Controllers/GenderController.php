@@ -32,7 +32,6 @@ class GenderController extends Controller
     {
       try {
         DB::beginTransaction();
-
         $data = $request->all();
         $gender = Gender::create($data);
         DB::commit();

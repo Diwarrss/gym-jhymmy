@@ -2,6 +2,7 @@
   <div>
     <!-- Info modal -->
     <b-modal
+      size="lg"
       ref="modal-users"
       :id="modal"
       no-close-on-esc
@@ -46,160 +47,227 @@
               </template>
             </b-form-group>
           </b-col>
-        <!-- cedula -->
-        <b-col cols="md-6">
-         <b-form-group
-          id="groupname"
-          label="Cedula:"
-          label-for="identification">
-          <b-form-input
-            id="identification"
-            :disabled="viewOnlly"
-            v-model="form.identification"
-            :class="{ 'is-invalid': $v.form.identification.$error }"
-          />
-          <template v-if="$v.form.identification.$error">
-            <div class="invalid-feedback" v-if="!$v.form.identification.required">
-              Digite el Cedula
-            </div>
-            <div class="invalid-feedback" v-if="!$v.form.identification.maxLength">
-              Exede los 20 Caracteres
-            </div>
-          </template>
-        </b-form-group>
-        </b-col>
-        <!-- Dirección -->
-        <b-col cols="md-6">
-         <b-form-group
-          id="groupname"
-          label="Dirección:"
-          label-for="address">
-          <b-form-input
-            id="address"
-            :disabled="viewOnlly"
-            v-model="form.address"
-            :class="{ 'is-invalid': $v.form.address.$error }"
-          />
-          <template v-if="$v.form.address.$error">
-            <div class="invalid-feedback" v-if="!$v.form.address.required">
-              Digite la Dirección
-            </div>
-            <div class="invalid-feedback" v-if="!$v.form.address.maxLength">
-              Exede los 200 Caracteres
-            </div>
-          </template>
-        </b-form-group>
-        </b-col>
-        <!-- Numero del telefono -->
-        <b-col cols="md-6">
-         <b-form-group
-          id="groupname"
-          label="Numero Telefonico:"
-          label-for="phone">
-          <b-form-input
-            id="phone"
-            :disabled="viewOnlly"
-            v-model="form.phone"
-            :class="{ 'is-invalid': $v.form.phone.$error }"
-          />
-          <template v-if="$v.form.phone.$error">
-            <div class="invalid-feedback" v-if="!$v.form.phone.required">
-              Digite el Numero
-            </div>
-            <div class="invalid-feedback" v-if="!$v.form.phone.maxLength">
-              Exede los 20 Caracteres
-            </div>
-          </template>
-        </b-form-group>
-        </b-col>
-        <!-- fecha de nacimiento -->
-        <b-col cols="md-6">
-        <b-form-group
-          id="groupname"
-          label="Fecha de Nacimiento:"
-          label-for="birthdate">
-          <b-form-input
-            id="birthdate"
-            :disabled="viewOnlly"
-            v-model="form.birthdate"
-            :class="{ 'is-invalid': $v.form.birthdate.$error }"
-          />
-          <template v-if="$v.form.birthdate.$error">
-            <div class="invalid-feedback" v-if="!$v.form.birthdate.required">
-              Digite el fecha de nacimiento
-            </div>
-          </template>
-        </b-form-group>
-        </b-col>
-        <!-- correo electronico -->
-        <b-col cols="md-6">
-        <b-form-group
-          id="groupname"
-          label="E-mail:"
-          label-for="email">
-          <b-form-input
-            id="email"
-            :disabled="viewOnlly"
-            v-model="form.email"
-            :class="{ 'is-invalid': $v.form.email.$error }"
-          />
-          <template v-if="$v.form.email.$error">
-            <div class="invalid-feedback" v-if="!$v.form.email.required">
-              Digite el E-mail
-            </div>
-            <div class="invalid-feedback" v-if="!$v.form.email.maxLength">
-              Exede los 200 Caracteres
-            </div>
-          </template>
-        </b-form-group>
-        </b-col>
-        <!-- Genero -->
-        <b-col cols="md-6">
-            <b-form-group
-                id="groupname"
-                label="Genero:"
-                label-for="gender">
-                <b-form-input
-                  id="gender"
-                  :disabled="viewOnlly"
-                  v-model="form.gender_id"
-                  :class="{ 'is-invalid': $v.form.gender_id.$error }"
-                />
-                <template v-if="$v.form.gender_id.$error">
-            <div class="invalid-feedback" v-if="!$v.form.gender_id.required">
-              Seleccione el Genero
-            </div>
-          </template>
-              </b-form-group>
+          <!-- cedula -->
+          <b-col cols="md-6">
+          <b-form-group
+            id="groupname"
+            label="Cedula:"
+            label-for="identification">
+            <b-form-input
+              id="identification"
+              :disabled="viewOnlly"
+              v-model="form.identification"
+              :class="{ 'is-invalid': $v.form.identification.$error || errors.identification}"
+            />
+            <template v-if="$v.form.identification.$error">
+              <div class="invalid-feedback" v-if="!$v.form.identification.required">
+                Digite el Cedula
+              </div>
+              <div class="invalid-feedback" v-if="!$v.form.identification.maxLength">
+                Exede los 20 Caracteres
+              </div>
+            </template>
+            <template v-if="errors.identification">
+              <div class="invalid-feedback">
+                {{ errors.identification[0] }}
+              </div>
+            </template>
+          </b-form-group>
           </b-col>
-        <!-- estado -->
-        <b-col cols="md-6">
-        <b-form-group
-          id="groupstate"
-          label="Estado:"
-          label-for="state"
-          >
-          <b-form-select
-            id="state"
-            :disabled="viewOnlly"
-            v-model="form.state_id"
-            :class="{ 'is-invalid': $v.form.state_id.$error }"
-          >
-            <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
-              <b-form-select-option
-                v-for="(item, index) in states"
-                :key="index"
-                :value="item.id"
-              >{{ item.name }}
-            </b-form-select-option>
-          </b-form-select>
-          <template v-if="$v.form.state_id.$error">
-            <div class="invalid-feedback" v-if="!$v.form.state_id.required">
-              Seleccione el Estado
-            </div>
-          </template>
-        </b-form-group>
-        </b-col>
+          <!-- Dirección -->
+          <b-col cols="md-6">
+          <b-form-group
+            id="groupname"
+            label="Dirección:"
+            label-for="address">
+            <b-form-input
+              id="address"
+              :disabled="viewOnlly"
+              v-model="form.address"
+              :class="{ 'is-invalid': $v.form.address.$error }"
+            />
+            <template v-if="$v.form.address.$error">
+              <div class="invalid-feedback" v-if="!$v.form.address.required">
+                Digite la Dirección
+              </div>
+              <div class="invalid-feedback" v-if="!$v.form.address.maxLength">
+                Exede los 200 Caracteres
+              </div>
+            </template>
+          </b-form-group>
+          </b-col>
+          <!-- Numero del telefono -->
+          <b-col cols="md-6">
+          <b-form-group
+            id="groupname"
+            label="Numero Telefonico:"
+            label-for="phone">
+            <b-form-input
+              id="phone"
+              :disabled="viewOnlly"
+              v-model="form.phone"
+              :class="{ 'is-invalid': $v.form.phone.$error }"
+            />
+            <template v-if="$v.form.phone.$error">
+              <div class="invalid-feedback" v-if="!$v.form.phone.required">
+                Digite el Numero
+              </div>
+              <div class="invalid-feedback" v-if="!$v.form.phone.maxLength">
+                Exede los 20 Caracteres
+              </div>
+            </template>
+          </b-form-group>
+          </b-col>
+          <!-- fecha de nacimiento -->
+          <b-col cols="md-6">
+          <b-form-group
+            id="groupname"
+            label="Fecha de Nacimiento:"
+            label-for="birthdate">
+            <b-form-input
+              id="birthdate"
+              :disabled="viewOnlly"
+              v-model="form.birthdate"
+              :class="{ 'is-invalid': $v.form.birthdate.$error }"
+            />
+            <template v-if="$v.form.birthdate.$error">
+              <div class="invalid-feedback" v-if="!$v.form.birthdate.required">
+                Digite el fecha de nacimiento
+              </div>
+            </template>
+          </b-form-group>
+          </b-col>
+          <!-- correo electronico -->
+          <b-col cols="md-6">
+          <b-form-group
+            id="groupname"
+            label="E-mail:"
+            label-for="email">
+            <b-form-input
+              id="email"
+              :disabled="viewOnlly"
+              v-model="form.email"
+              :class="{ 'is-invalid': $v.form.email.$error || errors.email}"
+            />
+            <template v-if="$v.form.email.$error">
+              <div class="invalid-feedback" v-if="!$v.form.email.required">
+                Digite el E-mail
+              </div>
+              <div class="invalid-feedback" v-if="!$v.form.email.maxLength">
+                Exede los 200 Caracteres
+              </div>
+            </template>
+            <template v-if="errors.email">
+              <div class="invalid-feedback">
+                {{ errors.email[0] }}
+              </div>
+            </template>
+          </b-form-group>
+          </b-col>
+          <!-- password -->
+          <b-col cols="md-6">
+            <b-form-group
+              id="groupinitial"
+              label="Contraseña:"
+              label-for="password">
+              <b-form-input
+                id="password"
+                ref="password"
+                :disabled="viewOnlly ? true : false"
+                :class="{'is-invalid': $v.form.password.$error}"
+                v-model="form.password"
+                type="password"
+                name="password"
+                />
+              <template v-if="$v.form.password.$error">
+                <div
+                  v-if="!$v.form.password.required"
+                  class="invalid-feedback">
+                  Digite la Contraseña
+                </div>
+                <div
+                  v-if="!$v.form.password.maxLength"
+                  class="invalid-feedback">
+                  La Contraseña Exede los 130 Caracteres
+                </div>
+                <div
+                  v-if="!$v.form.password.minLength"
+                  class="invalid-feedback">
+                  El Contraseña Debe Tener Mínimo 8 Caracteres
+                </div>
+              </template>
+            </b-form-group>
+          </b-col>
+          <!-- confirmacion de password -->
+          <b-col class="col-md-6">
+            <b-form-group
+              id="groupinitial"
+              label="Confirmar Contraseña:"
+              label-for="confirm_password">
+              <b-form-input
+                id="confirm_password"
+                :disabled="viewOnlly ? true : false"
+                v-model="form.confirm_password"
+                :class="{'is-invalid': $v.form.confirm_password.$error}"
+                type="password"
+                name="confirm_password"
+              />
+              <template v-if="$v.form.confirm_password.$error">
+                <div
+                  v-if="!$v.form.confirm_password.sameAsPassword"
+                  class="invalid-feedback">
+                  Las Contraseñas no Coindicen
+                </div>
+              </template>
+            </b-form-group>
+          </b-col>
+          <!-- Genero -->
+          <b-col cols="md-6">
+            <b-form-group
+              id="groupname"
+              label="Genero:"
+              label-for="gender">
+              <b-form-input
+                id="gender"
+                :disabled="viewOnlly"
+                v-model="form.gender_id"
+                :class="{ 'is-invalid': $v.form.gender_id.$error }"
+              />
+              <template v-if="$v.form.gender_id.$error">
+                <div class="invalid-feedback" v-if="!$v.form.gender_id.required">
+                  Seleccione el Genero
+                </div>
+              </template>
+            </b-form-group>
+          </b-col>
+          <!-- estado -->
+          <b-col cols="md-6">
+          <b-form-group
+            id="groupstate"
+            label="Estado:"
+            label-for="state"
+            >
+            <b-form-select
+              id="state"
+              :disabled="viewOnlly"
+              v-model="form.state_id"
+              :class="{ 'is-invalid': $v.form.state_id.$error }"
+            >
+              <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
+                <b-form-select-option
+                  v-for="(item, index) in states"
+                  :key="index"
+                  :value="item.id"
+                >{{ item.name }}
+              </b-form-select-option>
+            </b-form-select>
+            <template v-if="$v.form.state_id.$error">
+              <div class="invalid-feedback" v-if="!$v.form.state_id.required">
+                Seleccione el Estado
+              </div>
+            </template>
+          </b-form-group>
+          </b-col>
         </b-row>
         <div
           class="text-center">
@@ -239,7 +307,7 @@
   </div>
 </template>
 <script>
-import { required, minLength, maxLength, between, integer, email } from 'vuelidate/lib/validators'
+import { required, minLength, maxLength, between, integer, email, sameAs } from 'vuelidate/lib/validators'
 import EventBus from '../../bus'
 export default {
   props: {
@@ -277,6 +345,8 @@ export default {
         phone: '',
         birthdate: '',
         email: '',
+        confirm_password: '',
+        password: '',
         gender_id: '',
         state_id: ''
       },
@@ -294,7 +364,58 @@ export default {
     },
     row() {
       return this.$store.state.config.allRow
+    },
+    errors() {
+      return this.$store.state.actions.errors
     }
+  },
+  validations() {
+    let form = {
+      form: {
+        name: {
+          required,
+          maxLength: maxLength(200)
+        },
+        identification: {
+          required,
+          maxLength: maxLength(20)
+        },
+        address: {
+          required,
+          maxLength: maxLength(20)
+        },
+        birthdate: {
+          required
+        },
+        phone: {
+          required,
+          maxLength: maxLength(20)
+        },
+        email: {
+          required,
+          maxLength: maxLength(200)
+        },
+        password: {
+          required,
+          minLength: minLength(8),
+          maxLength: maxLength(255)
+        },
+        confirm_password: {
+          sameAsPassword: sameAs('password')
+        },
+        phone: {
+          required,
+          maxLength: maxLength(20)
+        },
+        gender_id: {
+          required
+        },
+        state_id: {
+          required
+        }
+      }
+    }
+    return form
   },
   methods: {
     hideModal() {
@@ -329,11 +450,12 @@ export default {
         me.sending = true
         if (me.event) {
           let params = {
-            url: 'users',
+            url: '/users',
             data: me.form,
-            files: false
+            files: false,
+            action: 'getUsers'
           }
-          me.$store.dispatch('api/create', params)
+          me.$store.dispatch('create', params)
           setTimeout(() => {
             if (Object.keys(me.errors).length >= 1) {
               //validation back
@@ -341,7 +463,7 @@ export default {
               return
             } else {
               me.sending = false
-              me.$store.dispatch('config/getUsers')
+              //me.$store.dispatch('config/getUsers')
               me.hideModal()
             }
           }, 2000)
@@ -371,46 +493,6 @@ export default {
       }
     },
   },
-  validations() {
-    let form = {
-      form: {
-        name: {
-          required,
-          maxLength: maxLength(200)
-        },
-        identification: {
-          required,
-          maxLength: maxLength(20)
-        },
-        address: {
-          required,
-          maxLength: maxLength(20)
-        },
-        birthdate: {
-          required
-        },
-        phone: {
-          required,
-          maxLength: maxLength(20)
-        },
-        email: {
-          required,
-          maxLength: maxLength(200)
-        },
-        phone: {
-          required,
-          maxLength: maxLength(20)
-        },
-        gender_id: {
-          required
-        },
-        state_id: {
-          required
-        }
-      }
-    }
-    return form
-  },
   created() {
     EventBus.$on('show-modal-user-table', () => {
       this.$bvModal.show('modal-users-table')
@@ -418,7 +500,7 @@ export default {
     EventBus.$on('show-modal-user', () => {
     this.$bvModal.show('modal-users')
     })
-    this.$store.dispatch('getUsers')
+    //this.$store.dispatch('getUsers')
   },
   watch: {
     items(){

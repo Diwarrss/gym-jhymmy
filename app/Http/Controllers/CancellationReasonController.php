@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RequestCancellationReason;
 use App\Models\CancellationReason;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,36 +26,35 @@ class CancellationReasonController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RequestCancellationReason $request)
     {
       try {
         DB::beginTransaction();
 
         $data = $request->all();
-        $data['user_id'] = Auth::user()->id; //trae el usuario que esta autenticado
-        $cancellationReason = CancellationReason::created($data);
+        $cancellationReason = CancellationReason::create($data);
         DB::commit();
 
         if ($cancellationReason) {
           return response()->json([
             'type' => 'success',
-            'message' => 'Cancelado',
+            'message' => 'Creado con éxito',
             'data' => $cancellationReason
           ], 202);
         }else{
           return response()->json([
             'type' => 'error',
-            'message' => 'Error al Cancelar',
+            'message' => 'Error al guardar',
             'data' =>[]
           ], 204);
         }
       } catch (Exception $e){
-          return response()->json([
-            'type' => 'error',
-            'message' => 'Error al cancelar',
-            'data' =>[]
-          ], 204);
-          DB::rollBack(); //si hay un error no se ejecuta la transaccion
+        return response()->json([
+          'type' => 'error',
+          'message' => 'Error al guardar',
+          'data' =>[]
+        ], 204);
+        DB::rollBack(); //si hay un error no se ejecuta la transaccion
       }
     }
 

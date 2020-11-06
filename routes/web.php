@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\CancellationReasonController;
 use App\Http\Controllers\GenderController;
+use App\Http\Controllers\StateController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,11 +26,11 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/home/{any?}', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
   //usuarios
-  Route::resource('users', 'App\Http\Controllers\UserController');
+  Route::resource('users', UserController::class);
   //generos
   Route::resource('genders', GenderController::class);
   //estados
-  Route::resource('states', 'App\Http\Controllers\StateController');
+  Route::resource('states', StateController::class);
   //seguimineto
   Route::resource('tracings', 'App\Http\Controllers\TracingController');
   //pagos
@@ -37,7 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
   //acceso
   Route::resource('access-controlls', 'App\Http\Controllers\AccessControlController');
   //motivo de cancelación
-  Route::resource('cancellation-reasons', 'App\Http\Controllers\CancellationReasonController');
+  Route::resource('cancellation-reasons', CancellationReasonController::class);
 
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);

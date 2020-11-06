@@ -30,7 +30,7 @@
           <b-form-input
             id="name"
             v-model="form.name"
-            :class="{ 'is-invalid': $v.form.name.$error }"
+            :class="{ 'is-invalid': $v.form.name.$error || errors.name }"
             :disabled="viewOnlly"
             autofocus
           />
@@ -40,6 +40,11 @@
             </div>
             <div class="invalid-feedback" v-if="!$v.form.name.maxLength">
               Exede los 200 Caracteres
+            </div>
+          </template>
+          <template v-if="errors.name">
+            <div class="invalid-feedback">
+              {{ errors.name[0] }}
             </div>
           </template>
         </b-form-group>
@@ -151,6 +156,9 @@ export default {
   computed: {
     allStates(){
       return this.$store.state.config.states
+    },
+    errors() {
+      return this.$store.state.actions.errors
     }
   },
   validations() {
@@ -188,11 +196,12 @@ export default {
         me.sending = true
         if (me.event) {
           let params = {
-            url: 'states',
+            url: '/states',
             data: me.form,
-            files: false
+            files: false,
+            action: 'getStates'
           }
-          me.$store.dispatch('api/create', params)
+          me.$store.dispatch('create', params)
           setTimeout(() => {
             if (Object.keys(me.errors).length >= 1) {
               //validation back
@@ -200,7 +209,7 @@ export default {
               return
             } else {
               me.sending = false
-              me.$store.dispatch('config/getStates')
+              /* me.$store.dispatch('config/getStates') */
               me.hideModal()
             }
           }, 2000)
@@ -238,7 +247,7 @@ export default {
     EventBus.$on('show-modal-state', () => {
       this.$bvModal.show('modal-state')
     })
-    this.$store.dispatch('getStates')
+    /* this.$store.dispatch('getStates') */
   },
   watch: {
     items(){

@@ -29,7 +29,7 @@
           <b-form-input
             id="name"
             v-model="form.name"
-            :class="{ 'is-invalid': $v.form.name.$error }"
+            :class="{ 'is-invalid': $v.form.name.$error || errors.name}"
             :disabled="viewOnlly"
             autofocus
           />
@@ -39,6 +39,11 @@
             </div>
             <div class="invalid-feedback" v-if="!$v.form.name.maxLength">
               Exede los 200 Caracteres
+            </div>
+          </template>
+          <template v-if="errors.name">
+            <div class="invalid-feedback">
+              {{ errors.name[0] }}
             </div>
           </template>
         </b-form-group>
@@ -165,6 +170,9 @@ export default {
   computed: {
     allCancellationReason(){
       return this.$store.state.config.cancellationReason
+    },
+    errors() {
+      return this.$store.state.actions.errors
     }
   },
   methods: {
@@ -188,11 +196,12 @@ export default {
         me.sending = true
         if (me.event) {
           let params = {
-            url: 'cancellationReason',
+            url: '/cancellation-reasons',
             data: me.form,
-            files: false
+            files: false,
+            action: 'getCancellationReason'
           }
-          me.$store.dispatch('api/create', params)
+          me.$store.dispatch('create', params)
           setTimeout(() => {
             if (Object.keys(me.errors).length >= 1) {
               //validation back
@@ -200,7 +209,7 @@ export default {
               return
             } else {
               me.sending = false
-              me.$store.dispatch('config/getCancellationReason')
+              //me.$store.dispatch('config/getCancellationReason')
               me.hideModal()
             }
           }, 2000)
@@ -246,7 +255,7 @@ export default {
     EventBus.$on('show-modal-cancellationReason', () => {
       this.$bvModal.show('modal-cancellationReason')
     })
-    this.$store.dispatch('getCancellationReason')
+    /* this.$store.dispatch('getCancellationReason') */
   },
 }
 </script>

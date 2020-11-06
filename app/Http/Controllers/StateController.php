@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RequestState;
 use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -25,20 +26,19 @@ class StateController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RequestState $request)
     {
       try {
         DB::beginTransaction();
 
         $data = $request->all();
-        $data['user_id'] = Auth::user()->id; //trae el usuario que esta autenticado
-        $state = State::created($data);
+        $state = State::create($data);
         DB::commit();
 
         if ($state) {
           return response()->json([
             'type' => 'success',
-            'message' => 'Estado cambiado',
+            'message' => 'Creado con éxito',
             'data' => $state
           ], 202);
         }else{

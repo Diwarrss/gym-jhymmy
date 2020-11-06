@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RequestUser;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
 use GuzzleHttp\Psr7\Request;
@@ -28,34 +29,36 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RequestUser $request)
     {
       //crear usuario
       try {
         DB::beginTransaction();
         $data = $request->all();
+        $data['pin'] = 0000;/* trae el usuario q esta autenticado */
         $user = User::create($data);
         DB::commit(); //commit de la transaccion
 
         if ($user) {
           return response()->json([
             'type' => 'success',
-            'message' => 'Usuario creado con éxito',
+            'message' => 'Creado con éxito',
             'data' => $user
-          ], 201);
+          ], 202);
         }else{
           return response()->json([
             'type' => 'error',
             'message' => 'Error al guardar',
-            'data' => []
+            'data' =>[]
           ], 204);
         }
-        /* return response()->json([
-          'message' => 'Seguimiento creado con éxito',
-          'data' => $user
-        ], 201); */
-      } catch (Exception $e) {
-        DB::rollBack(); //si hay error no ejecute la transaccion
+      } catch (Exception $e){
+          return response()->json([
+            'type' => 'error',
+            'message' => 'Error al guardar',
+            'data' =>[]
+          ], 204);
+          DB::rollBack(); //si hay un error no se ejecuta la transaccion
       }
     }
 

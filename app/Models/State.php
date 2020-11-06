@@ -15,6 +15,7 @@ class State extends Model
      * @var array
      */
     protected $fillable = [
-      'name'
+      'name',
+      'state'
     ];
 }
