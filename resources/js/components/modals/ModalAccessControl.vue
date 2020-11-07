@@ -65,27 +65,6 @@
             </div>
           </template>
         </b-form-group>
-        <!-- estado -->
-        <b-form-group
-          id="groupstate"
-          label="Estado:"
-          label-for="state"
-          >
-          <b-form-select
-            id="state"
-            v-model="form.state"
-            :class="{ 'is-invalid': $v.form.state.$error }"
-          >
-            <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
-            <b-form-select-option :value="1">Activo</b-form-select-option>
-            <b-form-select-option :value="0">Inactivo</b-form-select-option>
-          </b-form-select>
-          <template v-if="$v.form.state.$error">
-            <div class="invalid-feedback" v-if="!$v.form.state.required">
-              Seleccione el Estado
-            </div>
-          </template>
-        </b-form-group>
         <div
           class="text-center">
           <b-button
@@ -158,8 +137,7 @@ export default {
         id: '',
         user_id: null,
         date: '',
-        temperature:'',
-        state: null
+        temperature:''
       },
       sending: false,
       updating: false
@@ -168,14 +146,10 @@ export default {
   validations() {
     let form = {
       form: {
-
         user_id: {
           required
         },
         temperature: {
-          required
-        },
-        state: {
           required
         }
       }
@@ -266,13 +240,13 @@ export default {
   created() {
     EventBus.$on('show-modal-access-table', () => {
       this.$bvModal.show('modal-access-table')
-      console.log(this.items)
+      this.$store.dispatch('getUsers')
     })
     EventBus.$on('show-modal-access', () => {
       this.$bvModal.show('modal-access')
+      this.$store.dispatch('getUsers')
     })
-    this.$store.dispatch('getAccessControl')
-    this.$store.dispatch('getUsers')
+    //this.$store.dispatch('getAccessControl')
   },
 }
 </script>

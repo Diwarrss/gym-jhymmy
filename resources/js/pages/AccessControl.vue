@@ -76,11 +76,7 @@ export default {
       updating: false,
       event: '',
       viewOnlly: false,
-      tittleModal : '',
-      users: [
-        { "id" : "1", "name" : "Activo"},
-        { "id" : "2", "name" : "Inactivo"}
-      ],
+      tittleModal : ''
     }
   },
   computed: {

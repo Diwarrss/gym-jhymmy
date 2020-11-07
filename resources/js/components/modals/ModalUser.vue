@@ -21,6 +21,7 @@
         {{ tittleModal }}
       </template>
       <b-form
+        class="form-modal-user"
         @submit="sendData"
         v-if="show">
         <!-- usuario -->
@@ -120,22 +121,29 @@
           </b-col>
           <!-- fecha de nacimiento -->
           <b-col cols="md-6">
-          <b-form-group
-            id="groupname"
-            label="Fecha de Nacimiento:"
-            label-for="birthdate">
-            <b-form-input
-              id="birthdate"
-              :disabled="viewOnlly"
-              v-model="form.birthdate"
-              :class="{ 'is-invalid': $v.form.birthdate.$error }"
-            />
-            <template v-if="$v.form.birthdate.$error">
-              <div class="invalid-feedback" v-if="!$v.form.birthdate.required">
-                Digite el fecha de nacimiento
-              </div>
-            </template>
-          </b-form-group>
+            <b-form-group
+              id="groupname"
+              label="Fecha de Nacimiento:"
+              label-for="birthdate">
+              <!-- <b-form-input
+                id="birthdate"
+                :disabled="viewOnlly"
+                v-model="form.birthdate"
+                :class="{ 'is-invalid': $v.form.birthdate.$error }"
+              /> -->
+              <date-picker
+                valueType="format"
+                id="birthdate"
+                :disabled="viewOnlly"
+                v-model="form.birthdate"
+                :class="{ 'is-invalid': $v.form.birthdate.$error }"
+                />
+              <template v-if="$v.form.birthdate.$error">
+                <div class="invalid-feedback" v-if="!$v.form.birthdate.required">
+                  Digite el fecha de nacimiento
+                </div>
+              </template>
+            </b-form-group>
           </b-col>
           <!-- correo electronico -->
           <b-col cols="md-6">
@@ -315,9 +323,12 @@
   </div>
 </template>
 <script>
+import DatePicker from 'vue2-datepicker'
+import 'vue2-datepicker/index.css'
 import { required, minLength, maxLength, between, integer, email, sameAs } from 'vuelidate/lib/validators'
 import EventBus from '../../bus'
 export default {
+  components: { DatePicker },
   props: {
     viewOnlly: {
       type: Boolean,
@@ -537,23 +548,15 @@ export default {
 }
 </script>
 <style lang="scss">
-  .modal-content{
-    .v-select{
-      .vs__dropdown-toggle{
-        height: 46px !important;
+  .form-modal-user {
+    .form-group {
+      .mx-datepicker {
+        width: 100%;
+        .mx-input {
+          color: #8898aa;
+          height: 46px;
+        }
       }
     }
-    /* .vdpComponent.vdpWithInput>input {
-      height: 46px;
-      width: 100%;
-      border-radius: 5px;
-      border: 1px solid #cac7c7;
-      font-size: 16px;
-      padding-left: 10px;
-      color: black;
-    } */
-    /* .vdpComponent {
-      width: 100%;
-    } */
   }
 </style>

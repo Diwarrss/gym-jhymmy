@@ -30,7 +30,7 @@ export default {
       const data = await axios.get('/payments')
       commit('setPayment', data.data)
     },
-    getAccessCotrol: async function({ commit }) {
+    getAccessControl: async function({ commit }) {
       const data = await axios.get('/access-controlls')
       commit('setAccessControl', data.data)
     }
