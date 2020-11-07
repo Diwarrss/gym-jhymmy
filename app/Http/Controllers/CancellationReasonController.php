@@ -79,9 +79,9 @@ class CancellationReasonController extends Controller
         $cancellationReason = CancellationReason::find($id);
 
         //validacion
-       /*  $request->validate([
+        $request->validate([
           'name' => 'required|max:200|unique:cancellation_reasons,name,' . $id
-        ]); */
+        ]);
 
       $cancellationReason->name = $request->name;
       $cancellationReason->state = $request->state;
