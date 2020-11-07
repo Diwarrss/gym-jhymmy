@@ -17,9 +17,8 @@ class Tracing extends Model
     protected $fillable = [
       'back',
       'chest',
-      'claf',
+      'calf',
       'leg',
-      'abdomen',
       'arm',
       'waist',
       'weight',

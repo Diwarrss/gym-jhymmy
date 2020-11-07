@@ -86,10 +86,10 @@ class GenderController extends Controller
         $gender = Gender::find($id);
 
         //validacion
-       /*  $request->validate([
+        $request->validate([
           'name' => 'required|max:200|unique:genders,name,' . $id,
           'initials' => 'required|max:5|unique:genders,initials,' . $id
-        ]); */
+        ]);
 
       $gender->name = $request->name;
       $gender->initials = $request->initials;

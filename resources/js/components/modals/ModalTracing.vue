@@ -50,14 +50,14 @@
                 </div>
               </template>
               <template v-if="errors.user_id">
-            <div class="invalid-feedback">
-              {{ errors.user_id[0] }}
-            </div>
-          </template>
+                <div class="invalid-feedback">
+                  {{ errors.user_id[0] }}
+                </div>
+              </template>
             </b-form-group>
           </b-col>
           <!-- estado -->
-          <b-col cols="md-6">
+          <!-- <b-col cols="md-6">
           <b-form-group
             id="groupstate"
             label="Estado:"
@@ -83,12 +83,12 @@
               </div>
             </template>
           </b-form-group>
-          </b-col>
+          </b-col> -->
           <!-- Fecha -->
-          <b-col>
+          <b-col cols="md-6">
             <b-form-group
               id="groupname"
-              label="Fecha de Pago:"
+              label="Fecha de Inicio:"
               label-for="created_at">
               <!-- <b-form-input
                 id="birthdate"
@@ -346,7 +346,6 @@ export default {
       form: {
         id: '',
         user_id: '',
-        state:'',
         back: '',
         chest: '',
         calf: '',
@@ -391,9 +390,6 @@ export default {
         },
         size: {
           required
-        },
-        state: {
-          required
         }
       }
     }
@@ -411,7 +407,7 @@ export default {
     hideModal() {
       this.form.id = ''
       this.form.user = ''
-      this.form.state = ''
+      //this.form.state = ''
       this.form.back = ''
       this.form.chest = ''
       this.form.calf = ''
@@ -482,10 +478,12 @@ export default {
   created() {
     EventBus.$on('show-modal-tracing-table', () => {
       this.$bvModal.show('modal-tracing-table')
+      //this.$store.dispatch('getUsers')
       console.log(this.items)
     })
     EventBus.$on('show-modal-tracing', () => {
       this.$bvModal.show('modal-tracing')
+      //this.$store.dispatch('getUsers')
     })
     //this.$store.dispatch('getTracing')
   },
@@ -494,7 +492,7 @@ export default {
       //console.log('items')
       this.form.id = this.items.id
       this.form.user = this.items.user
-      this.form.state = this.items.state
+      //this.form.state = this.items.state
       this.form.back = this.items.back
       this.form.chest = this.items.chest
       this.form.calf =  this.items.calf

@@ -17,6 +17,7 @@ class Payment extends Model
     protected $fillable = [
       'value',
       'to_date',
+      'state',
       'from_date',
       'user_id',
       'creator_user_id'

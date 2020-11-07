@@ -73,7 +73,6 @@ export default {
       modal: 'modal-tracing',
       form: {
         user_id: '',
-        state:'',
         back: '',
         calf: '',
         leg: '',
@@ -147,6 +146,7 @@ export default {
   },
   created() {
     this.$store.dispatch('getTracing')
+    this.$store.dispatch('getUsers')
   },
   methods: {
     newTracing(view) {
@@ -164,7 +164,7 @@ export default {
       //this.$store.dispatch('config/getGender')
       //this.$store.dispatch('config/getTypeIdentification')
       this.form.user_id = item.user_id
-      this.form.state = item.state
+      //this.form.state = item.state
       this.form.back = item.back
       this.form.calf = item.calf
       this.form.leg = item.leg

@@ -19,7 +19,6 @@ class CreateTracingsTable extends Migration
             $table->double('chest');//pecho
             $table->double('calf');//pantorrilla
             $table->double('leg');//pierna
-            $table->double('abdomen');//abdomen
             $table->double('arm');//brazo
             $table->double('waist');//cintura
             $table->double('weight');//peso

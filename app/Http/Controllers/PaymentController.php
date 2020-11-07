@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RequestPayment;
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PaymentController extends Controller
@@ -31,6 +32,7 @@ class PaymentController extends Controller
       try {
         DB::beginTransaction();
         $data = $request->all();
+        $data['creator_user_id'] = Auth::user()->id;
         $payment = Payment::create($data);
         DB::commit(); //commit de la transaccion
 

@@ -23,35 +23,35 @@
         @submit="sendData"
         v-if="show">
         <!-- usuario -->
-        <b-form-group
-          id="groupusers"
-          label="Usuario:"
-          label-for="user_id"
-          >
-          <v-select
-            id="user_id"
-            v-model="form.user_id"
-            :class="{ 'is-invalid': $v.form.user_id.$error || errors.user_id}"
-            :options="users"
-            placeholder="Seleccionar..."
-            :reduce="users => users.id"
-            label="name"
-            name="user"
-            :disabled="viewOnlly"
-          >
-            <div slot="no-options">No hay Resultados!</div>
-          </v-select>
-          <template v-if="$v.form.user_id.$error">
-            <div class="invalid-feedback" v-if="!$v.form.user_id.required">
-              Seleccione Usuario
-            </div>
-          </template>
-          <template v-if="errors.user_id">
-            <div class="invalid-feedback">
-              {{ errors.user_id[0] }}
-            </div>
-          </template>
-        </b-form-group>
+          <b-form-group
+            id="groupusers"
+            label="Usuario:"
+            label-for="user_id"
+            >
+            <v-select
+              id="user_id"
+              v-model="form.user_id"
+              :class="{'is-invalid': $v.form.user_id.$error || errors.user_id}"
+              :options="users"
+              placeholder="Seleccionar..."
+              :reduce="users => users.id"
+              label="name"
+              name="user"
+              :disabled="viewOnlly"
+            >
+              <div slot="no-options">No hay Resultados!</div>
+            </v-select>
+            <template v-if="$v.form.user_id.$error">
+              <div class="invalid-feedback" v-if="!$v.form.user_id.required">
+                Seleccione Usuario
+              </div>
+            </template>
+            <template v-if="errors.user_id">
+              <div class="invalid-feedback">
+                {{ errors.user_id[0] }}
+              </div>
+            </template>
+          </b-form-group>
         <!-- fecha de pago -->
             <b-form-group
               id="groupname"
@@ -200,7 +200,7 @@ export default {
         user_id: '',
         to_date: '',
         from_date: '',
-        state: '',
+        state: true,
         value: ''
       },
     }
@@ -244,9 +244,7 @@ export default {
     sendData(evt) {
       evt.preventDefault()
       let me = this
-      me.form.user_id = me.form.user_id ? me.form.user_id.toUpperCase() : ''
-      me.form.value = me.form.value ? me.form.value.toUpperCase() : ''
-      me.form.created_at = me.form.created_at ? me.form.created_at.toUpperCase() : ''
+      me.form.to_date = me.form.from_date
       this.$v.$touch()
       if (this.$v.$invalid) {
         return
