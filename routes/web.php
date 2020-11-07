@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\CancellationReasonController;
 use App\Http\Controllers\GenderController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StateController;
+use App\Http\Controllers\TracingController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,9 +34,9 @@ Route::group(['middleware' => 'auth'], function () {
   //estados
   Route::resource('states', StateController::class);
   //seguimineto
-  Route::resource('tracings', 'App\Http\Controllers\TracingController');
+  Route::resource('tracings', TracingController::class);
   //pagos
-  Route::resource('payments', 'App\Http\Controllers\PaymentController');
+  Route::resource('payments', PaymentController::class);
   //perfil
   //Route::resource('profiles', 'App\Http\Controllers\ProfileController');
   //acceso

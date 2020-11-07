@@ -39,7 +39,7 @@ export default {
       tittleModal : '',
       form: {
         id: '',
-        name: '',
+        user_id: '',
         from_date: '',
         state: ''
       },
@@ -101,7 +101,7 @@ export default {
         this.sending = false
         this.form = {
           id: null,
-          name: null,
+          user_id: null,
           date: null,
           create_ad: null,
           state: null
@@ -124,7 +124,7 @@ export default {
       //this.$store.dispatch('config/getGender')
       //this.$store.dispatch('config/getTypeIdentification')
       this.form.id = item.id
-      this.form.name = item.name
+      this.form.user_id = item.user_id
       this.form.from_date = item.created_ad
       this.form.state = item.state
       this.event = 0

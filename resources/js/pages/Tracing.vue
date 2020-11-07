@@ -72,7 +72,7 @@ export default {
       rows: 4,
       modal: 'modal-tracing',
       form: {
-        user: '',
+        user_id: '',
         state:'',
         back: '',
         calf: '',
@@ -163,7 +163,7 @@ export default {
       //this.$store.dispatch('api/clearErrors') //clean errors of back
       //this.$store.dispatch('config/getGender')
       //this.$store.dispatch('config/getTypeIdentification')
-      this.form.user = item.user
+      this.form.user_id = item.user_id
       this.form.state = item.state
       this.form.back = item.back
       this.form.calf = item.calf

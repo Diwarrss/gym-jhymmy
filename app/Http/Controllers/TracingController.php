@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RequestTracing;
 use App\Models\Tracing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TracingController extends Controller
 {
@@ -23,9 +25,35 @@ class TracingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RequestTracing $request)
     {
-        //
+      try {
+        DB::beginTransaction();
+        $data = $request->all();
+        $tracing = Tracing::create($data);
+        DB::commit();
+
+        if ($tracing) {
+          return response()->json([
+            'type' => 'success',
+            'message' => 'Creado con éxito',
+            'data' => $tracing
+          ], 202);
+        }else{
+          return response()->json([
+            'type' => 'error',
+            'message' => 'Error al guardar',
+            'data' =>[]
+          ], 204);
+        }
+      } catch (Exception $e){
+          return response()->json([
+            'type' => 'error',
+            'message' => 'Error al guardar',
+            'data' =>[]
+          ], 204);
+          DB::rollBack(); //si hay un error no se ejecuta la transaccion
+      }
     }
 
     /**

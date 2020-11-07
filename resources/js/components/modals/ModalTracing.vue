@@ -20,6 +20,7 @@
         {{ tittleModal }}
       </template>
       <b-form
+      class="form-modal-tracing"
         @submit="sendData"
         v-if="show">
         <!-- usuario -->
@@ -33,7 +34,7 @@
               <v-select
                 id="user_id"
                 v-model="form.user_id"
-                :class="{ 'is-invalid': $v.form.user_id.$error }"
+                :class="{ 'is-invalid': $v.form.user_id.$error || errors.user_id}"
                 :options="users"
                 placeholder="Seleccionar..."
                 :reduce="users => users.id"
@@ -48,6 +49,11 @@
                   Seleccione Usuario
                 </div>
               </template>
+              <template v-if="errors.user_id">
+            <div class="invalid-feedback">
+              {{ errors.user_id[0] }}
+            </div>
+          </template>
             </b-form-group>
           </b-col>
           <!-- estado -->
@@ -78,21 +84,28 @@
             </template>
           </b-form-group>
           </b-col>
-           <b-col cols="md-4">
-             <!-- Fecha -->
+          <!-- Fecha -->
+          <b-col>
             <b-form-group
-              id="date"
-              label="Fecha:"
+              id="groupname"
+              label="Fecha de Pago:"
               label-for="created_at">
-              <b-form-input
+              <!-- <b-form-input
+                id="birthdate"
+                :disabled="viewOnlly"
+                v-model="form.birthdate"
+                :class="{ 'is-invalid': $v.form.birthdate.$error }"
+              /> -->
+              <date-picker
+                valueType="format"
                 id="created_at"
+                :disabled="viewOnlly"
                 v-model="form.created_at"
                 :class="{ 'is-invalid': $v.form.created_at.$error }"
-                :disabled="viewOnlly"
-              />
+                />
               <template v-if="$v.form.created_at.$error">
                 <div class="invalid-feedback" v-if="!$v.form.created_at.required">
-                  Seleccione fecha
+                  Fecha
                 </div>
               </template>
             </b-form-group>
@@ -288,9 +301,14 @@
   </div>
 </template>
 <script>
+import DatePicker from 'vue2-datepicker'
+import 'vue2-datepicker/index.css'
 import { required, minLength, maxLength, between, integer, email } from 'vuelidate/lib/validators'
 import EventBus from '../../bus'
 export default {
+  components: {
+    DatePicker
+  },
   props: {
     viewOnlly: {
       type: Boolean,
@@ -384,6 +402,9 @@ export default {
   computed: {
     users() {
       return this.$store.state.user.users
+    },
+    errors() {
+      return this.$store.state.actions.errors
     }
   },
   methods: {
@@ -415,11 +436,12 @@ export default {
         me.sending = true
         if (me.event) {
           let params = {
-            url: 'tracings',
+            url: '/tracings',
             data: me.form,
-            files: false
+            files: false,
+            action: 'getTracing'
           }
-          me.$store.dispatch('api/create', params)
+          me.$store.dispatch('create', params)
           setTimeout(() => {
             if (Object.keys(me.errors).length >= 1) {
               //validation back
@@ -427,7 +449,7 @@ export default {
               return
             } else {
               me.sending = false
-              me.$store.dispatch('config/getTracing')
+              //me.$store.dispatch('config/getTracing')
               me.hideModal()
             }
           }, 2000)
@@ -465,7 +487,7 @@ export default {
     EventBus.$on('show-modal-tracing', () => {
       this.$bvModal.show('modal-tracing')
     })
-    this.$store.dispatch('getTracing')
+    //this.$store.dispatch('getTracing')
   },
   watch: {
     items(){
@@ -487,23 +509,15 @@ export default {
 }
 </script>
 <style lang="scss">
-  .modal-content{
-    .v-select{
-      .vs__dropdown-toggle{
-        height: 46px !important;
+  .form-modal-tracing {
+    .form-group {
+      .mx-datepicker {
+        width: 100%;
+        .mx-input {
+          color: #8898aa;
+          height: 46px;
+        }
       }
     }
-    /* .vdpComponent.vdpWithInput>input {
-      height: 46px;
-      width: 100%;
-      border-radius: 5px;
-      border: 1px solid #cac7c7;
-      font-size: 16px;
-      padding-left: 10px;
-      color: black;
-    } */
-    /* .vdpComponent {
-      width: 100%;
-    } */
   }
 </style>
