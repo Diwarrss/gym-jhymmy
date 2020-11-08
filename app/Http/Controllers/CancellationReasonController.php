@@ -15,9 +15,13 @@ class CancellationReasonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request  $request)
     {
+      if ($request->active == 1) {
+        return CancellationReason::where('state', true)->get();
+      }
       return CancellationReason::all();
+
     }
 
     /**

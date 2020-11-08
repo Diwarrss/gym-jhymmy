@@ -23,7 +23,8 @@ class Tracing extends Model
       'waist',
       'weight',
       'size',
-      'user_id'
+      'user_id',
+      'state'
     ];
 
     public function user()

@@ -59,6 +59,10 @@ export default {
           label: 'Nombre'
         },
         {
+          key: 'state',
+          label: 'Estado'
+        },
+        {
           key: 'acciones',
           label: 'Acciones'
         }

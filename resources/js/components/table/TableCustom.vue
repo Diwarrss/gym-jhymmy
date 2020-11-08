@@ -76,27 +76,41 @@
           variant="warning"
           @click="modalEdit(row.item, row.index, $event.target, false)"><i class="fas fa-edit mr-md-1"/><span class="d-none d-md-inline-block">Editar</span></b-button>
         <b-button
-          v-if="row.item.status == 1"
+          v-if="row.item.state == 1"
           variant="danger"
           @click="status(row.item.id, 'disable')"><i class="fas fa-times-circle mr-md-1"/><span class="d-none d-md-inline-block">Inactivar</span></b-button>
         <b-button
-          v-if="row.item.status == 0"
+          v-if="row.item.state == 0"
           variant="success"
           @click="status(row.item.id, 'enable')"><i class="fas fa-check-circle mr-md-1"/><span class="d-none d-md-inline-block">Activar</span></b-button>
       </template>
       <template #empty="scope">
         <h4 class="text-center text-primary"><b-spinner variant="primary" label="Spinning"></b-spinner> Sin Resultados</h4>
       </template>
-      <!-- <template v-slot:cell(state)="data">
-        <h5 v-if="data.item.status">
+      <template v-slot:cell(state)="data">
+        <h5 v-if="data.item.state">
           <b-badge
-            variant="success">{{ data.item.status ? 'Activo' : 'Inactivo' }} </b-badge>
+            variant="success">Activo</b-badge>
         </h5>
         <h5 v-else>
           <b-badge
-            variant="danger">{{ data.item.status ? 'Activo' : 'Inactivo' }} </b-badge>
+            variant="danger">Inactivo</b-badge>
         </h5>
-      </template> -->
+      </template>
+      <template v-slot:cell(state.name)="data">
+        <h5 v-if="data.item.state_id == 1">
+          <b-badge
+            variant="success">Activo</b-badge>
+        </h5>
+        <h5 v-else-if="data.item.state_id == 2">
+          <b-badge
+            variant="danger">Inactivo</b-badge>
+        </h5>
+        <h5 v-else>
+          <b-badge
+            variant="info">{{ data.item.state.name }}</b-badge>
+        </h5>
+      </template>
     </b-table>
     <!-- Info Paginacion -->
     <b-pagination

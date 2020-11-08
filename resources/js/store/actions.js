@@ -10,7 +10,6 @@ export default {
   actions: {
     create: function({ commit, dispatch }, params) {
       commit('setErrors', {})
-      let me = this
       let url = params.url
       let getData = params.data
       let files = params.files
@@ -41,7 +40,11 @@ export default {
                   timer: 2000
                 })
               }, 2000);
-              dispatch(action, null, {root:true})
+              if (params.paramDispatch) {
+                dispatch(action, params.actionDispatch, {root:true})
+              }else{
+                dispatch(action, null, {root:true})
+              }
             } else {
               setTimeout(() => {
                 Vue.swal({
@@ -67,6 +70,7 @@ export default {
       let url = params.url
       let getData = params.data
       let files = params.files
+      let action = params.action
       if (files) {
         axios
           .post(url, getData, {
@@ -115,29 +119,28 @@ export default {
           .then(res => {
             if (res.data.type === 'success') {
               setTimeout(() => {
-                this.$swal({
-                  title: res.data.message,
+                Vue.swal({
                   icon: 'success',
-                  confirmButtonColor: '#4dbd74',
-                  confirmButtonText:
-                    '<i class="far fa-check-circle"></i> Aceptar',
+                  title: res.data.message,
+                  showConfirmButton: true,
                   timer: 2000
                 })
-              }, 1000)
+              }, 2000);
               if (params.dispatchParams) {
-                dispatch(params.action, params.actionDispatch, {root:true})
+                dispatch(action, params.actionDispatch, {root:true})
               }else{
-                dispatch(params.action, null, {root:true})
+                dispatch(action, null, {root:true})
               }
               commit('setResult', res.data.data)
             } else {
-              this.$swal({
-                title: res.data.message,
-                icon: 'error',
-                confirmButtonColor: '#4dbd74',
-                confirmButtonText: '<i class="far fa-check-circle"></i> Aceptar',
-                timer: 2000
-              })
+              setTimeout(() => {
+                Vue.swal({
+                  icon: 'error',
+                  title: res.data.message,
+                  showConfirmButton: true,
+                  timer: 2000
+                })
+              }, 2000);
             }
             console.log(res)
           })

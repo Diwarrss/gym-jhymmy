@@ -22,16 +22,16 @@ export default {
     }
   },
   actions: {
-    getStates: async function({ commit }) {
-      const data = await axios.get('/states')
+    getStates: async function({ commit }, param) {
+      const data = await axios.get('/states', { params: { active: param} })
       commit('setStates', data.data)
     },
-    getGenders: async function({ commit }) {
-      const data = await axios.get('/genders')
+    getGenders: async function({ commit }, param) {
+      const data = await axios.get('/genders', { params: { active: param} })
       commit('setGenders', data.data)
     },
-    getCancellationReason: async function({ commit }) {
-      const data = await axios.get('/cancellation-reasons')
+    getCancellationReason: async function({ commit }, param) {
+      const data = await axios.get('/cancellation-reasons', { params: { active: param} })
       commit('setCancellationReason', data.data)
     }
   },

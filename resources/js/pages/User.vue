@@ -53,12 +53,9 @@ export default {
           sortable: true
         },
         {
-          key: 'state',
+          key: 'state.name',
           label: 'Estado',
-          sortable: true,
-          formatter: value => {
-            return value ? 'Activo' : 'Inactivo'
-          }
+          sortable: true
         },
         {
           key: 'acciones',

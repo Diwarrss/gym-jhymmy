@@ -310,6 +310,10 @@ export default {
     DatePicker
   },
   props: {
+    user: {
+      type: Number,
+      default: ()=> 0
+    },
     viewOnlly: {
       type: Boolean,
       default: ()=> false
@@ -354,6 +358,7 @@ export default {
         arm: '',
         waist: '',
         weight: '',
+        state: '',
         size: ''
       },
     }
@@ -406,8 +411,8 @@ export default {
   methods: {
     hideModal() {
       this.form.id = ''
-      this.form.user = ''
-      //this.form.state = ''
+      this.form.user_id = null
+      this.form.state = ''
       this.form.back = ''
       this.form.chest = ''
       this.form.calf = ''
@@ -435,7 +440,9 @@ export default {
             url: '/tracings',
             data: me.form,
             files: false,
-            action: 'getTracing'
+            action: 'getTracing',
+            paramDispatch: true,
+            actionDispatch: me.form.user_id
           }
           me.$store.dispatch('create', params)
           setTimeout(() => {
@@ -491,7 +498,7 @@ export default {
     items(){
       //console.log('items')
       this.form.id = this.items.id
-      this.form.user = this.items.user
+      this.form.user_id = this.items.user_id
       //this.form.state = this.items.state
       this.form.back = this.items.back
       this.form.chest = this.items.chest
@@ -502,6 +509,9 @@ export default {
       this.form.waist = this.items.waist
       this.form.weight = this.items.weight
       this.form.size = this.items.size
+    },
+    user() {
+      this.form.user_id = this.user
     }
   },
 }

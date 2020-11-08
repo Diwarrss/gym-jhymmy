@@ -22,8 +22,8 @@ export default {
     }
   },
   actions: {
-    getTracing: async function({ commit }) {
-      const data = await axios.get('/tracings')
+    getTracing: async function({ commit }, param) {
+      const data = await axios.get('/tracings', { params: { user: param } })
       commit('setTracings', data.data)
     },
     getPayment: async function({ commit }) {

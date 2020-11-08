@@ -17,9 +17,13 @@ class GenderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+      if ($request->active == 1) {
+        return Gender::where('state', true)->get();
+      }
       return Gender::all();
+
     }
 
     /**
@@ -82,7 +86,6 @@ class GenderController extends Controller
       try {
         DB::beginTransaction();
 
-        //$data request->all
         $gender = Gender::find($id);
 
         //validacion
@@ -90,29 +93,32 @@ class GenderController extends Controller
           'name' => 'required|max:200|unique:genders,name,' . $id,
           'initials' => 'required|max:5|unique:genders,initials,' . $id
         ]);
+        // table,column,except,idColumn
 
-      $gender->name = $request->name;
-      $gender->initials = $request->initials;
-      $gender->state = $request->state;
-      $gender->save();
 
-      DB::commit(); //commit de la transaccion
+        $gender->name = $request->name;
+        $gender->initials = $request->initials;
+        $gender->state = $request->state;
+        $gender->save();
 
-      if ($gender) {
-        return response()->json([
-          'type' => 'success',
-          'message' => 'Actualización con exito',
-          'data' => $gender
-        ], 202);
-      }else{
-        return response()->json([
-          'type' => 'error',
-          'message' => 'Error al actualizar',
-          'data' =>[]
-        ], 204);
-      }
+        DB::commit(); //commit de la transaccion
+
+        if ($gender) {
+          return response()->json([
+            'type' => 'success',
+            'message' => 'Actualización con exito',
+            'data' => $gender
+          ], 202);
+        }else{
+          return response()->json([
+            'type' => 'error',
+            'message' => 'Error al actualizar',
+            'data' =>[]
+          ], 204);
+        }
 
       } catch (Exception $e){
+        return $e;
         return response()->json([
           'type' => 'error',
           'message' => 'Error al actualizar',

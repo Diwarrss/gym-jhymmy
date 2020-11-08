@@ -20,13 +20,14 @@
                   :reduce="users => users.id"
                   label="name"
                   name="user"
+                  @input="changeUser"
                 >
                 <div slot="no-options">No hay Resultados!</div>
                 </v-select>
               </b-form-group>
             </b-form>
           </b-col>
-          <b-col>
+          <b-col sm="12" md="12" lg="6">
             <button class="btn btn-primary mb-3" @click="newTracing()">Nuevo</button>
           </b-col>
         </b-row>
@@ -43,7 +44,7 @@
         </div>
       </div>
     </div>
-    <ModalTracing :viewOnlly="false" :event="true" tittleModal="Nuevo Registro" :modal="modal"/>
+    <ModalTracing :viewOnlly="false" :event="true" tittleModal="Nuevo Registro" :modal="modal" :user="form.user_id"/>
   </div>
 </template>
 <script>
@@ -145,10 +146,13 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('getTracing')
+    // this.$store.dispatch('getTracing')
     this.$store.dispatch('getUsers')
   },
   methods: {
+    changeUser () {
+      this.$store.dispatch('getTracing', this.form.user_id)
+    },
     newTracing(view) {
       EventBus.$emit('show-modal-tracing')
     },
@@ -188,6 +192,18 @@ export default {
 </script>
 <style lang="scss">
   .tracing_component {
+    .card-body {
+      .form-group {
+        label {
+          @media (min-width: 992px) {
+            text-align: right;
+          }
+        }
+        .vs__dropdown-toggle {
+          height: 46px;
+        }
+      }
+    }
     .body_table {
       border-top: 1px solid #cec6c6;
     }

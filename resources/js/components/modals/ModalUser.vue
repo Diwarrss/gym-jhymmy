@@ -366,7 +366,7 @@ export default {
         email: '',
         confirm_password: '',
         password: '',
-        gender_id: '',
+        gender_id: null,
         state_id: null
       },
       sending: false,
@@ -452,8 +452,8 @@ export default {
       this.form.phone = ''
       this.form.birthdate = ''
       this.form.email = ''
-      this.form.gender_id = ''
-      this.form.state_id = ''
+      this.form.gender_id = null
+      this.form.state_id = null
       EventBus.$emit('clear-data-modal')
       this.$v.$reset()
     },
@@ -521,13 +521,13 @@ export default {
   created() {
     EventBus.$on('show-modal-user-table', () => {
       this.$bvModal.show('modal-users-table')
-      this.$store.dispatch('getStates')
-      this.$store.dispatch('getGenders')
+      this.$store.dispatch('getStates', 1)
+      this.$store.dispatch('getGenders', 1)
     })
     EventBus.$on('show-modal-user', () => {
       this.$bvModal.show('modal-users')
-      this.$store.dispatch('getStates')
-      this.$store.dispatch('getGenders')
+      this.$store.dispatch('getStates', 1)
+      this.$store.dispatch('getGenders', 1)
     })
   },
   watch: {

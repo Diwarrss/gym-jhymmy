@@ -15,8 +15,11 @@ class StateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+      if ($request->active == 1) {
+        return State::where('state', true)->get();
+      }
       return State::all();
     }
 

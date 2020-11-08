@@ -64,6 +64,10 @@ export default {
           label: 'Iniciales'
         },
         {
+          key: 'state',
+          label: 'Estado'
+        },
+        {
           key: 'acciones',
           label: 'Acciones'
         }

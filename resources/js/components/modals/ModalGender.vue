@@ -170,11 +170,11 @@ export default {
         id: '',
         name: '',
         initials: '',
-        state: ''
+        state: null
       },
       states: [
-        { "id": true, "name": "Activo"},
-        { "id": false, "name": "Inactivo"}
+        { "id": 1, "name": "Activo"},
+        { "id": 0, "name": "Inactivo"}
       ],
     }
   },
@@ -261,11 +261,12 @@ export default {
           me.updating = true
           //actualizar
           let params = {
-            url: `genders/${me.form.id}`,
+            url: `/genders/${me.form.id}`,
             data: me.form,
-            action: 'config/getGender'
+            files: false,
+            action: 'getGenders'
           }
-          me.$store.dispatch('api/update', params)
+          me.$store.dispatch('update', params)
           setTimeout(() => {
             if (Object.keys(me.errors).length !== 0) {
               //validation back

@@ -13,9 +13,9 @@ class TracingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-      return Tracing::with('user')->get();
+      return Tracing::with('user')->where('user_id', $request->user )->get();
     }
 
     /**
@@ -29,6 +29,8 @@ class TracingController extends Controller
       try {
         DB::beginTransaction();
         $data = $request->all();
+        $data['state'] = 1;
+        //return $data;
         $tracing = Tracing::create($data);
         DB::commit();
 
