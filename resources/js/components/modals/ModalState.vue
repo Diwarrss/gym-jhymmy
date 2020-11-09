@@ -217,11 +217,11 @@ export default {
           me.updating = true
           //actualizar
           let params = {
-            url: `states/${me.form.id}`,
+            url: `/states/${me.form.id}`,
             data: me.form,
-            action: 'config/getStates'
+            action: 'getStates'
           }
-          me.$store.dispatch('api/update', params)
+          me.$store.dispatch('update', params)
           setTimeout(() => {
             if (Object.keys(me.errors).length !== 0) {
               //validation back

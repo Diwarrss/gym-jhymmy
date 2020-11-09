@@ -98,6 +98,7 @@ export default {
           id: null,
           name: null,
           date: null,
+          identification: null,
           state: null
         }
         //this.$store.dispatch('api/clearErrors') //clean errors of back

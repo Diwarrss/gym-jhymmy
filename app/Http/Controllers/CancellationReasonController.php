@@ -34,7 +34,6 @@ class CancellationReasonController extends Controller
     {
       try {
         DB::beginTransaction();
-
         $data = $request->all();
         $cancellationReason = CancellationReason::create($data);
         DB::commit();

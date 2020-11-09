@@ -86,6 +86,15 @@ class StateController extends Controller
 
         //$data request->all
         $state = State::find($id);
+        //validacion
+        $request->validate([
+          'name' => 'required|max:200|unique:states,name,' . $id
+        ]);
+
+        // table,column,except,idColumn
+        $state->name = $request->name;
+        $state->state = $request->state;
+        $state->save();
 
         DB::commit(); //commit de la transaccion
 

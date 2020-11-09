@@ -175,7 +175,7 @@
           <!-- password -->
           <b-col cols="md-6">
             <b-form-group
-              id="groupinitial"
+              id="groupname"
               label="Contraseña:"
               label-for="password">
               <b-form-input
@@ -496,11 +496,12 @@ export default {
           me.updating = true
           //actualizar
           let params = {
-            url: `users/${me.form.id}`,
+            url: `/users/${me.form.id}`,
             data: me.form,
-            action: 'config/getUsers'
+            files: false,
+            action: 'getUsers'
           }
-          me.$store.dispatch('api/update', params)
+          me.$store.dispatch('update', params)
           setTimeout(() => {
             if (Object.keys(me.errors).length !== 0) {
               //validation back

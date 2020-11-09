@@ -35,15 +35,15 @@ export default {
       show: true,
       allRow: this.row,
       modal: 'modal-cancellationReason',
+      sending: false,
+      updating: false,
+      event: '',
+      viewOnlly: false,
+      tittleModal : '',
       form: {
         id: '',
         name: '',
-        state: '',
-        sending: false,
-        updating: false,
-        event: '',
-        viewOnlly: false,
-        tittleModal : ''
+        state: ''
       },
       states: [
         { "id": 1, "name": "Activo"},

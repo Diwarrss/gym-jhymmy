@@ -29,7 +29,7 @@
           <b-form-input
             id="name"
             v-model="form.name"
-            :class="{ 'is-invalid': $v.form.name.$error || errors.name}"
+            :class="{ 'is-invalid': $v.form.name.$error || errors.name }"
             :disabled="viewOnlly"
             autofocus
           />
@@ -122,7 +122,7 @@ export default {
       type: Boolean,
       default: ()=> false
     },
-    item: {
+    items: {
       type: Object,
       default: ()=> {}
     },
@@ -141,10 +141,11 @@ export default {
       allRow: this.row,
       sending: false,
       updating: false,
+      allData: this.items,
       form: {
         id: '',
         name: '',
-        state: ''
+        state: null
       },
       states: [
         { "id": 1, "name": "Activo"},
@@ -171,9 +172,22 @@ export default {
     allCancellationReason(){
       return this.$store.state.config.cancellationReason
     },
+    row() {
+      return this.$store.state.config.allRow
+    },
     errors() {
       return this.$store.state.actions.errors
     }
+  },
+  created() {
+    EventBus.$on('show-modal-cancellationReason-table', () => {
+      this.$bvModal.show('modal-cancellationReason-table')
+      console.log(this.items)
+    })
+    EventBus.$on('show-modal-cancellationReason', () => {
+      this.$bvModal.show('modal-cancellationReason')
+    })
+    /* this.$store.dispatch('getCancellationReason') */
   },
   methods: {
     hideModal() {
@@ -217,11 +231,12 @@ export default {
           me.updating = true
           //actualizar
           let params = {
-            url: `cancellationReason/${me.form.id}`,
+            url: `/cancellation-reasons/${me.form.id}`,
             data: me.form,
-            action: 'config/getCancellationReason'
+            files: false,
+            action: 'getCancellationReason'
           }
-          me.$store.dispatch('api/update', params)
+          me.$store.dispatch('update', params)
           setTimeout(() => {
             if (Object.keys(me.errors).length !== 0) {
               //validation back
@@ -246,17 +261,7 @@ export default {
       this.form.name = this.items.name
       this.form.state = this.items.state
     }
-  },
-  created() {
-    EventBus.$on('show-modal-cancellationReason-table', () => {
-      this.$bvModal.show('modal-cancellationReason-table')
-      console.log(this.items)
-    })
-    EventBus.$on('show-modal-cancellationReason', () => {
-      this.$bvModal.show('modal-cancellationReason')
-    })
-    /* this.$store.dispatch('getCancellationReason') */
-  },
+  }
 }
 </script>
 <style lang="scss">
