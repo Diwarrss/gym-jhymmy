@@ -358,7 +358,7 @@ export default {
         arm: '',
         waist: '',
         weight: '',
-        state: '',
+        //state: '',
         size: ''
       },
     }
@@ -412,7 +412,7 @@ export default {
     hideModal() {
       this.form.id = ''
       this.form.user_id = null
-      this.form.state = ''
+      //sthis.form.state = ''
       this.form.back = ''
       this.form.chest = ''
       this.form.calf = ''
@@ -460,11 +460,14 @@ export default {
           me.updating = true
           //actualizar
           let params = {
-            url: `tracings/${me.form.id}`,
+            url: `/tracings/${me.form.id}`,
             data: me.form,
-            action: 'config/getTracing'
+            files: false,
+            action: 'getTracing',
+            dispatchParams: true,
+            actionDispatch: me.user
           }
-          me.$store.dispatch('api/update', params)
+          me.$store.dispatch('update', params)
           setTimeout(() => {
             if (Object.keys(me.errors).length !== 0) {
               //validation back

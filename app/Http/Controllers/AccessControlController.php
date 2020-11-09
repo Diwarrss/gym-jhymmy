@@ -57,6 +57,66 @@ class AccessControlController extends Controller
           DB::rollBack(); //si hay un error no se ejecuta la transaccion
       }
     }
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\AccessControl  $accessControl
+     * @return \Illuminate\Http\Response
+     */
+    public function show(AccessControl $accessControl)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\AccessControl  $accessControl
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+      try {
+        DB::beginTransaction();
+
+        //$data request->all
+        $accessControl = AccessControl::find($id);
+
+        //validacion
+       /*  $request->validate([
+          'name' => 'required|max:200|unique:accessControl$tracings,name,' . $id,
+          'initials' => 'required|max:5|unique:tracing$tracings,initials,' . $id
+        ]); */
+
+      $accessControl->temperature = $request->temperature;
+      $accessControl->save();
+
+      DB::commit(); //commit de la transaccion
+
+      if ($accessControl) {
+        return response()->json([
+          'type' => 'success',
+          'message' => 'Actualización con exito',
+          'data' => $accessControl
+        ], 202);
+      }else{
+        return response()->json([
+          'type' => 'error',
+          'message' => 'Error al actualizar',
+          'data' =>[]
+        ], 204);
+      }
+
+      } catch (Exception $e){
+        return response()->json([
+          'type' => 'error',
+          'message' => 'Error al actualizar',
+          'data' =>[]
+        ], 204);
+        DB::rollBack(); //si hay un error no se ejecuta la transaccion
+      }
+    }
 
     public function updateState(Request $request, $id)
     {
@@ -66,8 +126,13 @@ class AccessControlController extends Controller
         //$data request->all
         $accessControl = AccessControl::find($id);
 
-        $accessControl->state = !$accessControl->state;
-        $accessControl->save();
+        /* $accessControl->state = !$accessControl->state; */
+        if ($accessControl->state) {
+          $accessControl->state = false;
+        } else {
+          $accessControl->state = true;
+        }
+          $accessControl->save();
 
         DB::commit(); //commit de la transaccion
 
@@ -94,29 +159,6 @@ class AccessControlController extends Controller
           DB::rollBack(); //si hay un error no se ejecuta la transaccion
         }
       }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\AccessControl  $accessControl
-     * @return \Illuminate\Http\Response
-     */
-    public function show(AccessControl $accessControl)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\AccessControl  $accessControl
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, AccessControl $accessControl)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.

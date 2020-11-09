@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Tracing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Exception;
+
 
 class TracingController extends Controller
 {
@@ -75,7 +77,7 @@ class TracingController extends Controller
      * @param  \App\Models\Tracing  $tracing
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tracing $tracing, $id)
+    public function update(Request $request, $id)
     {
       try {
         DB::beginTransaction();
@@ -84,14 +86,20 @@ class TracingController extends Controller
         $tracing = Tracing::find($id);
 
         //validacion
-        $request->validate([
+       /*  $request->validate([
           'name' => 'required|max:200|unique:tracing$tracings,name,' . $id,
           'initials' => 'required|max:5|unique:tracing$tracings,initials,' . $id
-        ]);
+        ]); */
 
-      $tracing->name = $request->name;
-      $tracing->initials = $request->initials;
-      $tracing->state = $request->state;
+      $tracing->back = $request->back;
+      $tracing->chest = $request->chest;
+      $tracing->calf = $request->calf;
+      $tracing->leg = $request->leg;
+      $tracing->arm = $request->arm;
+      $tracing->waist = $request->waist;
+      $tracing->weight = $request->weight;
+      $tracing->created_at = $request->created_at;
+      $tracing->size = $request->size;
       $tracing->save();
 
       DB::commit(); //commit de la transaccion

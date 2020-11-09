@@ -130,7 +130,12 @@ class StateController extends Controller
         //$data request->all
         $state = State::find($id);
 
-        $state->state = !$state->state;
+        //$state->state = !$state->state;
+        if ($state->state) {
+          $state->state = false;
+        } else {
+          $state->state = true;
+        }
         $state->save();
 
         DB::commit(); //commit de la transaccion

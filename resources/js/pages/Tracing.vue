@@ -73,7 +73,7 @@ export default {
       rows: 4,
       modal: 'modal-tracing',
       form: {
-        user_id: '',
+        user_id: 0,
         back: '',
         calf: '',
         leg: '',

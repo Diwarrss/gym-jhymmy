@@ -78,10 +78,93 @@ class PaymentController extends Controller
      * @param  \App\Models\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Payment $payment)
+    public function update(Request $request, $id)
     {
-        //
+      try {
+        DB::beginTransaction();
+
+        //$data request->all
+        $payment = Payment::find($id);
+
+        //validacion
+       /*  $request->validate([
+          'name' => 'required|max:200|unique:accessControl$tracings,name,' . $id,
+          'initials' => 'required|max:5|unique:tracing$tracings,initials,' . $id
+        ]); */
+
+      $payment->value = $request->value;
+      $payment->from_date = $request->from_date;
+      $payment->state = $request->state;
+      $payment->save();
+
+      DB::commit(); //commit de la transaccion
+
+      if ($payment) {
+        return response()->json([
+          'type' => 'success',
+          'message' => 'Actualización con exito',
+          'data' => $payment
+        ], 202);
+      }else{
+        return response()->json([
+          'type' => 'error',
+          'message' => 'Error al actualizar',
+          'data' =>[]
+        ], 204);
+      }
+
+      } catch (Exception $e){
+        return response()->json([
+          'type' => 'error',
+          'message' => 'Error al actualizar',
+          'data' =>[]
+        ], 204);
+        DB::rollBack(); //si hay un error no se ejecuta la transaccion
+      }
     }
+
+    public function updateState(Request $request, $id)
+    {
+      try {
+        DB::beginTransaction();
+
+        //$data request->all
+        $payment = Payment::find($id);
+
+        /* $payment->state = !$payment->state; */
+        if ($payment->state) {
+          $payment->state = false;
+        } else {
+          $payment->state = true;
+        }
+        $payment->save();
+
+        DB::commit(); //commit de la transaccion
+
+        if ($payment) {
+          return response()->json([
+            'type' => 'success',
+            'message' => 'regitro exitoso',
+            'data' => $payment->state
+          ], 202);
+        }else{
+          return response()->json([
+            'type' => 'error',
+            'message' => 'Error',
+            'data' =>[]
+          ], 204);
+        }
+
+        } catch (Exception $e){
+          return response()->json([
+            'type' => 'error',
+            'message' => 'Error al actualizar',
+            'data' =>[]
+          ], 204);
+          DB::rollBack(); //si hay un error no se ejecuta la transaccion
+        }
+      }
+
 
     /**
      * Remove the specified resource from storage.

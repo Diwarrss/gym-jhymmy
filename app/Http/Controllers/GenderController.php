@@ -136,7 +136,12 @@ class GenderController extends Controller
         //$data request->all
         $gender = Gender::find($id);
 
-        $gender->state = !$gender->state;
+        //$gender->state = !$gender->state;
+        if ($gender->state) {
+          $gender->state = false;
+        } else {
+          $gender->state = true;
+        }
         $gender->save();
 
         DB::commit(); //commit de la transaccion

@@ -186,11 +186,12 @@ export default {
         me.sending = true
         if (me.event) {
           let params = {
-            url: 'access_control',
+            url: '/access_control',
             data: me.form,
-            files: false
+            files: false,
+            action: 'getAccessControl',
           }
-          me.$store.dispatch('api/create', params)
+          me.$store.dispatch('create', params)
           setTimeout(() => {
             if (Object.keys(me.errors).length >= 1) {
               //validation back
@@ -198,7 +199,7 @@ export default {
               return
             } else {
               me.sending = false
-              me.$store.dispatch('config/getAccessControl')
+              //me.$store.dispatch('config/getAccessControl')
               me.hideModal()
             }
           }, 2000)
@@ -206,11 +207,12 @@ export default {
           me.updating = true
           //actualizar
           let params = {
-            url: `access_control/${me.form.id}`,
+            url: `/access_control/${me.form.id}`,
             data: me.form,
-            action: 'config/getAccessControl'
+            action: 'getAccessControl',
+            files: false
           }
-          me.$store.dispatch('api/update', params)
+          me.$store.dispatch('update', params)
           setTimeout(() => {
             if (Object.keys(me.errors).length !== 0) {
               //validation back

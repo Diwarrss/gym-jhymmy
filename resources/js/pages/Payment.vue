@@ -59,6 +59,10 @@ export default {
           sortable: true
         },
         {
+          key: 'state',
+          label: 'Estado'
+        },
+        {
           key: 'acciones',
           label: 'Acciones',
           visible: false,

@@ -124,7 +124,12 @@ class CancellationReasonController extends Controller
         //$data request->all
         $cancellationReason = CancellationReason::find($id);
 
-        $cancellationReason->state = !$cancellationReason->state;
+        /* $cancellationReason->state = !$cancellationReason->state; */
+        if ($cancellationReason->state) {
+          $cancellationReason->state = false;
+        } else {
+          $cancellationReason->state = true;
+        }
         $cancellationReason->save();
 
         DB::commit(); //commit de la transaccion

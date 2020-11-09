@@ -274,11 +274,12 @@ export default {
           me.updating = true
           //actualizar
           let params = {
-            url: `payments/${me.form.id}`,
+            url: `/payments/${me.form.id}`,
             data: me.form,
-            action: 'config/getPayment'
+            files: false,
+            action: 'getPayment'
           }
-          me.$store.dispatch('api/update', params)
+          me.$store.dispatch('update', params)
           setTimeout(() => {
             if (Object.keys(me.errors).length !== 0) {
               //validation back
