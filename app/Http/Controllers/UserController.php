@@ -132,7 +132,12 @@ class UserController extends Controller
         //$data request->all
         $user = User::find($id);
 
-        $user->state = !$user->state;
+        if ($user->state) {
+          $user->state = false;
+        } else {
+          $user->state = true;
+        }
+
         $user->save();
 
         DB::commit(); //commit de la transaccion

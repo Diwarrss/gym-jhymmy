@@ -263,7 +263,56 @@ export default {
         //console.log(this.dataModal)
         EventBus.$emit('show-modal-access-table')
       }
-
+    },
+    status(id, type) {
+      let me = this
+      let actionDispatch = ''
+      let urlDispatch = ''
+      if (me.typePage == 'gender') {
+        actionDispatch = 'getGenders'
+        urlDispatch = `/genders-state/${id}`
+      }else if (me.typePage == 'user'){
+        actionDispatch = 'getUsers'
+        urlDispatch = `/users-state/${id}`
+      }else if (me.typePage == 'tracing'){
+        actionDispatch = 'getGenders'
+      }else if (me.typePage == 'state'){
+        actionDispatch = 'getGenders'
+      }else if (me.typePage == 'payment'){
+        actionDispatch = 'getGenders'
+      }else if (me.typePage == 'cancellationReason'){
+        actionDispatch = 'getGenders'
+      }else if (me.typePage == 'access'){
+        actionDispatch = 'getGenders'
+      }
+      try {
+        Vue.swal({
+          title: '¿Estás seguro?',
+          text: '¡No podrás revertir esto!',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#4dbd74',
+          cancelButtonColor: '#d33',
+          confirmButtonText:
+            type == 'disable'
+              ? '<i class="far fa-check-circle"></i> Si, Inactivar!'
+              : '<i class="far fa-check-circle"></i> Si, Activar!',
+          cancelButtonText: '<i class="far fa-times-circle"></i> Cancelar'
+        }).then(result => {
+          if (result.value) {
+            //Inactivar
+            if (id) {
+              let params = {
+                url: urlDispatch,
+                action: actionDispatch
+              }
+              me.$store.dispatch('status', params)
+            }
+          }
+        })
+      } catch (error) {
+        console.log(error)
+      }
     },
   },
   watch: {

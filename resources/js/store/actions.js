@@ -153,18 +153,18 @@ export default {
       }
     },
     status: function({ dispatch, commit }, params) {
-      console.log(params.url)
       axios
         .put(params.url)
         .then(res => {
           if (res.data.type === 'success') {
-            this.$swal({
-              title: res.data.message,
-              icon: 'success',
-              confirmButtonColor: '#4dbd74',
-              confirmButtonText: '<i class="far fa-check-circle"></i> Aceptar',
-              timer: 2000
-            })
+            setTimeout(() => {
+              Vue.swal({
+                icon: 'success',
+                title: res.data.message,
+                showConfirmButton: true,
+                timer: 2000
+              })
+            }, 500);
             if (params.dispatchParams) {
               dispatch(params.action, params.actionDispatch, {root:true})
             }else{
@@ -172,13 +172,14 @@ export default {
             }
             commit('setResult', res.data.data)
           } else {
-            this.$swal({
-              title: res.data.message,
-              icon: 'error',
-              confirmButtonColor: '#4dbd74',
-              confirmButtonText: '<i class="far fa-check-circle"></i> Aceptar',
-              timer: 2000
-            })
+            setTimeout(() => {
+              Vue.swal({
+                icon: 'error',
+                title: res.data.message,
+                showConfirmButton: true,
+                timer: 2000
+              })
+            }, 500);
           }
           console.log(res)
         })

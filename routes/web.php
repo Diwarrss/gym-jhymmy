@@ -29,18 +29,27 @@ Route::group(['middleware' => 'auth'], function () {
 
   //usuarios
   Route::resource('users', UserController::class);
+  Route::put('users-state/{id}', [App\Http\Controllers\UserController::class, 'updateState']);
+
   //generos
   Route::resource('genders', GenderController::class);
+  Route::put('genders-state/{id}', [App\Http\Controllers\GenderController::class, 'updateState']);
+
   //estados
   Route::resource('states', StateController::class);
+
   //seguimineto
   Route::resource('tracings', TracingController::class);
+
   //pagos
   Route::resource('payments', PaymentController::class);
+
   //perfil
   //Route::resource('profiles', 'App\Http\Controllers\ProfileController');
+
   //acceso
   Route::resource('access-controlls', 'App\Http\Controllers\AccessControlController');
+
   //motivo de cancelación
   Route::resource('cancellation-reasons', CancellationReasonController::class);
 
