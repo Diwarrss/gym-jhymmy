@@ -275,15 +275,20 @@ export default {
         actionDispatch = 'getUsers'
         urlDispatch = `/users-state/${id}`
       }else if (me.typePage == 'tracing'){
-        actionDispatch = 'getGenders'
+        actionDispatch = 'getTracing'
+        urlDispatch = `/tracings-state/${id}`
       }else if (me.typePage == 'state'){
-        actionDispatch = 'getGenders'
+        actionDispatch = 'getStates'
+        urlDispatch = `/states-state/${id}`
       }else if (me.typePage == 'payment'){
-        actionDispatch = 'getGenders'
+        actionDispatch = 'getPayment'
+        urlDispatch = `/payments-state/${id}`
       }else if (me.typePage == 'cancellationReason'){
-        actionDispatch = 'getGenders'
+        actionDispatch = 'getCancellationReason'
+        urlDispatch = `/cancellation-reasons-state/${id}`
       }else if (me.typePage == 'access'){
-        actionDispatch = 'getGenders'
+        actionDispatch = 'getAccessControl'
+        urlDispatch = `/access-cancel/${id}`
       }
       try {
         Vue.swal({

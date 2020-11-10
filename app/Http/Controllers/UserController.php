@@ -137,7 +137,6 @@ class UserController extends Controller
         } else {
           $user->state = true;
         }
-
         $user->save();
 
         DB::commit(); //commit de la transaccion

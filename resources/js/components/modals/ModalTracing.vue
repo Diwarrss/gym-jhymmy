@@ -465,7 +465,7 @@ export default {
             files: false,
             action: 'getTracing',
             dispatchParams: true,
-            actionDispatch: me.user
+            actionDispatch: me.form.user_id
           }
           me.$store.dispatch('update', params)
           setTimeout(() => {

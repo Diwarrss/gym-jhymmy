@@ -36,6 +36,11 @@ export default {
       allRow: this.row,
       show: true,
       modal: 'modal-users',
+      sending: false,
+      updating: false,
+      event: '',
+      viewOnlly: false,
+      tittleModal : '',
       form: {
         id: '',
         name: '',
@@ -64,11 +69,6 @@ export default {
           sortable: false
         }
       ],
-      sending: false,
-      updating: false,
-      event: '',
-      viewOnlly: false,
-      tittleModal : '',
       states: [
         { "id" : "1", "name" : "Activo"},
         { "id" : "2", "name" : "Inactivo"}
