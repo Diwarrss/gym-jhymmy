@@ -144,7 +144,7 @@ class PaymentController extends Controller
         if ($payment) {
           return response()->json([
             'type' => 'success',
-            'message' => 'regitro exitoso',
+            'message' => 'Actualización con éxito',
             'data' => $payment->state
           ], 202);
         }else{
