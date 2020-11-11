@@ -65,32 +65,25 @@ export default {
       position: relative;
       border-radius: 3px;
       margin-top: 10px;
-      // background: white;
-      /* .box-image{
-        padding: 15px;
-        img {
-          width: 100%;
-          height: 100%;
-          background-size: 100% 100%;
-          opacity: 0.5;
-        }
-      } */
       .box-image {
         position: relative;
         overflow: hidden;
-        padding: 15px;
-
+        padding: 100px;
+        text-align: center;
         h3 {
           //padding: 100px;
           position: relative;
           z-index: 100;
           color: white;
+          font-size: 20px;
         }
         h2 {
           //padding: 100px;
           position: relative;
           z-index: 100;
           color: white;
+          font-size: 40px;
+          font-weight: bold;
         }
         img {
           position: absolute;
@@ -98,7 +91,7 @@ export default {
           top: 0;
           width: 100%;
           height: auto;
-          opacity: 0.6;
+          opacity: 0.4;
           border-radius: 3px;
           padding: 15px;
         }

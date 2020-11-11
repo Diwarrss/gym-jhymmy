@@ -2,14 +2,14 @@
   <div class="component_profile p-4">
     <div class="card">
       <div class="card-header first_card">
-        <h1 class="fas fa-user-cog"> Cuenta</h1>
+        <h1><i class="fas fa-user-cog"/> Cuenta</h1>
       </div>
       <div class="card-body body_profile">
         <b-row>
           <b-col cols="md-4" class="mb-4">
             <div class="card">
               <div class="card-header">
-                <h1 class="fas fa-user-circle" > Mi perfil</h1>
+                <h1><i class="fas fa-user-circle" /> Mi perfil</h1>
               </div>
               <div class="card-body">
                   <div>
@@ -80,7 +80,7 @@
           <b-col cols="md-4" class="mb-4">
             <div class="card">
               <div class="card-header">
-                <h1 class="fas fa-image" > Mi Foto</h1>
+                <h1><i class="fas fa-image"/> Mi Foto</h1>
               </div>
               <div class="card-body">
                 <form action="">
@@ -98,7 +98,7 @@
           <b-col cols="md-4" class="mb-4">
             <div class="card">
               <div class="card-header">
-                <h1 class="fas fa-key"> Mi Contraseña</h1>
+                <h1><i class="fas fa-key"/> Mi Contraseña</h1>
               </div>
               <div class="card-body">
                 <form action="">
