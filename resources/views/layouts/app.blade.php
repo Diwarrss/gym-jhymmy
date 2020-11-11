@@ -32,7 +32,11 @@
 
           <div class="main-content">
             @include('layouts.navbars.navbar')
-            <router-view></router-view>
+            {{-- Solo se muestra el componente cuando este Auth --}}
+            @auth()
+              <router-view></router-view>
+            @endauth
+            {{-- Se muestra el contenido para el Cliente --}}
             @yield('content')
           </div>
 

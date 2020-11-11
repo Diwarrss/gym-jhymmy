@@ -43,6 +43,7 @@ Vue.use(IconsPlugin)
 Vue.component('example-component', require('./pages/ExampleComponent.vue').default)
 Vue.component('nav-bar', require('./components/partials/NavBar.vue').default)
 Vue.component('side-bar', require('./components/partials/SideBar.vue').default)
+Vue.component('page-home', require('./components/partials/PageHome.vue').default)
 
 //import out store for vuex
 import user from './store/user';
