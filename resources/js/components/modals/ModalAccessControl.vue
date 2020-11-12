@@ -25,7 +25,7 @@
         <!-- usuario -->
         <b-form-group
               id="groupusers"
-              label="Usuario:"
+              label="Cliente:"
               label-for="user_id"
               >
               <v-select

@@ -1,5 +1,5 @@
 <template>
-  <div class="page-home">
+  <div class="container-fluid page-home">
     <div class="home">
     </div>
     <div class="card-custom">
@@ -13,17 +13,17 @@
         <b-col md="6" class="box-image">
           <img :src="'/assets/img/gym/encasa.jpg'" alt="">
           <h3>ENTRENATE EN CASA CON ASESORÍA PROFESIONAL</h3>
-          <h2>MY COACH BODYTECH</h2>
+          <h2>MY COACH</h2>
         </b-col>
         <b-col md="6" class="box-image">
-          <img :src="'/assets/img/gym/coahs.jpg'" alt="">
+          <img :src="'/assets/img/gym/coach.jpg'" alt="">
           <h3>LOS ENTRENADORES VAN A TU CASA</h3>
           <h2>@ HOME</h2>
         </b-col>
         <b-col md="6" class="box-image">
           <img :src="'/assets/img/gym/personal.jpg'" alt="">
-          <h3>TODA LA MOTIVACIÓN DE UN ENTRENADOR PERSONALIZADOEN VIVO</h3>
-          <h2>MY COACH BODYTECH</h2>
+          <h3>TODA LA MOTIVACIÓN DE UN ENTRENADOR PERSONALIZADO EN VIVO</h3>
+          <h2>MY COACH</h2>
         </b-col>
       </b-row>
     </div>
@@ -97,7 +97,7 @@ export default {
           top: 0;
           width: 100%;
           height: 100%;
-          opacity: 0.4;
+          opacity: 0.5;
           border-radius: 20px;
           padding: 15px;
           margin: auto;
@@ -105,11 +105,12 @@ export default {
       }
     }
   }
-  .navbar{
+  /* .navbar{
     z-index: 1000;
     position: fixed;
     width: 100%;
-    box-shadow: 0px 4px 3px rgba(0,0,0,.5);
-    position: relative;
-  }
+    border: unset;
+    background-color: black;
+
+  } */
 </style>

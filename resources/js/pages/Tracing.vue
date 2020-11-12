@@ -11,7 +11,7 @@
               <b-form-group
                 id="group1"
                 label-cols-md="3"
-                label="Usuario:"
+                label="Cliente:"
                 label-for="user_id">
                 <v-select id="user_id"
                   v-model="form.user_id"

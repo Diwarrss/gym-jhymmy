@@ -15,7 +15,7 @@ class CreateAccessControlsTable extends Migration
     {
         Schema::create('access_controls', function (Blueprint $table) {
             $table->id();
-            $table->double('temperature');      //temperatura
+            $table->string('temperature');      //temperatura
             //relacion con users
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
