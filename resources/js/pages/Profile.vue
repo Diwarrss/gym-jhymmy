@@ -213,7 +213,7 @@
    }
   .body_profile{
     .card-header{
-      background: #9e76ff;
+      background: #5e71e3;
     }
   }
 }

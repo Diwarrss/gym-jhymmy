@@ -4,11 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RequestUser;
 use App\Models\User;
-use App\Http\Requests\UserRequest;
-use GuzzleHttp\Psr7\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -82,6 +79,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+      //return $id;
       try {
         DB::beginTransaction();
 
@@ -96,6 +94,16 @@ class UserController extends Controller
         // table,column,except,idColumn
         $user->identification = $request->identification;
         $user->email = $request->email;
+        $user->name = $request->name;
+        $user->address = $request->address;
+        $user->phone = $request->phone;
+        $user->birthdate = $request->birthdate;
+        $user->gender_id = $request->gender_id;
+        $user->state_id = $request->state_id;
+        if ($request->password != null) {
+          $user->password = $request->password;
+        }
+
         $user->save();
 
         DB::commit(); //commit de la transaccion

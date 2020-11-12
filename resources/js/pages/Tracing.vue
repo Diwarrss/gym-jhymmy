@@ -40,6 +40,7 @@
             :per-page="10"
             :show-filter="false"
             :per-pagination="false"
+            :cancel-state="true"
             />
         </div>
       </div>
@@ -51,6 +52,8 @@
 import TableCustom from '../components/table/TableCustom'
 import ModalTracing from '../components/modals/ModalTracing'
 import EventBus from '../bus'
+import moment from "moment";
+moment.locale("es");
 export default {
   components: {
     TableCustom,
@@ -85,6 +88,11 @@ export default {
       },
       fields: [
         {
+          key: 'id',
+          label: 'ID',
+          sortable: true
+        },
+        {
           key: 'back',
           label: 'Espalda',
           sortable: true
@@ -117,7 +125,10 @@ export default {
         {
           key: 'created_at',
           label: 'Fecha',
-          sortable: true
+          sortable: true,
+          formatter: value => {
+            return moment(value).format("YYYY-MM-DD")
+          }
         },
         {
           key: 'acciones',

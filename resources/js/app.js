@@ -28,6 +28,13 @@ const options = {
 };
 // If you don't need the styles, do not connect
 import 'sweetalert2/dist/sweetalert2.min.css';
+//import vue-moment CONFIGURADO AL ESPAÑOL
+const moment = require("moment");
+require("moment/locale/es");
+
+Vue.use(require("vue-moment"), {
+  moment
+});
 Vue.component('v-select', vSelect)
 //Create components and import components
 Vue.use(VueRouter)
@@ -39,6 +46,7 @@ Vue.use(Vuelidate)
 //VueSweetalert2
 Vue.use(VueSweetalert2, options);
 // Optionally install the BootstrapVue icon components plugin
+
 Vue.use(IconsPlugin)
 Vue.component('example-component', require('./pages/ExampleComponent.vue').default)
 Vue.component('nav-bar', require('./components/partials/NavBar.vue').default)

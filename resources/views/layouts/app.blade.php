@@ -23,9 +23,9 @@
     <body class="{{ $class ?? '' }}">
         <div id="app">
           @auth()
-              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                   @csrf
-              </form>
+              </form> --}}
               <side-bar path="{{ asset('argon') }}"></side-bar>
               {{-- @include('layouts.navbars.sidebar') --}}
           @endauth

@@ -136,8 +136,7 @@ export default {
       form: {
         id: '',
         user_id: null,
-        date: '',
-        temperature:''
+        temperature: ''
       },
       sending: false,
       updating: false
@@ -162,6 +161,9 @@ export default {
     },
     users() {
       return this.$store.state.user.users
+    },
+    errors() {
+      return this.$store.state.actions.errors
     }
   },
   methods: {
@@ -178,7 +180,7 @@ export default {
     sendData(evt) {
       evt.preventDefault()
       let me = this
-      this.$v.$touch()
+      me.$v.$touch()
       if (this.$v.$invalid) {
         return
       } else {
@@ -186,13 +188,15 @@ export default {
         me.sending = true
         if (me.event) {
           let params = {
-            url: '/access_control',
+            url: '/access-controlls',
             data: me.form,
             files: false,
             action: 'getAccessControl',
           }
           me.$store.dispatch('create', params)
+
           setTimeout(() => {
+            console.log(Object.keys(me.errors).length)
             if (Object.keys(me.errors).length >= 1) {
               //validation back
               me.sending = false

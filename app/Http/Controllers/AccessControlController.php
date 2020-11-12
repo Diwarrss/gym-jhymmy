@@ -27,14 +27,16 @@ class AccessControlController extends Controller
      */
     public function store(Request $request)
     {
+      //return $request;
       try {
         DB::beginTransaction();
 
         $data = $request->all();
-        $data['user_id'] = Auth::user()->id; //trae el usuario que esta autenticado
-        $accessControl = AccessControl::created($data);
-        DB::commit();
+        /* $data['user_id'] = Auth::user()->id; */ //trae el usuario que esta autenticado
+        $accessControl = AccessControl::create($data);
 
+        /* dd($data); */
+        DB::commit();
         if ($accessControl) {
           return response()->json([
             'type' => 'success',
@@ -49,6 +51,7 @@ class AccessControlController extends Controller
           ], 204);
         }
       } catch (Exception $e){
+        return $e;
           return response()->json([
             'type' => 'error',
             'message' => 'Error registro',

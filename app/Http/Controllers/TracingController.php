@@ -28,6 +28,7 @@ class TracingController extends Controller
      */
     public function store(Request $request)
     {
+      //return $request;
       try {
         DB::beginTransaction();
         $data = $request->all();
@@ -50,6 +51,7 @@ class TracingController extends Controller
           ], 204);
         }
       } catch (Exception $e){
+        return $e;
           return response()->json([
             'type' => 'error',
             'message' => 'Error al guardar',

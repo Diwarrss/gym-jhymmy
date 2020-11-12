@@ -54,7 +54,7 @@
     <!-- Pintar Tabla -->
     <b-table
       show-empty
-      id="table-dependence"
+      id="table-custom"
       :fields="fields"
       :items="allData"
       :per-page="perPage"
@@ -76,13 +76,17 @@
           variant="warning"
           @click="modalEdit(row.item, row.index, $event.target, false)"><i class="fas fa-edit mr-md-1"/><span class="d-none d-md-inline-block">Editar</span></b-button>
         <b-button
-          v-if="row.item.state == 1"
+          v-if="row.item.state == 1 && !cancelState"
           variant="danger"
           @click="status(row.item.id, 'disable')"><i class="fas fa-times-circle mr-md-1"/><span class="d-none d-md-inline-block">Inactivar</span></b-button>
         <b-button
-          v-if="row.item.state == 0"
+          v-if="row.item.state == 0 && !cancelState"
           variant="success"
           @click="status(row.item.id, 'enable')"><i class="fas fa-check-circle mr-md-1"/><span class="d-none d-md-inline-block">Activar</span></b-button>
+        <b-button
+          v-if="cancelState"
+          variant="danger"
+          @click="status(row.item.id, 'enable')"><i class="fas fa-check-circle mr-md-1"/><span class="d-none d-md-inline-block">Anular</span></b-button>
       </template>
       <template #empty="scope">
         <h4 class="text-center text-primary"><b-spinner variant="primary" label="Spinning"></b-spinner> Sin Resultados</h4>
@@ -117,8 +121,7 @@
       v-model="currentPage"
       :total-rows="rows"
       :per-page="perPage"
-      aria-controls="table-dependence"
-      @change="getData"
+      aria-controls="table-custom"
     />
     <ModalGenderTable v-if="typePage=='gender'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-gender-table"/>
     <ModalUserTable v-if="typePage=='user'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-users-table"/>
@@ -149,6 +152,10 @@ export default {
     ModalAccessControlTable
   },
   props: {
+    cancelState: {
+      type: Boolean,
+      default: false
+    },
     typePage: {
       type: String,
       default: () => ''
@@ -239,6 +246,7 @@ export default {
         //console.log(this.dataModal)
         EventBus.$emit('show-modal-gender-table')
       }else if (this.typePage == 'user'){
+        console.log(item)
         this.dataModal = item
         //console.log(this.dataModal)
         EventBus.$emit('show-modal-user-table')

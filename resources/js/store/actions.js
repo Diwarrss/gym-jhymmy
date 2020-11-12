@@ -66,7 +66,7 @@ export default {
     },
     update: function({ dispatch, commit }, params) {
       commit('setErrors', {})
-      console.log(params.data)
+      //console.log('params' + params.data)
       let url = params.url
       let getData = params.data
       let files = params.files

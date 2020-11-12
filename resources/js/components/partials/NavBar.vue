@@ -30,7 +30,10 @@
             <em><i class="fas fa-user-friends"></i> {{ userAuth.name }} </em>
           </template>
           <b-dropdown-item :to="{ name: 'profile' }" class=""><i class="fas fa-user-circle"></i> Perfil</b-dropdown-item>
-          <b-dropdown-item href="#" variant="danger"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</b-dropdown-item>
+          <b-dropdown-item @click.prevent="logout" variant="danger"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</b-dropdown-item>
+          <form id="logout-form" action="/logout" method="POST" style="display: none;">
+            <input type="hidden" name="_token" v-bind:value="csrf" />
+          </form>
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
@@ -40,12 +43,19 @@
 export default {
   props: {
     path: String,
-    user: String
+    user: String,
+    csrf: String
   },
   computed: {
     userAuth() {
       return JSON.parse(this.user)
     }
+  },
+  methods: {
+    logout() {
+      event.preventDefault();
+      document.getElementById("logout-form").submit();
+    },
   },
 }
 </script>

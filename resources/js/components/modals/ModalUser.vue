@@ -364,8 +364,8 @@ export default {
         phone: '',
         birthdate: '',
         email: '',
-        confirm_password: '',
-        password: '',
+        confirm_password: null,
+        password: null,
         gender_id: null,
         state_id: null
       },
@@ -395,52 +395,98 @@ export default {
     }
   },
   validations() {
-    let form = {
-      form: {
-        name: {
-          required,
-          maxLength: maxLength(200)
-        },
-        identification: {
-          required,
-          maxLength: maxLength(20)
-        },
-        address: {
-          required,
-          maxLength: maxLength(20)
-        },
-        birthdate: {
-          required
-        },
-        phone: {
-          required,
-          maxLength: maxLength(20)
-        },
-        email: {
-          required,
-          maxLength: maxLength(200)
-        },
-        password: {
-          required,
-          minLength: minLength(8),
-          maxLength: maxLength(255)
-        },
-        confirm_password: {
-          sameAsPassword: sameAs('password')
-        },
-        phone: {
-          required,
-          maxLength: maxLength(20)
-        },
-        gender_id: {
-          required
-        },
-        state_id: {
-          required
+    if (this.event) {
+      let form = {
+        form: {
+          name: {
+            required,
+            maxLength: maxLength(200)
+          },
+          identification: {
+            required,
+            maxLength: maxLength(20)
+          },
+          address: {
+            required,
+            maxLength: maxLength(20)
+          },
+          birthdate: {
+            required
+          },
+          phone: {
+            required,
+            maxLength: maxLength(20)
+          },
+          email: {
+            required,
+            maxLength: maxLength(200)
+          },
+          password: {
+            required,
+            minLength: minLength(8),
+            maxLength: maxLength(255)
+          },
+          confirm_password: {
+            sameAsPassword: sameAs('password')
+          },
+          phone: {
+            required,
+            maxLength: maxLength(20)
+          },
+          gender_id: {
+            required
+          },
+          state_id: {
+            required
+          }
         }
       }
+      return form
+    } else {
+      let form = {
+        form: {
+          name: {
+            required,
+            maxLength: maxLength(200)
+          },
+          identification: {
+            required,
+            maxLength: maxLength(20)
+          },
+          address: {
+            required,
+            maxLength: maxLength(20)
+          },
+          birthdate: {
+            required
+          },
+          phone: {
+            required,
+            maxLength: maxLength(20)
+          },
+          email: {
+            required,
+            maxLength: maxLength(200)
+          },
+          password: {
+          },
+          confirm_password: {
+            sameAsPassword: sameAs('password')
+          },
+          phone: {
+            required,
+            maxLength: maxLength(20)
+          },
+          gender_id: {
+            required
+          },
+          state_id: {
+            required
+          }
+        }
+      }
+      return form
     }
-    return form
   },
   methods: {
     hideModal() {
@@ -452,6 +498,8 @@ export default {
       this.form.phone = ''
       this.form.birthdate = ''
       this.form.email = ''
+      this.form.password = null
+      this.form.confirm_password = null
       this.form.gender_id = null
       this.form.state_id = null
       EventBus.$emit('clear-data-modal')
@@ -461,12 +509,6 @@ export default {
       evt.preventDefault()
       let me = this
       me.form.name = me.form.name ? me.form.name.toUpperCase() : ''
-      me.form.identification = me.form.identification ? me.form.identification.toUpperCase() : ''
-      me.form.address = me.form.address ? me.form.address.toUpperCase() : ''
-      me.form.phone = me.form.phone ? me.form.phone.toUpperCase() : ''
-      me.form.birthdate = me.form.birthdate ? me.form.birthdate.toUpperCase() : ''
-      me.form.email = me.form.email ? me.form.email.toUpperCase() : ''
-
       this.$v.$touch()
       if (this.$v.$invalid) {
         return
@@ -520,15 +562,13 @@ export default {
     },
   },
   created() {
+    this.$store.dispatch('getStates', 1)
+    this.$store.dispatch('getGenders', 1)
     EventBus.$on('show-modal-user-table', () => {
       this.$bvModal.show('modal-users-table')
-      this.$store.dispatch('getStates', 1)
-      this.$store.dispatch('getGenders', 1)
     })
     EventBus.$on('show-modal-user', () => {
       this.$bvModal.show('modal-users')
-      this.$store.dispatch('getStates', 1)
-      this.$store.dispatch('getGenders', 1)
     })
   },
   watch: {
