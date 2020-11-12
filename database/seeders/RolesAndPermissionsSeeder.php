@@ -21,16 +21,22 @@ class RolesAndPermissionsSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         $permissionsAdmin_array = [];
-        $permissionsViewer_array = [];
-        $permissionsManager_array = [];
+        $permissionsClient_array = [];
 
+        //ver sidebar
         $showPanelAdmin = Permission::create([
           'name' => 'show_panel_admin',
           'title' => 'ver_panel_administrador'
         ]);
         array_push($permissionsAdmin_array, $showPanelAdmin);
-        array_push($permissionsViewer_array, $showPanelAdmin);
-        array_push($permissionsManager_array, $showPanelAdmin);
+        array_push($permissionsClient_array, $showPanelAdmin);
+
+        //ver usuario
+        $userSee = Permission::create([
+          'name' => 'view_user',
+          'title' => 'ver_usuario'
+        ]);
+        array_push($permissionsAdmin_array, $userSee);
 
         //crear usuario
         $userCreate = Permission::create([
@@ -42,7 +48,7 @@ class RolesAndPermissionsSeeder extends Seeder
         //editar usuario
         $userEdit = Permission::create([
           'name' => 'user_edit',
-          'title' => 'crear_usuario'
+          'title' => 'editar_usuario'
         ]);
         array_push($permissionsAdmin_array, $userEdit);
 
@@ -53,26 +59,47 @@ class RolesAndPermissionsSeeder extends Seeder
         ]);
         array_push($permissionsAdmin_array, $userStatus);
 
-        //ver acceso de control
+        //ver control de acceso
         $seeAccessControl = Permission::create([
           'name' => 'see_access_control',
           'title' => 'ver_control_acceso'
         ]);
         array_push($permissionsAdmin_array, $seeAccessControl);
 
-        //crear registro entrada
+        //crear registro control de acceso
         $entryRegister = Permission::create([
-          'name' => 'entry_register',
-          'title' => 'registro_entrada'
+          'name' => 'create_access_controll',
+          'title' => 'crear_control_acceso'
         ]);
         array_push($permissionsAdmin_array, $entryRegister);
 
-        //crear registro salida
+        //anular control de acceso
         $outputRegister = Permission::create([
-          'name' => 'output_register',
-          'title' => 'registro_salida'
+          'name' => 'cancel_access_controll',
+          'title' => 'anular_control_acceso'
         ]);
         array_push($permissionsAdmin_array, $outputRegister);
+
+        //ver seguimiento
+        $tracingSee = Permission::create([
+          'name' => 'view_tracing',
+          'title' => 'ver_seguimineto'
+        ]);
+        array_push($permissionsAdmin_array, $tracingSee);
+
+        //crear registro seguimiento
+        $tracingSee = Permission::create([
+          'name' => 'create_tracing',
+          'title' => 'ver_seguimineto'
+        ]);
+        array_push($permissionsAdmin_array, $tracingSee);
+
+        //ver pago
+        $paymentSee = Permission::create([
+          'name' => 'view_payment',
+          'title' => 'ver_pago'
+        ]);
+        array_push($permissionsAdmin_array, $paymentSee);
 
         //crear pago
         $createPayment = Permission::create([
@@ -116,6 +143,13 @@ class RolesAndPermissionsSeeder extends Seeder
         ]);
         array_push($permissionsAdmin_array, $statusReasonPaymentCancellation);
 
+        //ver generos
+        $genderSee = Permission::create([
+          'name' => 'view_gender',
+          'title' => 'ver_generos'
+        ]);
+        array_push($permissionsAdmin_array, $genderSee);
+
         //crear genero
         $createGender = Permission::create([
           'name' => 'create_gender',
@@ -142,15 +176,8 @@ class RolesAndPermissionsSeeder extends Seeder
         /* asiganacion de permisos por array al roll */
         $superAdminRole->syncPermissions($permissionsAdmin_array);
 
-        $viewerRole = Role::create(['name' => 'viewer']);
-        $viewerRole->syncPermissions($permissionsViewer_array);
-
-        $managerRole = Role::create(['name' => 'manager']);
-        $managerRole->syncPermissions($permissionsManager_array);
-
-        $superAdminRole = Role::create(['name' => 'invited']);
-        $superAdminRole = Role::create(['name' => 'auditor']);
-        $superAdminRole = Role::create(['name' => 'basic']);
+        $clientRole = Role::create(['name' => 'viewer']);
+        $clientRole->syncPermissions($permissionsClient_array);
 
         //creamos el usuario super admin
         $userSuperAdmin = User::create([
