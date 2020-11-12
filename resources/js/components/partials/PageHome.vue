@@ -1,5 +1,5 @@
 <template>
-  <div class="container page-home">
+  <div class="page-home">
     <div class="home">
     </div>
     <div class="card-custom">
@@ -12,12 +12,18 @@
         </b-col>
         <b-col md="6" class="box-image">
           <img :src="'/assets/img/gym/encasa.jpg'" alt="">
+          <h3>ENTRENATE EN CASA CON ASESORÍA PROFESIONAL</h3>
+          <h2>MY COACH BODYTECH</h2>
         </b-col>
         <b-col md="6" class="box-image">
           <img :src="'/assets/img/gym/coahs.jpg'" alt="">
+          <h3>LOS ENTRENADORES VAN A TU CASA</h3>
+          <h2>@ HOME</h2>
         </b-col>
         <b-col md="6" class="box-image">
           <img :src="'/assets/img/gym/personal.jpg'" alt="">
+          <h3>TODA LA MOTIVACIÓN DE UN ENTRENADOR PERSONALIZADOEN VIVO</h3>
+          <h2>MY COACH BODYTECH</h2>
         </b-col>
       </b-row>
     </div>
@@ -39,21 +45,21 @@ export default {
       background-size: 100% 100%;
       animation: banner 10s infinite;
       animation-direction: alternate;
-      border-radius: 3px;
+      border-radius: 5px;
       @keyframes banner {
         0%, 30%{
           opacity: 1;
           background-image: url('/assets/img/gym/gym3.jpg');
         }
         31%, 34%{
-          opacity: 0.1;
+          opacity: 0.3;
         }
         35%, 65%{
           opacity: 1;
           background-image: url('/assets/img/gym/gym2.jpg');
         }
         66%, 69%{
-          opacity: 0.1;
+          opacity: 0.3;
         }
         70%, 100%{
           opacity: 1;
@@ -90,13 +96,20 @@ export default {
           left: 0;
           top: 0;
           width: 100%;
-          height: auto;
+          height: 100%;
           opacity: 0.4;
-          border-radius: 3px;
+          border-radius: 20px;
           padding: 15px;
+          margin: auto;
         }
       }
     }
   }
-
+  .navbar{
+    z-index: 1000;
+    position: fixed;
+    width: 100%;
+    box-shadow: 0px 4px 3px rgba(0,0,0,.5);
+    position: relative;
+  }
 </style>
