@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RequestUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash as FacadesHash;
 
 class UserController extends Controller
 {
@@ -163,15 +165,15 @@ class UserController extends Controller
           ], 204);
         }
 
-        } catch (Exception $e){
-          return response()->json([
-            'type' => 'error',
-            'message' => 'Error al actualizar',
-            'data' =>[]
-          ], 204);
-          DB::rollBack(); //si hay un error no se ejecuta la transaccion
-        }
+      } catch (Exception $e){
+        return response()->json([
+          'type' => 'error',
+          'message' => 'Error al actualizar',
+          'data' =>[]
+        ], 204);
+        DB::rollBack(); //si hay un error no se ejecuta la transaccion
       }
+    }
 
 
     /**
@@ -183,5 +185,76 @@ class UserController extends Controller
     public function destroy()
     {
         //
+    }
+
+    public function changePassword(Request $request)
+    {//cambiar la contraseña de usuario
+      /*
+      * Validate all input fields
+      */
+      $request->validate([
+        'old_password'     => 'required',//valida que la contraseña consida con la que tiene la base de datos
+        'new_password'     => 'required|min:8',//valida que la nueva ocntraseña cumpla con los parametros necesarios
+        'confirm_password' => 'required|same:new_password',//valida que consida con la nueva conrtaseña
+      ]);
+      $data = $request->all();//captura los parametros q vienen en la petición
+      $user = User::find(Auth::user()->id);//Busca registro por ID
+      //return FacadesHash::check($request->old_password, $user->password);
+      if ($user) {
+        if (FacadesHash::check($request->old_password, $user->password)) {//validamos que la iformacion de la contraseña actual coincida
+          // The passwords match...
+          //guarda la nueva contraseña encriptada en la base de datos
+          $user->fill([
+            'password' => FacadesHash::make($request->new_password)
+          ])->save();
+
+          return response()->json([//respuesta de exito
+            'type' => 'success',
+            'message' => 'Actualizado con éxito',
+            'data' => $user->state
+          ], 202);
+        }else{//no conincide la contraseña actual con la información
+          return response()->json([
+            'type' => 'error',
+            'message' => 'la contraseña actual no coincide',
+            'data' => []
+          ], 202);
+        }
+      }
+    }
+
+    //cambiar username y e-mail de usuario logueado (acount)
+    public function changeData(Request $request)
+    {
+      /*
+      * Validate all input fields
+      //validations->valida q el nombre y el e-mail no esten en la base de datos
+      */
+      $request->validate([
+        'username' => 'required|max:30|unique:users,username,' . Auth::user()->id,
+        'email' => 'required|max:130|unique:users,email,' . Auth::user()->id
+      ]);
+
+      $user = User::find(Auth::user()->id);//Busca registro por ID
+      if ($user) {
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->save();//Guarda la informacion del registro
+
+        if ($user) {//respuesta exitosa
+          return response()->json([
+            'type' => 'success',
+            'message' => 'Actualizado con éxito',
+            'data' => $user
+          ], 202);
+        }else{//respuesta de error
+          return response()->json([
+            'type' => 'error',
+            'message' => 'Error al actualizar',
+            'data' => []
+          ], 204);
+        }
+
+      }
     }
 }
