@@ -94,6 +94,20 @@ class RolesAndPermissionsSeeder extends Seeder
         ]);
         array_push($permissionsAdmin_array, $tracingSee);
 
+        //editar seguimiento
+        $editTracing = Permission::create([
+          'name' => 'edit_tracing',
+          'title' => 'editar_seguimiento'
+        ]);
+        array_push($permissionsAdmin_array, $editTracing);
+
+        //anular seguimiento
+        $outputTracing = Permission::create([
+          'name' => 'cancel_tracing',
+          'title' => 'anular_seguimineto'
+        ]);
+        array_push($permissionsAdmin_array, $outputTracing);
+
         //ver pago
         $paymentSee = Permission::create([
           'name' => 'view_payment',
@@ -143,10 +157,10 @@ class RolesAndPermissionsSeeder extends Seeder
         ]);
         array_push($permissionsAdmin_array, $statusReasonPaymentCancellation);
 
-        //ver generos
+        //ver genero
         $genderSee = Permission::create([
-          'name' => 'view_gender',
-          'title' => 'ver_generos'
+          'name' => 'see_gender',
+          'title' => 'ver_genero'
         ]);
         array_push($permissionsAdmin_array, $genderSee);
 
@@ -170,6 +184,34 @@ class RolesAndPermissionsSeeder extends Seeder
           'title' => 'estado_genero'
         ]);
         array_push($permissionsAdmin_array, $genderStatus);
+
+        //ver estado
+        $stateSee = Permission::create([
+          'name' => 'see_state',
+          'title' => 'ver_estado'
+        ]);
+        array_push($permissionsAdmin_array, $stateSee);
+
+        //crear estado
+        $createState = Permission::create([
+          'name' => 'create_state',
+          'title' => 'crear_estado'
+        ]);
+        array_push($permissionsAdmin_array, $createState);
+
+        //editar estado
+        $editState = Permission::create([
+          'name' => 'edit_state',
+          'title' => 'editar_estado'
+        ]);
+        array_push($permissionsAdmin_array, $editState);
+
+        //cambiar estado
+        $stateStatus = Permission::create([
+          'name' => 'state_status',
+          'title' => 'estado_estado'
+        ]);
+        array_push($permissionsAdmin_array, $stateStatus);
 
         /* creacion de roll */
         $superAdminRole = Role::create(['name' => 'super_admin']);

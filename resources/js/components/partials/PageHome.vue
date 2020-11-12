@@ -1,6 +1,34 @@
 <template>
   <div class="container-fluid page-home">
-    <div class="home">
+    <div class="contenido-home">
+      <b-carousel
+        id="carousel-1"
+        v-model="slide"
+        :interval="4000"
+        controls
+        indicators
+        style="text-shadow: 1px 1px 2px #333;"
+        @sliding-start="onSlideStart"
+        @sliding-end="onSlideEnd"
+      >
+        <b-carousel-slide img-src="/assets/img/gym/gym1.jpg"></b-carousel-slide>
+
+        <b-carousel-slide img-src="/assets/img/gym/gym2.jpg"></b-carousel-slide>
+
+        <b-carousel-slide img-src="/assets/img/gym/gym3.jpg"></b-carousel-slide>
+
+        <b-carousel-slide>
+          <template #img>
+            <img
+              class="d-block img-fluid w-100"
+              width="1024"
+              height="480"
+              src="/assets/img/gym/gym4.jpg"
+              alt="image slot"
+            >
+          </template>
+        </b-carousel-slide>
+      </b-carousel>
     </div>
     <div class="card-custom">
       <b-row>
@@ -27,44 +55,39 @@
         </b-col>
       </b-row>
     </div>
+
   </div>
 </template>
 <script>
 export default {
   props: {
     path: String
+  },
+  data() {
+    return {
+      slide: 0,
+      sliding: null
+    }
+  },
+  methods: {
+    onSlideStart(slide) {
+      this.sliding = true
+    },
+    onSlideEnd(slide) {
+      this.sliding = false
+    }
   }
 }
 </script>
 <style lang="scss">
   .page-home {
-    .home {
-      width: auto;
-      height: 500px;
-      margin: auto;
-      background-size: 100% 100%;
-      animation: banner 10s infinite;
-      animation-direction: alternate;
-      border-radius: 5px;
-      @keyframes banner {
-        0%, 30%{
-          opacity: 1;
-          background-image: url('/assets/img/gym/gym3.jpg');
-        }
-        31%, 34%{
-          opacity: 0.3;
-        }
-        35%, 65%{
-          opacity: 1;
-          background-image: url('/assets/img/gym/gym2.jpg');
-        }
-        66%, 69%{
-          opacity: 0.3;
-        }
-        70%, 100%{
-          opacity: 1;
-          background-image: url('/assets/img/gym/gym1.jpg');
-        }
+    .contenido-home {
+      .carousel-inner{
+        width: auto;
+        height: 500px;
+        margin: auto;
+        background-size: 100% 100%;
+        border-radius: 5px;
       }
     }
     .card-custom{
