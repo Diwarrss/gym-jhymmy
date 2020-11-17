@@ -1,7 +1,7 @@
 <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
     <div class="container px-4">
         <a class="navbar-brand" href="/">
-            <img src="{{ asset('argon') }}/img/brand/white.png" />
+            <img src="{{ asset('argon') }}/img/brand/logo.png" />
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -43,12 +43,12 @@
                         <span class="nav-link-inner--text">{{ __('Acceder') }}</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{--  <li class="nav-item">
                     <a class="nav-link nav-link-icon" href="{{ route('profile.edit') }}">
                         <i class="ni ni-single-02"></i>
                         <span class="nav-link-inner--text">{{ __('Perfil') }}</span>
                     </a>
-                </li>
+                </li>  --}}
             </ul>
         </div>
     </div>

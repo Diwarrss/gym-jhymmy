@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid page-home">
+  <div class="container page-home">
     <div class="contenido-home">
       <b-carousel
         id="carousel-1"
