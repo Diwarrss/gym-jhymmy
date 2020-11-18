@@ -40,6 +40,7 @@
             :per-page="10"
             :show-filter="false"
             :per-pagination="false"
+            :status-state="false"
             />
         </div>
       </div>

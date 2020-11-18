@@ -78,11 +78,11 @@
           variant="warning"
           @click="modalEdit(row.item, row.index, $event.target, false)"><i class="fas fa-edit mr-md-1"/><span class="d-none d-md-inline-block">Editar</span></b-button>
         <b-button
-          v-if="row.item.state == 1 && !cancelState"
+          v-if="row.item.state == 1 && !cancelState && statusState"
           variant="danger"
           @click="status(row.item.id, 'disable')"><i class="fas fa-times-circle mr-md-1"/><span class="d-none d-md-inline-block">Inactivar</span></b-button>
         <b-button
-          v-if="row.item.state == 0 && !cancelState"
+          v-if="row.item.state == 0 && !cancelState && statusState"
           variant="success"
           @click="status(row.item.id, 'enable')"><i class="fas fa-check-circle mr-md-1"/><span class="d-none d-md-inline-block">Activar</span></b-button>
         <b-button
@@ -164,6 +164,10 @@ export default {
     typePage: {
       type: String,
       default: () => ''
+    },
+    statusState: {
+      type: Boolean,
+      default: () => true
     },
     items: {
       type: Array,

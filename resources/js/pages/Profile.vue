@@ -2,14 +2,14 @@
   <div class="component_profile p-4">
     <div class="card">
       <div class="card-header first_card">
-        <h1><i class="fas fa-user-cog"/> Cuenta</h1>
+        <h1><i class="fas fa-user-cog"/> Mi Cuenta</h1>
       </div>
       <div class="card-body body_profile">
         <b-row>
-          <b-col cols="md-4" class="mb-4">
+          <b-col cols="md-6" class="mb-4">
             <div class="card">
               <div class="card-header">
-                <h1><i class="fas fa-user-circle" /> Mi perfil</h1>
+                <h1><i class="fas fa-user-circle" /> Perfil</h1>
               </div>
               <div class="card-body">
                   <div>
@@ -79,28 +79,10 @@
               </div>
             </div>
           </b-col>
-          <b-col cols="md-4" class="mb-4">
+          <b-col cols="md-6" class="mb-4">
             <div class="card">
               <div class="card-header">
-                <h1><i class="fas fa-image"/> Mi Foto</h1>
-              </div>
-              <div class="card-body">
-                <form action="">
-                  <label class="d-block">Imagen Perfil:</label>
-                  <b-form-group>
-
-                  </b-form-group>
-                  <div class="text-center">
-                    <b-button type="submit" variant="dark" class="far fa-save"> Actualizar Imagen</b-button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </b-col>
-          <b-col cols="md-4" class="mb-4">
-            <div class="card">
-              <div class="card-header">
-                <h1><i class="fas fa-key"/> Mi Contraseña</h1>
+                <h1><i class="fas fa-key"/> Contraseña</h1>
               </div>
               <div class="card-body">
                 <form action="">
