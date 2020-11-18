@@ -115,7 +115,7 @@ export default {
       type: Boolean,
       default: ()=> false
     },
-    item: {
+    items: {
       type: Object,
       default: ()=> {}
     },
@@ -235,9 +235,9 @@ export default {
     },
   },
    watch: {
-    row() {
+    items() {
       this.form.id = this.items.id
-      this.form.name = this.items.name
+      this.form.user_id = this.items.user_id
       this.form.date = this.items.date
       this.form.temperature = this.items.temperature
       this.form.state = this.items.state

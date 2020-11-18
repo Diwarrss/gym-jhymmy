@@ -66,6 +66,7 @@
               <date-picker
                 valueType="format"
                 id="from_date"
+                :disabled-date="disabledAfterToday"
                 :disabled="viewOnlly"
                 v-model="form.from_date"
                 :class="{ 'is-invalid': $v.form.from_date.$error }"
@@ -230,12 +231,17 @@ export default {
     },
   },
   methods: {
+    disabledAfterToday(date) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      return date > today;
+    },
     hideModal() {
       this.form.id = ''
       this.form.user_id = ''
       this.form.to_date = ''
       this.form.from_date = ''
-      this.form.state = ''
+      this.form.state = true
       this.form.value = ''
       this.$bvModal.hide(this.modal)
       this.$v.$reset()
@@ -269,7 +275,7 @@ export default {
               //me.$store.dispatch('config/getPayment')
               me.hideModal()
             }
-          }, 2000)
+          }, 1000)
         } else {
           me.updating = true
           //actualizar

@@ -193,8 +193,8 @@ export default {
         return
       } else {
         //Crear
-        me.sending = true
         if (me.event) {
+          me.sending = true
           let params = {
             url: '/states',
             data: me.form,

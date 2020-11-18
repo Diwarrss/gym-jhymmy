@@ -15,7 +15,8 @@
             :fields="fields"
             :items="AccessCotrol"
             :rows="allRow"
-            :per-page="10"/>
+            :per-page="10"
+          />
         </div>
       </div>
     </div>
@@ -26,6 +27,8 @@
 import TableCustom from '../components/table/TableCustom'
 import ModalAccessControl from '../components/modals/ModalAccessControl'
 import EventBus from '../bus'
+import moment from "moment";
+moment.locale("es");
 export default {
   components: {
     TableCustom,
@@ -63,13 +66,10 @@ export default {
         {
           key: 'created_at',
           label: 'Fecha y Hora',
-          sortable: true
-        },
-        {
-          key: 'acciones',
-          label: 'Acciones',
-          visible: false,
-          sortable: false
+          sortable: true,
+          formatter: value => {
+            return moment(value).format("YYYY-MM-DD hh:mm a")
+          }
         }
       ],
       sending: false,

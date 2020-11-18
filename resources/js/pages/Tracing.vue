@@ -40,7 +40,6 @@
             :per-page="10"
             :show-filter="false"
             :per-pagination="false"
-            :cancel-state="true"
             />
         </div>
       </div>
@@ -52,8 +51,8 @@
 import TableCustom from '../components/table/TableCustom'
 import ModalTracing from '../components/modals/ModalTracing'
 import EventBus from '../bus'
-import moment from "moment";
-moment.locale("es");
+import moment from "moment"
+moment.locale("es")
 export default {
   components: {
     TableCustom,

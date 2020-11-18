@@ -70,9 +70,11 @@
       <!-- se pinta el componente para el slot acciones -->
       <template v-slot:cell(acciones)="row">
         <b-button
+          v-if="butonView"
           variant="primary"
           @click="modalEdit(row.item, row.index, $event.target, true)"><i class="fas fa-eye mr-md-1"/><span class="d-none d-md-inline-block">Ver</span></b-button>
         <b-button
+          v-if="butonEdit"
           variant="warning"
           @click="modalEdit(row.item, row.index, $event.target, false)"><i class="fas fa-edit mr-md-1"/><span class="d-none d-md-inline-block">Editar</span></b-button>
         <b-button
@@ -86,7 +88,7 @@
         <b-button
           v-if="cancelState"
           variant="danger"
-          @click="status(row.item.id, 'enable')"><i class="fas fa-check-circle mr-md-1"/><span class="d-none d-md-inline-block">Anular</span></b-button>
+          @click="cancelItem(row.item.id)"><i class="fas fa-check-circle mr-md-1"/><span class="d-none d-md-inline-block">Anular</span></b-button>
       </template>
       <template #empty="scope">
         <h4 class="text-center text-primary"><b-spinner variant="primary" label="Spinning"></b-spinner> Sin Resultados</h4>
@@ -130,6 +132,7 @@
     <ModalPaymentTable v-if="typePage=='payment'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-payment-table"/>
     <ModalCancellationReasonTable v-if="typePage=='cancellationReason'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-cancellationReason-table"/>
     <ModalAccessControlTable v-if="typePage=='access'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-access-table"/>
+    <ModalCancel :tittleModal="tittleModal" :id="data_id" />
   </div>
 </template>
 <script>
@@ -140,6 +143,7 @@ import ModalStateTable from '../modals/ModalState'
 import ModalPaymentTable from '../modals/ModalPayment'
 import ModalCancellationReasonTable from '../modals/ModalCancellationReason'
 import ModalAccessControlTable from '../modals/ModalAccessControl'
+import ModalCancel from '../modals/ModalCancel'
 import EventBus from '../../bus'
 export default {
   components: {
@@ -149,7 +153,8 @@ export default {
     ModalStateTable,
     ModalPaymentTable,
     ModalCancellationReasonTable,
-    ModalAccessControlTable
+    ModalAccessControlTable,
+    ModalCancel
   },
   props: {
     cancelState: {
@@ -199,6 +204,14 @@ export default {
     perPagination: {
       type: Boolean,
       default: () => true
+    },
+    butonEdit: {
+      type: Boolean,
+      default: true
+    },
+    butonView: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -210,7 +223,8 @@ export default {
       sortDesc: false,
       viewOnlly: null,
       tittleModal: null,
-      dataModal: {}
+      dataModal: {},
+      data_id: 0
     }
   },
   methods: {
@@ -218,6 +232,11 @@ export default {
       // actualiza la paginacion cuando se usa el filtro
       this.rows = filteredItems.length
       this.currentPage = 1
+    },
+    cancelItem(id) {
+      let me = this
+      me.data_id = id
+      EventBus.$emit('show-modal-cancel')
     },
     getData() {
       let me = this

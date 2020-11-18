@@ -51,8 +51,10 @@
                       >
                         <b-form-input
                           id="rol"
+                          class="input-roll"
                           v-model="form.rol"
                           required
+                          disabled
                           autofocus
                         ></b-form-input>
                       </b-form-group>
@@ -161,6 +163,9 @@
 </template>
 <script>
   export default {
+    props: {
+      user: String
+    },
     data() {
       return {
         form: {
@@ -176,6 +181,16 @@
         /* foods: [{ text: '', value: null }, 'Soltero', 'Casado', 'Muerto', 'No sabe'], */
         show: true
       }
+    },
+    computed: {
+      userAuth() {
+        return JSON.parse(this.user)
+      }
+    },
+    mounted() {
+      this.form.name = this.userAuth.name
+      this.form.email = this.userAuth.email
+      this.fomr.rol = this.userAuth.roles[0].name
     },
     methods: {
       onSubmit(evt) {
@@ -214,6 +229,11 @@
   .body_profile{
     .card-header{
       background: #5e71e3;
+    }
+    .card-body {
+      .input-roll {
+        background-color: #8898aa00;
+      }
     }
   }
 }

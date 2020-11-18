@@ -34,7 +34,7 @@
             @include('layouts.navbars.navbar')
             {{-- Solo se muestra el componente cuando este Auth --}}
             @auth()
-              <router-view></router-view>
+              <router-view user="{{ auth()->user() }}"></router-view>
             @endauth
             {{-- Se muestra el contenido para el Cliente --}}
             @yield('content')

@@ -46,6 +46,8 @@ Route::group(['middleware' => 'auth'], function () {
   //pagos
   Route::resource('payments', PaymentController::class);
   Route::put('payments-state/{id}', [App\Http\Controllers\PaymentController::class, 'updateState']);
+  Route::post('cancel-payment/{id}', [App\Http\Controllers\PaymentController::class, 'cancelPayment']);
+
 
   //perfil
   //Route::resource('profiles', 'App\Http\Controllers\ProfileController');

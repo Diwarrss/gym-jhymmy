@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RequestPayment;
+use App\Models\CanceledPayment;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,7 @@ class PaymentController extends Controller
      */
     public function index()
     {
-      return Payment::with('userAdm', 'userCli')->get();
+      return Payment::with('userAdm', 'userCli')->where('state', '1')->get();
 
     }
 
@@ -27,12 +28,13 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RequestPayment $request)
+    public function store(Request $request)
     {
       try {
         DB::beginTransaction();
         $data = $request->all();
         $data['creator_user_id'] = Auth::user()->id;
+        // $data['state'] = 1;
         $payment = Payment::create($data);
         DB::commit(); //commit de la transaccion
 
@@ -175,5 +177,49 @@ class PaymentController extends Controller
     public function destroy(Payment $payment)
     {
         //
+    }
+
+    public function cancelPayment(Request $request, $id)
+    {
+      //anular radicado, no elimina solo cambia el estado
+      try {
+        DB::beginTransaction();
+
+        $payment = Payment::find($id); //Busca registro por ID
+
+        //Add data in cancels_payments
+        $cancelPayment = CanceledPayment::create([
+          'description' => $request->description,
+          'cancellation_reason_id' => $request->cancellation_reason_id,
+          'payment_id' => $request->payment_id,
+          'user_id' => Auth::user()->id
+        ]);
+
+        $payment->state = !$payment->state; //cambia el estado del radicado
+        $payment->save(); //guarda el estado
+
+        DB::commit(); //commit de la transaccion
+
+        if ($payment) { //respuesta exitosa
+          return response()->json([
+            'type' => 'success',
+            'message' => 'Anulado con éxito',
+            'data' => $payment->state
+          ], 202);
+        }else{ //respuesta de error
+          return response()->json([
+            'type' => 'error',
+            'message' => 'Error al anular',
+            'data' => []
+          ], 204);
+        }
+      } catch (Exception $e) { //error en el proceso
+        return response()->json([
+          'type' => 'error',
+          'message' => 'Error al anular',
+          'data' => []
+        ], 204);
+        DB::rollBack(); //si hay error no ejecute la transaccion
+      }
     }
 }

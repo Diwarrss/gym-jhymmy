@@ -222,23 +222,23 @@ export default {
     clearErrors: function({ commit }) {
       commit('setErrors', {})
     },
-    cancelFiling: function({ dispatch, commit }, params) {
+    cancelPayment: function({ dispatch, commit }, params) {
       commit('setErrors', {})
-      let me = this
       let url = params.url
       let getData = params.data
       axios
         .post(url, getData)
         .then(res => {
           if (res.data.type === 'success') {
-            this.$swal({
-              title: res.data.message,
-              icon: 'success',
-              confirmButtonColor: '#4dbd74',
-              confirmButtonText: '<i class="far fa-check-circle"></i> Aceptar',
-              timer: 4000
-            })
-            if (params.paramsrStatus) {
+            setTimeout(() => {
+              Vue.swal({
+                icon: 'success',
+                title: res.data.message,
+                showConfirmButton: true,
+                timer: 2000
+              })
+            }, 500);
+            /* if (params.paramsrStatus) {
               dispatch(params.action, params.paramsr, {root:true})
             }else{
               if (params.dateRange.length > 0) {
@@ -246,18 +246,19 @@ export default {
               } else {
                 dispatch(params.action, null, {root:true})
               }
-            }
+            } */
+            dispatch(params.action, null, {root:true})
             commit('setResult', res.data.data)
           } else {
-            this.$swal({
-              title: res.data.message,
-              icon: 'error',
-              confirmButtonColor: '#4dbd74',
-              confirmButtonText: '<i class="far fa-check-circle"></i> Aceptar',
-              timer: 3000
-            })
+            setTimeout(() => {
+              Vue.swal({
+                icon: 'success',
+                title: res.data.message,
+                showConfirmButton: true,
+                timer: 2000
+              })
+            }, 500);
           }
-          console.log(res)
         })
         .catch(err => {
           console.error(err)

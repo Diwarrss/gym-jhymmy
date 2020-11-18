@@ -14,7 +14,9 @@
             :fields="fields"
             :items="payments"
             :rows="allRow"
-            :per-page="10"/>
+            :per-page="10"
+            :cancel-state="true"
+            />
         </div>
       </div>
     </div>
@@ -25,6 +27,8 @@
 import TableCustom from '../components/table/TableCustom'
 import ModalPayment from '../components/modals/ModalPayment'
 import EventBus from '../bus'
+import moment from "moment"
+moment.locale("es")
 export default {
   components: {
     TableCustom,
@@ -54,13 +58,17 @@ export default {
           sortable: true
         },
         {
-          key: 'created_at',
-          label: 'Fecha de Pago',
+          key: 'value',
+          label: 'Valor',
           sortable: true
         },
         {
-          key: 'state',
-          label: 'Estado'
+          key: 'created_at',
+          label: 'Fecha de Pago',
+          sortable: true,
+          formatter: value => {
+            return moment(value).format("YYYY-MM-DD")
+          }
         },
         {
           key: 'acciones',
