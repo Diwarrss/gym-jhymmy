@@ -9,6 +9,7 @@
           <b-col>
             <b-form>
               <b-form-group
+                v-if="rol_id == 1"
                 id="group1"
                 label-cols-md="3"
                 label="Cliente:"
@@ -24,6 +25,17 @@
                 >
                 <div slot="no-options">No hay Resultados!</div>
                 </v-select>
+              </b-form-group>
+              <b-form-group
+                v-else
+                id="group1"
+                label-cols-md="3"
+                label="Cliente:"
+                label-for="user_id">
+                <b-form-input
+                  v-model="user_name"
+                  disabled
+                />
               </b-form-group>
             </b-form>
           </b-col>
@@ -59,6 +71,9 @@ export default {
     TableCustom,
     ModalTracing
   },
+  props: {
+    user: String
+  },
   data() {
     return {
       // Note `isActive` is left out and will not appear in the rendered table
@@ -66,6 +81,8 @@ export default {
         { "id" : "1", "name" : "Activo"},
         { "id" : "2", "name" : "Inactivo"}
       ],
+      user_id: '',
+      user_name: '',
       show: true,
       sending: false,
       updating: false,
@@ -73,6 +90,7 @@ export default {
       viewOnlly: false,
       tittleModal : '',
       allRow: this.row,
+      rol_id: 0,
       rows: 4,
       modal: 'modal-tracing',
       form: {
@@ -155,17 +173,29 @@ export default {
     users(){
       return this.$store.state.user.users
     },
+    userAuth() {
+      return JSON.parse(this.user)
+    }
   },
   created() {
     // this.$store.dispatch('getTracing')
     this.$store.dispatch('getUsers')
+  },
+  mounted() {
+    this.rol_id = this.userAuth.roles[0]['id']
+    this.user_name = this.userAuth.name
+    this.user_id = this.userAuth.id
+    if (this.rol_id == 2) {
+      this.form.user_id = this.userAuth.id
+      this.$store.dispatch('getTracing', this.form.user_id)
+    }
   },
   methods: {
     changeUser () {
       this.$store.dispatch('getTracing', this.form.user_id)
     },
     newTracing(view) {
-      EventBus.$emit('show-modal-tracing')
+      EventBus.$emit('show-modal-tracing', this.rol_id)
     },
     modalEdit(item, index, button, view) {
       if (view) {

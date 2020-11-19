@@ -15,14 +15,14 @@ class CreateTracingsTable extends Migration
     {
         Schema::create('tracings', function (Blueprint $table) {
             $table->id();
-            $table->double('back');//espalda
-            $table->double('chest');//pecho
-            $table->double('calf');//pantorrilla
-            $table->double('leg');//pierna
-            $table->double('arm');//brazo
-            $table->double('waist');//cintura
-            $table->double('weight');//peso
-            $table->double('size');//talla
+            $table->string('back');//espalda
+            $table->string('chest');//pecho
+            $table->string('calf');//pantorrilla
+            $table->string('leg');//pierna
+            $table->string('arm');//brazo
+            $table->string('waist');//cintura
+            $table->string('weight');//peso
+            $table->string('size');//talla
             $table->boolean('state');//talla
             //relacion con usuario
             $table->foreignId('user_id')->constrained('users');

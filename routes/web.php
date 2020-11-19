@@ -30,6 +30,8 @@ Route::group(['middleware' => 'auth'], function () {
   //usuarios
   Route::resource('users', UserController::class);
   Route::put('users-state/{id}', [App\Http\Controllers\UserController::class, 'updateState']);
+  Route::post('change-data', [App\Http\Controllers\UserController::class, 'changeData']);
+  Route::post('change-password', [App\Http\Controllers\UserController::class, 'changePassword']);
 
   //generos
   Route::resource('genders', GenderController::class);

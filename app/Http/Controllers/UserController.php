@@ -195,8 +195,8 @@ class UserController extends Controller
       */
       $request->validate([
         'old_password'     => 'required',//valida que la contraseña consida con la que tiene la base de datos
-        'new_password'     => 'required|min:8',//valida que la nueva ocntraseña cumpla con los parametros necesarios
-        'confirm_password' => 'required|same:new_password',//valida que consida con la nueva conrtaseña
+        'password_new'     => 'required|min:8',//valida que la nueva ocntraseña cumpla con los parametros necesarios
+        'confirm_password' => 'required|same:password_new',//valida que consida con la nueva conrtaseña
       ]);
       $data = $request->all();//captura los parametros q vienen en la petición
       $user = User::find(Auth::user()->id);//Busca registro por ID
@@ -206,7 +206,7 @@ class UserController extends Controller
           // The passwords match...
           //guarda la nueva contraseña encriptada en la base de datos
           $user->fill([
-            'password' => FacadesHash::make($request->new_password)
+            'password' => FacadesHash::make($request->password_new)
           ])->save();
 
           return response()->json([//respuesta de exito
@@ -232,13 +232,12 @@ class UserController extends Controller
       //validations->valida q el nombre y el e-mail no esten en la base de datos
       */
       $request->validate([
-        'username' => 'required|max:30|unique:users,username,' . Auth::user()->id,
         'email' => 'required|max:130|unique:users,email,' . Auth::user()->id
       ]);
 
       $user = User::find(Auth::user()->id);//Busca registro por ID
       if ($user) {
-        $user->username = $request->username;
+        $user->name = $request->name;
         $user->email = $request->email;
         $user->save();//Guarda la informacion del registro
 

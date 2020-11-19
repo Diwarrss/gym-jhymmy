@@ -2,7 +2,7 @@
   <nav class="sidebar_custom navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
       <!-- Toggler -->
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
+      <button @click="touchCollapse" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <!-- Brand -->
@@ -10,46 +10,19 @@
         <img :src="path + '/img/brand/blue.png'" class="navbar-brand-img" alt="...">
       </div>
       <!-- User -->
-      <ul class="nav align-items-center d-md-none">
-        <li class="nav-item dropdown">
-            <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <div class="media align-items-center">
-                    <span class="avatar avatar-sm rounded-circle">
-                    <img alt="Image placeholder" :src="path + '/img/theme/team-1-800x800.jpg'">
-                    </span>
-                </div>
-            </a>
-            <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-                <div class=" dropdown-header noti-title">
-                    <h6 class="text-overflow m-0">Welcome!</h6>
-                </div>
-                <!-- <a href="{{ route('profile.edit') }}" class="dropdown-item">
-                    <i class="ni ni-single-02"></i>
-                    <span>{{ __('My profile') }}</span>
-                </a> -->
-                <!-- <a href="#" class="dropdown-item">
-                    <i class="ni ni-settings-gear-65"></i>
-                    <span>{{ __('Settings') }}</span>
-                </a>
-                <a href="#" class="dropdown-item">
-                    <i class="ni ni-calendar-grid-58"></i>
-                    <span>{{ __('Activity') }}</span>
-                </a>
-                <a href="#" class="dropdown-item">
-                    <i class="ni ni-support-16"></i>
-                    <span>{{ __('Support') }}</span>
-                </a> -->
-                <div class="dropdown-divider"></div>
-                <!-- <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
-                document.getElementById('logout-form').submit();">
-                    <i class="ni ni-user-run"></i>
-                    <span>{{ __('Logout') }}</span>
-                </a> -->
-            </div>
-        </li>
-      </ul>
+      <b-nav-item-dropdown class="pr-md-4 dropdown-custom" no-caret>
+          <!-- Using 'button-content' slot -->
+          <template #button-content>
+            <em><i class="fas fa-user-friends"></i></em>
+          </template>
+          <b-dropdown-item :to="{ name: 'profile' }" class=""><i class="fas fa-user-circle"></i> Perfil</b-dropdown-item>
+          <b-dropdown-item @click.prevent="logout" variant="danger"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</b-dropdown-item>
+          <form id="logout-form" action="/logout" method="POST" style="display: none;">
+            <input type="hidden" name="_token" v-bind:value="csrf" />
+          </form>
+        </b-nav-item-dropdown>
       <!-- Collapse -->
-      <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+      <div class="collapse navbar-collapse" id="sidenav-collapse-main" :class="!showCollapse ? 'collapse-oculto' : '' ">
         <!-- Collapse header -->
         <div class="navbar-collapse-header d-md-none">
           <div class="row">
@@ -59,7 +32,7 @@
               </div>
             </div>
               <div class="col-6 collapse-close">
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">
+                <button @click="touchClose" type="button" class="navbar-toggler" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">
                   <span></span>
                   <span></span>
                 </button>
@@ -178,11 +151,25 @@
 export default {
   props: {
     path: String,
-    user: String
+    user: String,
+    csrf: String
   },
   data() {
     return {
-      rol_id: ''
+      rol_id: '',
+      showCollapse: false
+    }
+  },
+  methods: {
+    touchCollapse() {
+      this.showCollapse = true
+    },
+    touchClose() {
+      this.showCollapse = false
+    },
+    logout() {
+      event.preventDefault();
+      document.getElementById("logout-form").submit();
     }
   },
   mounted() {
@@ -207,8 +194,17 @@ export default {
         color: white !important;
       }
     }
-    .nav-item:hover {
-      background: #d9cbff !important;
+    .nav-item{
+      ul {
+        top: 18px !important;
+        left: -60px !important;
+      }
+      &:hover {
+        background: transparent !important;
+      }
+    }
+    .collapse-oculto {
+      left: -400px !important;
     }
   }
 </style>

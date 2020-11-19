@@ -40,7 +40,7 @@
                 :reduce="users => users.id"
                 label="name"
                 name="user"
-                :disabled="viewOnlly"
+                :disabled="viewOnlly || rol_id != 1"
               >
                 <div slot="no-options">No hay Resultados!</div>
               </v-select>
@@ -342,6 +342,7 @@ export default {
         { "id" : "1", "name" : "Activo"},
         { "id" : "2", "name" : "Inactivo"}
       ],
+      rol_id: '',
       show: true,
       sending: false,
       updating: false,
@@ -411,7 +412,7 @@ export default {
   methods: {
     hideModal() {
       this.form.id = ''
-      this.form.user_id = null
+      /* this.form.user_id = null */
       //sthis.form.state = ''
       this.form.back = ''
       this.form.chest = ''
@@ -491,7 +492,8 @@ export default {
       //this.$store.dispatch('getUsers')
       console.log(this.items)
     })
-    EventBus.$on('show-modal-tracing', () => {
+    EventBus.$on('show-modal-tracing', (rol) => {
+      this.rol_id = rol
       this.$bvModal.show('modal-tracing')
       //this.$store.dispatch('getUsers')
     })
