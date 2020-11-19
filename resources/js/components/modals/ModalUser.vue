@@ -230,7 +230,7 @@
             </b-form-group>
           </b-col>
           <!-- Genero -->
-          <b-col cols="md-6">
+          <b-col cols="md-4">
             <b-form-group
               id="groupname"
               label="Genero:"
@@ -257,32 +257,56 @@
             </b-form-group>
           </b-col>
           <!-- estado -->
-          <b-col cols="md-6">
-          <b-form-group
-            id="groupstate"
-            label="Estado:"
-            label-for="state"
-            >
-            <b-form-select
-              id="state"
-              :disabled="viewOnlly"
-              v-model="form.state_id"
-              :class="{ 'is-invalid': $v.form.state_id.$error }"
-            >
-              <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
-                <b-form-select-option
-                  v-for="(item, index) in states"
-                  :key="index"
-                  :value="item.id"
-                >{{ item.name }}
-              </b-form-select-option>
-            </b-form-select>
-            <template v-if="$v.form.state_id.$error">
-              <div class="invalid-feedback" v-if="!$v.form.state_id.required">
-                Seleccione el Estado
-              </div>
-            </template>
-          </b-form-group>
+          <b-col cols="md-4">
+            <b-form-group
+              id="groupstate"
+              label="Estado:"
+              label-for="state"
+              >
+              <b-form-select
+                id="state"
+                :disabled="viewOnlly"
+                v-model="form.state_id"
+                :class="{ 'is-invalid': $v.form.state_id.$error }"
+              >
+                <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
+                  <b-form-select-option
+                    v-for="(item, index) in states"
+                    :key="index"
+                    :value="item.id"
+                  >{{ item.name }}
+                </b-form-select-option>
+              </b-form-select>
+              <template v-if="$v.form.state_id.$error">
+                <div class="invalid-feedback" v-if="!$v.form.state_id.required">
+                  Seleccione el Estado
+                </div>
+              </template>
+            </b-form-group>
+          </b-col>
+          <!-- Rol -->
+          <b-col cols="md-4">
+            <b-form-group
+              id="groupname"
+              label="Rol:"
+              label-for="roles"
+              >
+              <b-form-select
+                id="roles"
+                v-model="form.rol_id"
+                :class="{ 'is-invalid': $v.form.rol_id.$error }"
+                :disabled="viewOnlly"
+              >
+                <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
+                <b-form-select-option :value="1">super_admin</b-form-select-option>
+                <b-form-select-option :value="2">cliente</b-form-select-option>
+              </b-form-select>
+              <template v-if="$v.form.rol_id.$error">
+                <div class="invalid-feedback" v-if="!$v.form.rol_id.required">
+                  Seleccione el Estado
+                </div>
+              </template>
+            </b-form-group>
           </b-col>
         </b-row>
         <div
@@ -367,7 +391,9 @@ export default {
         confirm_password: null,
         password: null,
         gender_id: null,
-        state_id: null
+        state_id: null,
+        rol_id: null,
+        old_rol_id: null
       },
       sending: false,
       updating: false
@@ -438,6 +464,9 @@ export default {
           },
           state_id: {
             required
+          },
+          rol_id: {
+            required
           }
         }
       }
@@ -482,6 +511,9 @@ export default {
           },
           state_id: {
             required
+          },
+          rol_id: {
+            required
           }
         }
       }
@@ -502,6 +534,7 @@ export default {
       this.form.confirm_password = null
       this.form.gender_id = null
       this.form.state_id = null
+      this.form.rol_id = null
       EventBus.$emit('clear-data-modal')
       this.$v.$reset()
     },
@@ -509,6 +542,7 @@ export default {
       evt.preventDefault()
       let me = this
       me.form.name = me.form.name ? me.form.name.toUpperCase() : ''
+      this.form.old_rol_id =this.form.rol_id
       this.$v.$touch()
       if (this.$v.$invalid) {
         return
@@ -583,6 +617,7 @@ export default {
       this.form.email = this.items.email
       this.form.gender_id = this.items.gender_id
       this.form.state_id = this.items.state_id
+      this.form.rol_id = this.items.rol_id
 
     }
   },

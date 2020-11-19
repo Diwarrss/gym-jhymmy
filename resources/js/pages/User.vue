@@ -2,7 +2,7 @@
   <div class="p-4 users_component">
     <div class="card">
       <div class="card-header">
-        <h1>Componente de usuarios</h1>
+        <h1>Usuarios</h1>
       </div>
       <div class="card-body">
         <div>

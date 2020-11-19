@@ -287,6 +287,11 @@ export default {
         //console.log(this.dataModal)
         EventBus.$emit('show-modal-state-table')
       }else if (this.typePage == 'payment'){
+        if (view) {
+          this.tittleModal = 'Ver Registro'
+        } else {
+          this.tittleModal = 'Editar Registro'
+        }
         this.dataModal = item
         //console.log(this.dataModal)
         EventBus.$emit('show-modal-payment-table')

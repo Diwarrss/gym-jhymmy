@@ -10,7 +10,7 @@
         <img :src="path + '/img/brand/blue.png'" class="navbar-brand-img" alt="...">
       </div>
       <!-- User -->
-      <b-nav-item-dropdown class="pr-md-4 dropdown-custom" no-caret>
+      <b-nav-item-dropdown class="pr-md-4 dropdown-custom d-md-none">
           <!-- Using 'button-content' slot -->
           <template #button-content>
             <em><i class="fas fa-user-friends"></i></em>
@@ -204,7 +204,7 @@ export default {
       }
     }
     .collapse-oculto {
-      left: -400px !important;
+      left: -800px !important;
     }
   }
 </style>

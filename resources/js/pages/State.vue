@@ -2,7 +2,7 @@
   <div class="p-4 state_component">
     <div class="card">
       <div class="card-header">
-        <h1>Componente de Estados</h1>
+        <h1>Estados</h1>
       </div>
       <div class="card-body">
         <div>

@@ -37,6 +37,8 @@ class UserController extends Controller
         $data['pin'] = 0000;/* trae el usuario q esta autenticado */
         $data['password'] = FacadesHash::make($request->password);
         $user = User::create($data);
+        $user->assignRole($request->rol_id);
+
         DB::commit(); //commit de la transaccion
 
         if ($user) {
@@ -108,6 +110,9 @@ class UserController extends Controller
         }
 
         $user->save();
+
+        $user->removeRole($request->old_rol_id);
+        $user->assignRole($request->rol_id);
 
         DB::commit(); //commit de la transaccion
 
