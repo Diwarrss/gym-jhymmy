@@ -35,6 +35,7 @@ class UserController extends Controller
         DB::beginTransaction();
         $data = $request->all();
         $data['pin'] = 0000;/* trae el usuario q esta autenticado */
+        $data['password'] = FacadesHash::make($request->password);
         $user = User::create($data);
         DB::commit(); //commit de la transaccion
 
@@ -103,7 +104,7 @@ class UserController extends Controller
         $user->gender_id = $request->gender_id;
         $user->state_id = $request->state_id;
         if ($request->password != null) {
-          $user->password = $request->password;
+          $user->password = FacadesHash::make($request->password);
         }
 
         $user->save();
