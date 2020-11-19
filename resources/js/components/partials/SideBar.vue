@@ -88,89 +88,44 @@
         <!-- Divider -->
         <!-- <hr class="my-3"> -->
         <!-- Heading -->
-        <h6 class="navbar-heading text-muted">ACCESO</h6>
-         <ul class="navbar-nav mb-md-3">
+        <div v-if="rol_id == 1">
+          <h6 class="navbar-heading text-muted">ACCESO</h6>
+          <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'access_control' }">
                 <i class="fas fa-calendar-check"></i> Control de Ingreso
               </router-link>
             </li>
-        </ul>
-        <!-- Divider -->
-        <hr class="my-3">
+          </ul>
+          <!-- Divider -->
+          <hr class="my-3">
+        </div>
         <!-- Heading -->
         <h6 class="navbar-heading text-muted">ADMINISTRACIÓN</h6>
         <ul class="navbar-nav mb-md-3">
-            <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'user' }">
-                <i class="fas fa-users"></i> Usuarios
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'tracing' }">
-                  <i class="fas fa-chart-line"></i> Seguimiento
-              </router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" :to="{ name: 'payment' }">
-                  <i class="fas fa-dollar-sign"></i> Pagos
-              </router-link>
-            </li>
-            <li class="nav-item">
-                <!-- <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                    <i class="fab fa-laravel" style="color: #f4645f;"></i>
-                    <span class="nav-link-text" style="color: #f4645f;">Laravel Examples</span>
-                </a>
-
-                <div class="collapse show" id="navbar-examples">
-                    <ul class="nav nav-sm flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('profile.edit') }}">
-                                {{ __('User profile') }}
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('user.index') }}">
-                                {{ __('User Management') }}
-                            </a>
-                        </li>
-                    </ul>
-                </div> -->
-            </li>
-
-            <li class="nav-item">
-                <!-- <a class="nav-link" href="{{ route('icons') }}">
-                    <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}
-                </a> -->
-            </li>
-            <li class="nav-item ">
-                <!-- <a class="nav-link" href="{{ route('map') }}">
-                    <i class="ni ni-pin-3 text-orange"></i> {{ __('Maps') }}
-                </a> -->
-            </li>
-            <li class="nav-item">
-                <!-- <a class="nav-link" href="{{ route('table') }}">
-                  <i class="ni ni-bullet-list-67 text-default"></i>
-                  <span class="nav-link-text">Tables</span>
-                </a> -->
-            </li>
-            <li class="nav-item">
-                <!-- <a class="nav-link" href="#">
-                    <i class="ni ni-circle-08 text-pink"></i> {{ __('Register') }}
-                </a> -->
-            </li>
-            <li class="nav-item mb-5 mr-4 ml-4 pl-1 bg-danger" style="position: absolute; bottom: 0;">
-                <!-- <a class="nav-link text-white" href="https://www.creative-tim.com/product/argon-dashboard-pro-laravel" target="_blank">
-                    <i class="ni ni-cloud-download-95"></i> Upgrade to PRO
-                </a> -->
-            </li>
+          <li class="nav-item" v-if="rol_id == 1">
+            <router-link class="nav-link" :to="{ name: 'user' }">
+              <i class="fas fa-users"></i> Usuarios
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" :to="{ name: 'tracing' }">
+                <i class="fas fa-chart-line"></i> Seguimiento
+            </router-link>
+          </li>
+          <li class="nav-item" v-if="rol_id == 1">
+            <router-link class="nav-link" :to="{ name: 'payment' }">
+                <i class="fas fa-dollar-sign"></i> Pagos
+            </router-link>
+          </li>
         </ul>
         <!-- Divider -->
         <hr class="my-3">
         <!-- Heading -->
-        <h6 class="navbar-heading text-muted">CONFIGURACIÓN</h6>
-        <!-- Navigation -->
-        <ul class="navbar-nav mb-md-3">
+        <div v-if="rol_id == 1">
+          <h6 class="navbar-heading text-muted">CONFIGURACIÓN</h6>
+          <!-- Navigation -->
+          <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'gender' }">
                   <i class="fas fa-venus-mars"></i> Generos
@@ -186,9 +141,10 @@
                   <i class="fas fa-ban"></i> Motivo de Cancelación
               </router-link>
             </li>
-        </ul>
-        <!-- Divider -->
-        <hr class="my-3">
+          </ul>
+          <!-- Divider -->
+          <hr class="my-3">
+        </div>
         <!-- Heading -->
         <h6 class="navbar-heading text-muted">CUENTA</h6>
         <!-- Navigation -->
@@ -221,8 +177,22 @@
 <script>
 export default {
   props: {
-    path: String
-  }
+    path: String,
+    user: String
+  },
+  data() {
+    return {
+      rol_id: ''
+    }
+  },
+  mounted() {
+    this.rol_id = this.userAuth.roles[0]['id']
+  },
+  computed: {
+    userAuth() {
+      return JSON.parse(this.user)
+    }
+  },
 }
 </script>
 <style lang="scss">

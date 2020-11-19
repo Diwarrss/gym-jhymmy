@@ -26,7 +26,7 @@
               {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                   @csrf
               </form> --}}
-              <side-bar path="{{ asset('argon') }}"></side-bar>
+              <side-bar path="{{ asset('argon') }}" user="{{ auth()->user()->role }}"></side-bar>
               {{-- @include('layouts.navbars.sidebar') --}}
           @endauth
 
@@ -34,7 +34,7 @@
             @include('layouts.navbars.navbar')
             {{-- Solo se muestra el componente cuando este Auth --}}
             @auth()
-              <router-view user="{{ auth()->user() }}"></router-view>
+              <router-view user="{{ auth()->user()->role }}"></router-view>
             @endauth
             {{-- Se muestra el contenido para el Cliente --}}
             @yield('content')

@@ -274,6 +274,11 @@ export default {
         //console.log(this.dataModal)
         EventBus.$emit('show-modal-user-table')
       }else if (this.typePage == 'tracing'){
+        if (view) {
+          this.tittleModal = 'Ver Registro'
+        } else {
+          this.tittleModal = 'Editar Registro'
+        }
         this.dataModal = item
         //console.log(this.dataModal)
         EventBus.$emit('show-modal-tracing-table')

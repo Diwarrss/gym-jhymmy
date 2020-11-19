@@ -172,7 +172,7 @@
     mounted() {
       this.form.name = this.userAuth.name
       this.form.email = this.userAuth.email
-      this.fomr.rol = this.userAuth.roles[0].name
+      this.form.rol = this.userAuth.roles[0]['name']
     },
     methods: {
       onSubmit(evt) {

@@ -18,7 +18,7 @@ export default {
     {
       path: '/',
       name: 'home',
-      component: AccessControl
+      component: Tracing
     },
     {
       path: '/profile',
