@@ -81,14 +81,6 @@ export default {
     this.$store.dispatch('getCancellationReason')
   },
   methods: {
-    sendData(){
-      let me = this
-      me.sending = true
-      console.log('guardando')
-      /* setTimeout(() => {
-        me.hideModal()
-      }, 1000); */
-    },
     newCancellationReason(view) {
       EventBus.$emit('show-modal-cancellationReason')
     },

@@ -182,7 +182,7 @@ export default {
   created() {
     EventBus.$on('show-modal-cancellationReason-table', () => {
       this.$bvModal.show('modal-cancellationReason-table')
-      console.log(this.items)
+      //console.log(this.items)
     })
     EventBus.$on('show-modal-cancellationReason', () => {
       this.$bvModal.show('modal-cancellationReason')

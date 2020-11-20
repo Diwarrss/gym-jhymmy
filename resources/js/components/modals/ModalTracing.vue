@@ -490,7 +490,7 @@ export default {
     EventBus.$on('show-modal-tracing-table', () => {
       this.$bvModal.show('modal-tracing-table')
       //this.$store.dispatch('getUsers')
-      console.log(this.items)
+      //console.log(this.items)
     })
     EventBus.$on('show-modal-tracing', (rol) => {
       this.rol_id = rol

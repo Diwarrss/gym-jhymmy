@@ -249,7 +249,7 @@ export default {
         this.$axios.get(me.url +'?page=' + this.currentPage)
         .then(res => {
           me.allData = res.data.data.data
-          console.log(res);
+          //console.log(res);
         })
         //console.log('cambio de pagina', this.currentPage)
       }, 100);
@@ -269,7 +269,7 @@ export default {
         //console.log(this.dataModal)
         EventBus.$emit('show-modal-gender-table')
       }else if (this.typePage == 'user'){
-        console.log(item)
+        //console.log(item)
         this.dataModal = item
         //console.log(this.dataModal)
         EventBus.$emit('show-modal-user-table')

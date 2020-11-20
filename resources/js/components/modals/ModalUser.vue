@@ -617,8 +617,9 @@ export default {
       this.form.email = this.items.email
       this.form.gender_id = this.items.gender_id
       this.form.state_id = this.items.state_id
-      this.form.rol_id = this.items.rol_id
-
+      if (this.items.roles) {
+        this.form.rol_id = this.items.roles[0].id
+      }
     }
   },
 }

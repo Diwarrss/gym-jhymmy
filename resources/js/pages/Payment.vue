@@ -96,14 +96,6 @@ export default {
       this.rows = filteredItems.length
       this.currentPage = 1
     },
-    sendData(){
-      let me = this
-      me.sending = true
-      console.log('guardando')
-      /* setTimeout(() => {
-        me.hideModal()
-      }, 1000); */
-    },
     hideModal() {
       this.$refs['modal-payments'].hide()
       setTimeout(() => {

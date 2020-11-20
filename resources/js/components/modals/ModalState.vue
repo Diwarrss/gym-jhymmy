@@ -242,7 +242,7 @@ export default {
   created() {
     EventBus.$on('show-modal-state-table', () => {
       this.$bvModal.show('modal-state-table')
-      console.log(this.items)
+      //console.log(this.items)
     })
     EventBus.$on('show-modal-state', () => {
       this.$bvModal.show('modal-state')

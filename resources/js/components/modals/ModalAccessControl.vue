@@ -196,7 +196,7 @@ export default {
           me.$store.dispatch('create', params)
 
           setTimeout(() => {
-            console.log(Object.keys(me.errors).length)
+            //console.log(Object.keys(me.errors).length)
             if (Object.keys(me.errors).length >= 1) {
               //validation back
               me.sending = false

@@ -91,14 +91,6 @@ export default {
     this.$store.dispatch('getAccessControl')
   },
   methods: {
-    sendData(){
-      let me = this
-      me.sending = true
-      console.log('guardando')
-      /* setTimeout(() => {
-        me.hideModal()
-      }, 1000); */
-    },
     hideModal() {
       this.$refs['modal-access'].hide()
       setTimeout(() => {

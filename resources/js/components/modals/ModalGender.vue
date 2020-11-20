@@ -210,7 +210,7 @@ export default {
   created() {
     EventBus.$on('show-modal-gender-table', () => {
       this.$bvModal.show('modal-gender-table')
-      console.log(this.items)
+      //console.log(this.items)
     })
     EventBus.$on('show-modal-gender', () => {
       this.$bvModal.show('modal-gender')

@@ -86,14 +86,6 @@ export default {
     this.$store.dispatch('getGenders')
   },
   methods: {
-    sendData(){
-      let me = this
-      me.sending = true
-      console.log('guardando')
-      /* setTimeout(() => {
-        me.hideModal()
-      }, 1000); */
-    },
     /* hideModal() {
       this.$refs['modal-genders'].hide()
       setTimeout(() => {

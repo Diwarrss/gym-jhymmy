@@ -17,7 +17,7 @@
           </template>
           <b-dropdown-item :to="{ name: 'profile' }" class=""><i class="fas fa-user-circle"></i> Perfil</b-dropdown-item>
           <b-dropdown-item @click.prevent="logout" variant="danger"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</b-dropdown-item>
-          <form id="logout-form" action="/logout" method="POST" style="display: none;">
+          <form id="logout-form-sidebar" action="/logout" method="POST" style="display: none;">
             <input type="hidden" name="_token" v-bind:value="csrf" />
           </form>
         </b-nav-item-dropdown>
@@ -169,7 +169,7 @@ export default {
     },
     logout() {
       event.preventDefault();
-      document.getElementById("logout-form").submit();
+      document.getElementById("logout-form-sidebar").submit();
     }
   },
   mounted() {
