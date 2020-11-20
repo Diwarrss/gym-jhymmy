@@ -163,7 +163,6 @@ export default {
     EventBus.$on('show-modal-cancel', () => {
       this.$bvModal.show('modal-cancel')
     })
-    this.$store.dispatch('getCancellationReason')
   },
   watch: {
     items(){

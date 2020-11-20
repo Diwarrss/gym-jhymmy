@@ -19,7 +19,6 @@ class PaymentController extends Controller
     public function index()
     {
       return Payment::with('userAdm', 'userCli')->where('state', '1')->get();
-
     }
 
     /**

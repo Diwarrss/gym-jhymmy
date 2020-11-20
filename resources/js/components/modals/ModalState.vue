@@ -60,12 +60,8 @@
             :class="{ 'is-invalid': $v.form.state.$error }"
           >
             <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
-              <b-form-select-option
-                v-for="(item, index) in states"
-                :key="index"
-                :value="item.id"
-              >{{ item.name }}
-            </b-form-select-option>
+            <b-form-select-option :value="1">Activo...</b-form-select-option>
+            <b-form-select-option :value="0">Inactivo</b-form-select-option>
           </b-form-select>
           <template v-if="$v.form.state.$error">
             <div class="invalid-feedback" v-if="!$v.form.state.required">
@@ -145,12 +141,8 @@ export default {
       form: {
         id: '',
         name: '',
-        state: ''
-      },
-      states: [
-        { "id": 1, "name": "Activo"},
-        { "id": 2, "name": "Inactivo"}
-      ],
+        state: null
+      }
     }
   },
   computed: {

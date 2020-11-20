@@ -240,6 +240,7 @@ export default {
     cancelItem(id) {
       let me = this
       me.data_id = id
+      this.$store.dispatch('getCancellationReason', 1)
       EventBus.$emit('show-modal-cancel')
     },
     getData() {
