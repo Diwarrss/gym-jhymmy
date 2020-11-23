@@ -89,7 +89,7 @@
                         ></b-form-input>
                       </b-form-group>
                       <div class="text-center">
-                        <b-button @click="sendData('dataUser')" variant="dark" class="far fa-save"> Actualizar Datos</b-button>
+                        <b-button @click="sendData('dataUser')" variant="dark"><i class="far fa-save"></i> Actualizar Datos</b-button>
                       </div>
                     </b-form>
                   </div>
@@ -116,7 +116,7 @@
                           type="password"
                           placeholder="Ingrese Contraseña Anterior"
                           required
-                          autofocus
+
                         ></b-form-input>
                         <template v-if="$v.form.old_password.$error">
                           <div
@@ -149,7 +149,7 @@
                           type="password"
                           placeholder="Ingrese Contraseña Nueva"
                           required
-                          autofocus
+
                         ></b-form-input>
                         <template v-if="$v.form.password_new.$error">
                           <div
@@ -182,7 +182,7 @@
                           type="password"
                           placeholder="Confirme Contraseña"
                           required
-                          autofocus
+
                         ></b-form-input>
                         <template v-if="$v.form.confirm_password.$error">
                           <div
@@ -193,7 +193,7 @@
                         </template>
                       </b-form-group>
                       <div class="text-center">
-                        <b-button @click="sendData('changePassword')" variant="dark" class="far fa-save"> Actualizar Contraseña</b-button>
+                        <b-button @click="sendData('changePassword')" variant="dark" ><i class="far fa-save"></i> Actualizar Contraseña</b-button>
                       </div>
                 </form>
               </div>

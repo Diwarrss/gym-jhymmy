@@ -6,7 +6,7 @@
       </div>
       <div class="card-body">
         <div>
-          <button class="btn btn-primary mb-3" @click="newPay()">Nuevo Pago</button>
+          <button class="btn btn-primary mb-3" @click="newPay()"><i class="fas fa-plus-circle"></i> Nuevo Pago</button>
         </div>
         <div class="body_table pt-3">
           <TableCustom

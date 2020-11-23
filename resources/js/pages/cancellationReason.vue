@@ -6,7 +6,7 @@
       </div>
       <div class="card-body">
         <div>
-          <button class="btn btn-primary mb-3" @click="newCancellationReason()" data-toggle="modal" data-target="#exampleModal">Nuevo</button>
+          <button class="btn btn-primary mb-3" @click="newCancellationReason()"><i class="fas fa-plus-circle"></i> Nuevo</button>
         </div>
         <div class="body_table pt-3">
           <TableCustom

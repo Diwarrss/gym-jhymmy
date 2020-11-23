@@ -40,7 +40,7 @@
             </b-form>
           </b-col>
           <b-col sm="12" md="12" lg="6">
-            <button class="btn btn-primary mb-3" @click="newTracing()">Nuevo</button>
+            <button class="btn btn-primary mb-3" @click="newTracing()"><i class="fas fa-plus-circle"></i> Nuevo</button>
           </b-col>
         </b-row>
         <div class="body_table pt-3">

@@ -57,7 +57,6 @@
             v-model="form.temperature"
             :class="{ 'is-invalid': $v.form.temperature.$error }"
             :disabled="viewOnlly"
-            autofocus
           />
           <template v-if="$v.form.temperature.$error">
             <div class="invalid-feedback" v-if="!$v.form.temperature.required">

@@ -35,7 +35,7 @@
         <b-col md="6" class="box-image">
           <!-- <img src="'/assets/img/gym/nutri.jpg'" > -->
           <img :src="'/assets/img/gym/nutri.jpg'" alt="">
-          <h3>ASESOSRIA NUTRICIONAL PROFESIONAL</h3>
+          <h3>ASESORIA NUTRICIONAL PROFESIONAL</h3>
           <h2>NUTRICIÓN VIRTUAL</h2>
         </b-col>
         <b-col md="6" class="box-image">
