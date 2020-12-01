@@ -23,16 +23,21 @@
     <body class="{{ $class ?? '' }}">
         <div id="app">
           @auth()
-              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                   @csrf
-              </form>
-              @include('layouts.navbars.sidebar')
+              </form> --}}
+              <side-bar path="{{ asset('argon') }}" user="{{ auth()->user()->role }}" csrf="{{ csrf_token() }}"></side-bar>
+              {{-- @include('layouts.navbars.sidebar') --}}
           @endauth
 
           <div class="main-content">
-              @include('layouts.navbars.navbar')
-              <router-view></router-view>
-              @yield('content')
+            @include('layouts.navbars.navbar')
+            {{-- Solo se muestra el componente cuando este Auth --}}
+            @auth()
+              <router-view user="{{ auth()->user()->role }}"></router-view>
+            @endauth
+            {{-- Se muestra el contenido para el Cliente --}}
+            @yield('content')
           </div>
 
           @guest()

@@ -8,12 +8,12 @@ export default {
   },
   actions: {
     count ({ state }) {
-      console.log("sumando numeros")
+      console.log("sumando numeros b")
     }
   },
   getters: {
-    doubleCount (state) {
-      return state.count * 2
+    oneCount (state) {
+      return state.count * 1
     }
   }
 }
