@@ -106,7 +106,7 @@ class GenderController extends Controller
         if ($gender) {
           return response()->json([
             'type' => 'success',
-            'message' => 'Actualización con exito',
+            'message' => 'Actualización con éxito',
             'data' => $gender
           ], 202);
         }else{

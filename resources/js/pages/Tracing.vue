@@ -2,7 +2,7 @@
   <div class="p-4 tracing_component">
     <div class="card">
       <div class="card-header">
-        <h2 class="mb-0">Seguimiento</h2>
+        <h2 class="mb-0">Seguimientos</h2>
       </div>
       <div class="card-body">
         <b-row>
@@ -12,7 +12,7 @@
                 v-if="rol_id == 1"
                 id="group1"
                 label-cols-md="3"
-                label="Cliente:"
+                label="Seleccionar cliente:"
                 label-for="user_id">
                 <v-select id="user_id"
                   v-model="form.user_id"
@@ -112,32 +112,32 @@ export default {
         },
         {
           key: 'back',
-          label: 'Espalda',
+          label: 'Espalda (cm)',
           sortable: true
         },
         {
           key: 'chest',
-          label: 'Pecho',
+          label: 'Pecho (cm)',
           sortable: true
         },
         {
           key: 'leg',
-          label: 'Pierna',
+          label: 'Pierna (cm)',
           sortable: true
         },
         {
           key: 'arm',
-          label: 'Brazo',
+          label: 'Brazo (cm)',
           sortable: true
         },
         {
           key: 'waist',
-          label: 'cintura',
+          label: 'Cintura (cm)',
           sortable: true
         },
         {
           key: 'weight',
-          label: 'Peso',
+          label: 'Peso (kg)',
           sortable: true
         },
         {
@@ -171,7 +171,10 @@ export default {
       return this.$store.state.administration.allRow
     },
     users(){
-      return this.$store.state.user.users
+      const users = this.$store.state.user.users.filter(user => {
+        return user.roles.find(role => role.name !== 'super_admin')
+      })
+      return users
     },
     userAuth() {
       return JSON.parse(this.user)

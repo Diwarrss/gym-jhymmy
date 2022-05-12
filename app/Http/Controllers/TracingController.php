@@ -109,7 +109,7 @@ class TracingController extends Controller
       if ($tracing) {
         return response()->json([
           'type' => 'success',
-          'message' => 'Actualización con exito',
+          'message' => 'Actualización con éxito',
           'data' => $tracing
         ], 202);
       }else{

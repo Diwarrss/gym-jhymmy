@@ -50,7 +50,7 @@
         <!-- temperatura -->
         <b-form-group
           id="groupname"
-          label="Temperatura:"
+          label="Temperatura °C:"
           label-for="temperature">
           <b-form-input
             id="temperature"
@@ -158,8 +158,11 @@ export default {
     AccessCotrol(){
       return this.$store.state.administration.access_control
     },
-    users() {
-      return this.$store.state.user.users
+    users(){
+      const users = this.$store.state.user.users.filter(user => {
+        return user.roles.find(role => role.name !== 'super_admin')
+      })
+      return users
     },
     errors() {
       return this.$store.state.actions.errors

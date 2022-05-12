@@ -30,26 +30,6 @@
           </b-input-group>
         </b-form-group>
       </b-col>
-      <!-- Perpage -->
-      <b-col
-        lg="5"
-        class="my-1">
-        <b-form-group
-          label="Por página"
-          label-cols-sm="3"
-          label-align-sm="right"
-          label-size="mb"
-          label-for="perPageSelect"
-          class="mb-0"
-        >
-          <b-form-select
-            id="perPageSelect"
-            v-model="perPage"
-            :options="pageOptions"
-            class="select_custom"
-            size="mb"/>
-        </b-form-group>
-      </b-col>
     </b-row>
     <!-- Pintar Tabla -->
     <b-table
@@ -66,7 +46,8 @@
       striped
       small
       responsive
-      @filtered="onFiltered">
+      @filtered="onFiltered"
+      emptyFilteredText="No hay registros que coincidan con su solicitud">
       <!-- se pinta el componente para el slot acciones -->
       <template v-slot:cell(acciones)="row">
         <b-button
@@ -118,14 +99,24 @@
         </h5>
       </template>
     </b-table>
-    <!-- Info Paginacion -->
-    <b-pagination
-      class="mt-2"
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="table-custom"
-    />
+    <div class="mt-2 d-flex justify-content-between">
+      <!-- Info Paginacion -->
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        aria-controls="table-custom"
+      />
+      <!-- Perpage -->
+      <div class="d-flex justify-content-around">
+        <b-form-select
+          id="perPageSelect"
+          v-model="perPage"
+          :options="pageOptions"
+          class="select_custom"
+          size="sm"/>
+      </div>
+    </div>
     <ModalGenderTable v-if="typePage=='gender'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-gender-table"/>
     <ModalUserTable v-if="typePage=='user'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-users-table"/>
     <ModalTracingTable v-if="typePage=='tracing'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-tracing-table"/>

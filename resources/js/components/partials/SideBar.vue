@@ -83,7 +83,7 @@
           </li>
           <li class="nav-item">
             <router-link class="nav-link" :to="{ name: 'tracing' }">
-                <i class="fas fa-chart-line"></i> Seguimiento
+                <i class="fas fa-chart-line"></i> Seguimientos
             </router-link>
           </li>
           <li class="nav-item" v-if="rol_id == 1">
@@ -188,7 +188,7 @@ export default {
       color: #5e72e4;
     }
     .router-link-exact-active {
-      background: #825ee4 !important;
+      background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important;
       color: white !important;
       .fas {
         color: white !important;

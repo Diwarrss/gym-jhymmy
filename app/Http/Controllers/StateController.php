@@ -101,7 +101,7 @@ class StateController extends Controller
         if ($state) {
         return response()->json([
           'type' => 'success',
-          'message' => 'Actualización con exito',
+          'message' => 'Actualización con éxito',
           'data' => $state
         ], 202);
       }else{

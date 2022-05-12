@@ -100,7 +100,7 @@ class AccessControlController extends Controller
       if ($accessControl) {
         return response()->json([
           'type' => 'success',
-          'message' => 'Actualización con exito',
+          'message' => 'Actualización con éxito',
           'data' => $accessControl
         ], 202);
       }else{
@@ -142,7 +142,7 @@ class AccessControlController extends Controller
         if ($accessControl) {
           return response()->json([
             'type' => 'success',
-            'message' => 'regitro exitoso',
+            'message' => 'regitro éxitoso',
             'data' => $accessControl->state
           ], 202);
         }else{

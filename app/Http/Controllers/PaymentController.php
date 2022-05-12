@@ -103,7 +103,7 @@ class PaymentController extends Controller
       if ($payment) {
         return response()->json([
           'type' => 'success',
-          'message' => 'Actualización con exito',
+          'message' => 'Actualización con éxito',
           'data' => $payment
         ], 202);
       }else{
@@ -199,7 +199,7 @@ class PaymentController extends Controller
 
         DB::commit(); //commit de la transaccion
 
-        if ($payment) { //respuesta exitosa
+        if ($payment) { //respuesta éxitosa
           return response()->json([
             'type' => 'success',
             'message' => 'Anulado con éxito',

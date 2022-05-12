@@ -224,7 +224,10 @@ export default {
   },
   computed: {
     users() {
-      return this.$store.state.user.users
+      const users = this.$store.state.user.users.filter(user => {
+        return user.roles.find(role => role.name !== 'super_admin')
+      })
+      return users
     },
     errors() {
       return this.$store.state.actions.errors

@@ -95,7 +95,7 @@ class CancellationReasonController extends Controller
       if ($cancellationReason) {
         return response()->json([
           'type' => 'success',
-          'message' => 'Actualizado con exito',
+          'message' => 'Actualizado con éxito',
           'data' => $cancellationReason
         ], 202);
       }else{

@@ -55,12 +55,12 @@ export default {
         },
         {
           key: 'user.name',
-          label: 'Usuario',
+          label: 'Cliente',
           sortable: true
         },
         {
           key: 'temperature',
-          label: 'Temperatura',
+          label: 'Temperatura °C',
           sortable: true
         },
         {
@@ -84,7 +84,10 @@ export default {
       return this.$store.state.administration.access_control
     },
     users(){
-      return this.$store.state.user.users
+      const users = this.$store.state.user.users.filter(user => {
+        return user.roles.find(role => role.name !== 'super_admin')
+      })
+      return users
     },
   },
   created() {

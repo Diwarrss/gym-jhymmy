@@ -105,7 +105,7 @@ class UserController extends Controller
         $user->birthdate = $request->birthdate;
         $user->gender_id = $request->gender_id;
         $user->state_id = $request->state_id;
-        if ($request->password != null) {
+        if ($request->password != null || $request->password != '') {
           $user->password = FacadesHash::make($request->password);
         }
 
@@ -119,7 +119,7 @@ class UserController extends Controller
         if ($user) {
         return response()->json([
           'type' => 'success',
-          'message' => 'Actualización con exito',
+          'message' => 'Actualización con éxito',
           'data' => $user
         ], 202);
       }else{
@@ -214,7 +214,7 @@ class UserController extends Controller
             'password' => FacadesHash::make($request->password_new)
           ])->save();
 
-          return response()->json([//respuesta de exito
+          return response()->json([//respuesta de éxito
             'type' => 'success',
             'message' => 'Actualizado con éxito',
             'data' => $user->state
@@ -246,7 +246,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->save();//Guarda la informacion del registro
 
-        if ($user) {//respuesta exitosa
+        if ($user) {//respuesta éxitosa
           return response()->json([
             'type' => 'success',
             'message' => 'Actualizado con éxito',

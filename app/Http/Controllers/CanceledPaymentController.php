@@ -98,7 +98,7 @@ class CanceledPaymentController extends Controller
       if ($canceledPayment) {
         return response()->json([
           'type' => 'success',
-          'message' => 'Cancelación con exito',
+          'message' => 'Cancelación con éxito',
           'data' => $canceledPayment
         ], 202);
       }else{

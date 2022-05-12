@@ -28,7 +28,7 @@
           <b-col cols="md-6">
             <b-form-group
               id="groupusers"
-              label="Cliente:"
+              label="Seleccionar cliente:"
               label-for="user_id"
               >
               <v-select
@@ -68,6 +68,7 @@
               v-model="form.state"
               :class="{ 'is-invalid': $v.form.state.$error }"
               :disabled="viewOnlly"
+              type="number"
             >
               <b-form-select-option :value="null" disabled>Seleccionar...</b-form-select-option>
                 <b-form-select-option
@@ -93,6 +94,7 @@
               <!-- <b-form-input
                 id="birthdate"
                 :disabled="viewOnlly"
+                type="number"
                 v-model="form.birthdate"
                 :class="{ 'is-invalid': $v.form.birthdate.$error }"
               /> -->
@@ -100,6 +102,7 @@
                 valueType="format"
                 id="created_at"
                 :disabled="viewOnlly"
+                type="number"
                 v-model="form.created_at"
                 :class="{ 'is-invalid': $v.form.created_at.$error }"
                 />
@@ -114,13 +117,14 @@
              <!-- Espalda -->
             <b-form-group
               id="groupname"
-              label="Espalda:"
+              label="Espalda (cm):"
               label-for="back">
               <b-form-input
                 id="back"
                 v-model="form.back"
                 :class="{ 'is-invalid': $v.form.back.$error }"
                 :disabled="viewOnlly"
+                type="number"
               />
               <template v-if="$v.form.back.$error">
                 <div class="invalid-feedback" v-if="!$v.form.back.required">
@@ -133,13 +137,14 @@
              <!-- Pecho -->
             <b-form-group
               id="groupname"
-              label="Pecho:"
+              label="Pecho (cm):"
               label-for="chest">
               <b-form-input
                 id="chest"
                 v-model="form.chest"
                 :class="{ 'is-invalid': $v.form.chest.$error }"
                 :disabled="viewOnlly"
+                type="number"
               />
               <template v-if="$v.form.chest.$error">
                 <div class="invalid-feedback" v-if="!$v.form.chest.required">
@@ -152,13 +157,14 @@
             <!-- Pantorrilla -->
             <b-form-group
               id="groupname"
-              label="Pantorrilla:"
+              label="Pantorrilla (cm):"
               label-for="calf">
               <b-form-input
                 id="calf"
                 v-model="form.calf"
                 :class="{ 'is-invalid': $v.form.calf.$error }"
                 :disabled="viewOnlly"
+                type="number"
               />
               <template v-if="$v.form.calf.$error">
                 <div class="invalid-feedback" v-if="!$v.form.calf.required">
@@ -171,13 +177,14 @@
             <!-- Pierna -->
             <b-form-group
               id="groupname"
-              label="Pierna:"
+              label="Pierna (cm):"
               label-for="leg">
               <b-form-input
                 id="leg"
                 v-model="form.leg"
                 :class="{ 'is-invalid': $v.form.leg.$error }"
                 :disabled="viewOnlly"
+                type="number"
               />
               <template v-if="$v.form.leg.$error">
                 <div class="invalid-feedback" v-if="!$v.form.leg.required">
@@ -190,13 +197,14 @@
             <!-- Brazo -->
             <b-form-group
               id="groupname"
-              label="Brazo:"
+              label="Brazo (cm):"
               label-for="arm">
               <b-form-input
                 id="arm"
                 v-model="form.arm"
                 :class="{ 'is-invalid': $v.form.arm.$error }"
                 :disabled="viewOnlly"
+                type="number"
               />
               <template v-if="$v.form.arm.$error">
                 <div class="invalid-feedback" v-if="!$v.form.arm.required">
@@ -209,13 +217,14 @@
             <!-- cintura -->
             <b-form-group
               id="groupname"
-              label="Cintura:"
+              label="Cintura (cm):"
               label-for="waist">
               <b-form-input
                 id="waist"
                 v-model="form.waist"
                 :class="{ 'is-invalid': $v.form.waist.$error }"
                 :disabled="viewOnlly"
+                type="number"
               />
               <template v-if="$v.form.waist.$error">
                 <div class="invalid-feedback" v-if="!$v.form.waist.required">
@@ -228,13 +237,14 @@
             <!-- Peso -->
             <b-form-group
               id="groupname"
-              label="Peso:"
+              label="Peso (kg):"
               label-for="weight">
               <b-form-input
                 id="weight"
                 v-model="form.weight"
                 :class="{ 'is-invalid': $v.form.weight.$error }"
                 :disabled="viewOnlly"
+                type="number"
               />
               <template v-if="$v.form.weight.$error">
                 <div class="invalid-feedback" v-if="!$v.form.weight.required">
@@ -247,13 +257,14 @@
             <!-- Altura -->
             <b-form-group
               id="groupname"
-              label="Altura:"
+              label="Altura (cm):"
               label-for="size">
               <b-form-input
                 id="size"
                 v-model="form.size"
                 :class="{ 'is-invalid': $v.form.size.$error }"
                 :disabled="viewOnlly"
+                type="number"
               />
               <template v-if="$v.form.size.$error">
                 <div class="invalid-feedback" v-if="!$v.form.size.required">
@@ -403,7 +414,10 @@ export default {
   },
   computed: {
     users() {
-      return this.$store.state.user.users
+      const users = this.$store.state.user.users.filter(user => {
+        return user.roles.find(role => role.name !== 'super_admin')
+      })
+      return users
     },
     errors() {
       return this.$store.state.actions.errors
