@@ -2,7 +2,7 @@
   <div class="p-4 genders_component">
     <div class="card">
       <div class="card-header">
-        <h1>Generos</h1>
+        <h2 class="mb-0">Géneros</h2>
       </div>
       <div class="card-body">
         <div>

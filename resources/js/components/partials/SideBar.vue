@@ -62,7 +62,7 @@
         <!-- <hr class="my-3"> -->
         <!-- Heading -->
         <div v-if="rol_id == 1">
-          <h6 class="navbar-heading text-muted">ACCESO</h6>
+          <h6 class="navbar-heading text-center font-weight-bold">ACCESO</h6>
           <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'access_control' }">
@@ -74,7 +74,7 @@
           <hr class="my-3">
         </div>
         <!-- Heading -->
-        <h6 class="navbar-heading text-muted">ADMINISTRACIÓN</h6>
+        <h6 class="navbar-heading text-center font-weight-bold">ADMINISTRACIÓN</h6>
         <ul class="navbar-nav mb-md-3">
           <li class="nav-item" v-if="rol_id == 1">
             <router-link class="nav-link" :to="{ name: 'user' }">
@@ -96,12 +96,12 @@
         <hr class="my-3">
         <!-- Heading -->
         <div v-if="rol_id == 1">
-          <h6 class="navbar-heading text-muted">CONFIGURACIÓN</h6>
+          <h6 class="navbar-heading text-center font-weight-bold">CONFIGURACIÓN</h6>
           <!-- Navigation -->
           <ul class="navbar-nav mb-md-3">
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'gender' }">
-                  <i class="fas fa-venus-mars"></i> Generos
+                  <i class="fas fa-venus-mars"></i> Géneros
               </router-link>
             </li>
             <li class="nav-item">
@@ -119,7 +119,7 @@
           <hr class="my-3">
         </div>
         <!-- Heading -->
-        <h6 class="navbar-heading text-muted">CUENTA</h6>
+        <h6 class="navbar-heading text-center font-weight-bold">CUENTA</h6>
         <!-- Navigation -->
         <ul class="navbar-nav mb-md-3">
             <li class="nav-item">

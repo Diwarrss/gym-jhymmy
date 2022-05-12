@@ -567,7 +567,7 @@ export default {
               //me.$store.dispatch('config/getUsers')
               me.hideModal()
             }
-          }, 2000)
+          }, 300)
         } else {
           me.updating = true
           //actualizar
@@ -590,7 +590,7 @@ export default {
               //me.$store.dispatch('config/getGender')
               me.hideModal()
             }
-          }, 2000)
+          }, 300)
         }
       }
     },

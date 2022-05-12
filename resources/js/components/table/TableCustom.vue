@@ -23,7 +23,7 @@
             />
             <b-input-group-append>
               <b-button
-                variant="info"
+                variant="warning"
                 :disabled="!filter"
                 @click="filter = ''">Limpiar</b-button>
             </b-input-group-append>
@@ -120,6 +120,7 @@
     </b-table>
     <!-- Info Paginacion -->
     <b-pagination
+      class="mt-2"
       v-model="currentPage"
       :total-rows="rows"
       :per-page="perPage"

@@ -2,14 +2,14 @@
   <div class="component_profile p-4">
     <div class="card">
       <div class="card-header first_card">
-        <h1><i class="fas fa-user-cog"/> Mi Cuenta</h1>
+        <h2 class="mb-0"><i class="fas fa-user-cog"/> Mi Cuenta</h2>
       </div>
       <div class="card-body body_profile">
         <b-row>
           <b-col cols="md-6" class="mb-4">
             <div class="card">
               <div class="card-header">
-                <h1><i class="fas fa-user-circle" /> Perfil</h1>
+                <h2><i class="fas fa-user-circle" /> Perfil</h2>
               </div>
               <div class="card-body">
                   <div>
@@ -99,7 +99,7 @@
           <b-col cols="md-6" class="mb-4">
             <div class="card">
               <div class="card-header">
-                <h1><i class="fas fa-key"/> Contraseña</h1>
+                <h2><i class="fas fa-key"/> Contraseña</h2>
               </div>
               <div class="card-body">
                 <form action="">
@@ -330,7 +330,7 @@ export default {
                 me.updating = false
                 this.$auth.fetchUser()
                 this.$v.$reset()
-              }, 1000)
+              }, 300)
             })
             .catch(err => {
               if (err.response.status == 422) {
@@ -361,7 +361,7 @@ export default {
                 me.form.password_new = ''
                 me.form.confirm_password = ''
                 this.$v.$reset()
-              }, 1000)
+              }, 300)
             })
             .catch(err => {
               console.error(err)
@@ -404,7 +404,11 @@ export default {
    }
   .body_profile{
     .card-header{
-      background: #5e71e3;
+      background: #dbdffc;
+      padding: 10px;
+      h2{
+        margin: unset;
+      }
     }
     .card-body {
       .input-roll {

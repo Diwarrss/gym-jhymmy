@@ -39,7 +39,7 @@ export default {
                   showConfirmButton: true,
                   timer: 2000
                 })
-              }, 2000);
+              }, 300);
               if (params.paramDispatch) {
                 dispatch(action, params.actionDispatch, {root:true})
               }else{
@@ -53,7 +53,7 @@ export default {
                   showConfirmButton: true,
                   timer: 2000
                 })
-              }, 2000);
+              }, 300);
             }
           })
           .catch(err => {
@@ -89,7 +89,7 @@ export default {
                     '<i class="far fa-check-circle"></i> Aceptar',
                   timer: 2000
                 })
-              }, 1000)
+              }, 300)
               if (params.dispatchParams) {
                 dispatch(params.action, params.actionDispatch, {root:true})
               }else{
@@ -125,7 +125,7 @@ export default {
                   showConfirmButton: true,
                   timer: 2000
                 })
-              }, 2000);
+              }, 300);
               if (params.dispatchParams) {
                 dispatch(action, params.actionDispatch, {root:true})
               }else{
@@ -140,7 +140,7 @@ export default {
                   showConfirmButton: true,
                   timer: 2000
                 })
-              }, 2000);
+              }, 300);
             }
             console.log(res)
           })

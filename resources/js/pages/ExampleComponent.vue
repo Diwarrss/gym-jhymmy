@@ -2,7 +2,7 @@
   <div class="p-4">
     <div class="card">
       <div class="card-header">
-        <h1>Pagina del Dashboard</h1>
+        <h2 class="mb-0">Pagina del Dashboard</h2>
       </div>
       <div class="card-body">
         <button class="btn btn-primary" @click="count">SUMAR</button>

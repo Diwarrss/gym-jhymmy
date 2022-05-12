@@ -2,7 +2,7 @@
   <div class="p-4 tracing_component">
     <div class="card">
       <div class="card-header">
-        <h1>Seguimiento</h1>
+        <h2 class="mb-0">Seguimiento</h2>
       </div>
       <div class="card-body">
         <b-row>

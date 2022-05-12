@@ -2,7 +2,7 @@
   <div class="p-4 cancellationReason_component">
     <div class="card">
       <div class="card-header">
-        <h1>Motivo de Cancelación</h1>
+        <h2 class="mb-0">Motivo de Cancelación</h2>
       </div>
       <div class="card-body">
         <div>

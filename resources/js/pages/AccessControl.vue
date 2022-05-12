@@ -2,7 +2,7 @@
   <div class="p-4 access_component">
     <div class="card">
       <div class="card-header">
-        <h1>Control de Acceso</h1>
+        <h2 class="mb-0">Control de Acceso</h2>
       </div>
       <div class="card-body">
         <div>

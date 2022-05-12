@@ -155,7 +155,7 @@ export default {
           me.sending = false
           /* me.$store.dispatch('config/getStates') */
           me.hideModal()
-        }, 1000)
+        }, 300)
       }
     }
   },
