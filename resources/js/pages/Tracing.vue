@@ -13,7 +13,8 @@
                 id="group1"
                 label-cols-md="3"
                 label="Seleccionar cliente:"
-                label-for="user_id">
+                label-for="user_id"
+                size="sm">
                 <v-select id="user_id"
                   v-model="form.user_id"
                   :options="users"
@@ -22,6 +23,7 @@
                   label="name"
                   name="user"
                   @input="changeUser"
+                  size="sm"
                 >
                 <div slot="no-options">No hay Resultados!</div>
                 </v-select>
@@ -40,7 +42,7 @@
             </b-form>
           </b-col>
           <b-col sm="12" md="12" lg="6">
-            <button class="btn btn-primary mb-3" @click="newTracing()"><i class="fas fa-plus-circle"></i> Nuevo</button>
+            <b-button size="md" variant="primary" class="mb-3" @click="newTracing()"><i class="fas fa-plus-circle"></i> Nuevo</b-button>
           </b-col>
         </b-row>
         <div class="body_table pt-3">

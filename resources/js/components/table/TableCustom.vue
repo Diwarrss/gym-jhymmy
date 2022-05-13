@@ -2,128 +2,85 @@
   <div>
     <b-row>
       <!-- sector de filtrar -->
-      <b-col
-        v-if="showFilter"
-        lg="4"
-        class="my-1">
-        <b-form-group
-          label="Filtrar:"
-          label-cols-sm="3"
-          label-align-sm="right"
-          label-size="mb"
-          label-for="filterInput"
-          class="mb-0"
-        >
-          <b-input-group size="mb">
-            <b-form-input
-              id="filterInput"
-              v-model="filter"
-              type="search"
-              placeholder="Buscar..."
-            />
+      <b-col v-if="showFilter" lg="4" class="my-1">
+        <b-form-group label="Filtrar:" label-cols-sm="3" label-align-sm="right" label-size="sm" label-for="filterInput"
+          class="mb-0">
+          <b-input-group size="sm">
+            <b-form-input id="filterInput" v-model="filter" type="search" placeholder="Buscar..." />
             <b-input-group-append>
-              <b-button
-                variant="warning"
-                :disabled="!filter"
-                @click="filter = ''">Limpiar</b-button>
+              <b-button variant="warning" :disabled="!filter" @click="filter = ''">Limpiar</b-button>
             </b-input-group-append>
           </b-input-group>
         </b-form-group>
       </b-col>
     </b-row>
     <!-- Pintar Tabla -->
-    <b-table
-      show-empty
-      id="table-custom"
-      :fields="fields"
-      :items="allData"
-      :per-page="perPage"
-      :filter="filter"
-      :current-page="currentPage"
-      :sort-by.sync="sortBy"
-      :sort-desc.sync="sortDesc"
-      class="mt-2"
-      striped
-      small
-      responsive
-      @filtered="onFiltered"
-      emptyFilteredText="No hay registros que coincidan con su solicitud">
+    <b-table show-empty id="table-custom" :fields="fields" :items="allData" :per-page="perPage" :filter="filter"
+      :current-page="currentPage" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" class="mt-2" striped small
+      responsive @filtered="onFiltered" emptyFilteredText="No hay registros que coincidan con su solicitud">
       <!-- se pinta el componente para el slot acciones -->
       <template v-slot:cell(acciones)="row">
-        <b-button
-          v-if="butonView"
-          variant="primary"
-          @click="modalEdit(row.item, row.index, $event.target, true)"><i class="fas fa-eye mr-md-1"/><span class="d-none d-md-inline-block">Ver</span></b-button>
-        <b-button
-          v-if="butonEdit"
-          variant="warning"
-          @click="modalEdit(row.item, row.index, $event.target, false)"><i class="fas fa-edit mr-md-1"/><span class="d-none d-md-inline-block">Editar</span></b-button>
-        <b-button
-          v-if="row.item.state == 1 && !cancelState && statusState"
-          variant="danger"
-          @click="status(row.item.id, 'disable')"><i class="fas fa-times-circle mr-md-1"/><span class="d-none d-md-inline-block">Inactivar</span></b-button>
-        <b-button
-          v-if="row.item.state == 0 && !cancelState && statusState"
-          variant="success"
-          @click="status(row.item.id, 'enable')"><i class="fas fa-check-circle mr-md-1"/><span class="d-none d-md-inline-block">Activar</span></b-button>
-        <b-button
-          v-if="cancelState"
-          variant="danger"
-          @click="cancelItem(row.item.id)"><i class="fas fa-check-circle mr-md-1"/><span class="d-none d-md-inline-block">Anular</span></b-button>
+        <b-button v-if="butonView" variant="primary" size="sm"
+          @click="modalEdit(row.item, row.index, $event.target, true)"><i class="fas fa-eye mr-md-1" /><span
+            class="d-none d-md-inline-block">Ver</span></b-button>
+        <b-button v-if="butonEdit" variant="warning" size="sm" @click="modalEdit(row.item, row.index, $event.target, false)"><i
+            class="fas fa-edit mr-md-1" /><span class="d-none d-md-inline-block">Editar</span></b-button>
+        <b-button v-if="row.item.state == 1 && !cancelState && statusState" variant="danger" size="sm"
+          @click="status(row.item.id, 'disable')"><i class="fas fa-times-circle mr-md-1" /><span
+            class="d-none d-md-inline-block">Inactivar</span></b-button>
+        <b-button v-if="row.item.state == 0 && !cancelState && statusState" variant="success" size="sm"
+          @click="status(row.item.id, 'enable')"><i class="fas fa-check-circle mr-md-1" /><span
+            class="d-none d-md-inline-block">Activar</span></b-button>
+        <b-button v-if="cancelState" variant="danger" @click="cancelItem(row.item.id)" size="sm"><i
+            class="fas fa-check-circle mr-md-1" /><span class="d-none d-md-inline-block">Anular</span></b-button>
       </template>
       <template #empty="scope">
-        <h4 class="text-center text-primary"><b-spinner variant="primary" label="Spinning"></b-spinner> Sin Resultados</h4>
+        <h4 class="text-center text-primary">
+          <b-spinner variant="primary" label="Spinning"></b-spinner> Sin Resultados
+        </h4>
       </template>
       <template v-slot:cell(state)="data">
         <h5 v-if="data.item.state">
-          <b-badge
-            variant="success">Activo</b-badge>
+          <b-badge variant="success">Activo</b-badge>
         </h5>
         <h5 v-else>
-          <b-badge
-            variant="danger">Inactivo</b-badge>
+          <b-badge variant="danger">Inactivo</b-badge>
         </h5>
       </template>
       <template v-slot:cell(state.name)="data">
         <h5 v-if="data.item.state_id == 1">
-          <b-badge
-            variant="success">Activo</b-badge>
+          <b-badge variant="success">Activo</b-badge>
         </h5>
         <h5 v-else-if="data.item.state_id == 2">
-          <b-badge
-            variant="danger">Inactivo</b-badge>
+          <b-badge variant="danger">Inactivo</b-badge>
         </h5>
         <h5 v-else>
-          <b-badge
-            variant="info">{{ data.item.state.name }}</b-badge>
+          <b-badge variant="info">{{ data.item.state.name }}</b-badge>
         </h5>
       </template>
     </b-table>
     <div class="mt-2 d-flex justify-content-between">
       <!-- Info Paginacion -->
-      <b-pagination
-        v-model="currentPage"
-        :total-rows="rows"
-        :per-page="perPage"
-        aria-controls="table-custom"
-      />
+      <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage" aria-controls="table-custom" />
       <!-- Perpage -->
       <div class="d-flex justify-content-around">
-        <b-form-select
-          id="perPageSelect"
-          v-model="perPage"
-          :options="pageOptions"
-          class="select_custom"
-          size="sm"/>
+        <b-form-select id="perPageSelect" v-model="perPage" :options="pageOptions" class="select_custom" size="sm" />
       </div>
     </div>
-    <ModalGenderTable v-if="typePage=='gender'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-gender-table"/>
-    <ModalUserTable v-if="typePage=='user'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-users-table"/>
-    <ModalTracingTable v-if="typePage=='tracing'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-tracing-table"/>
-    <ModalStateTable v-if="typePage=='state'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-state-table"/>
-    <ModalPaymentTable v-if="typePage=='payment'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-payment-table"/>
-    <ModalCancellationReasonTable v-if="typePage=='cancellationReason'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-cancellationReason-table"/>
-    <ModalAccessControlTable v-if="typePage=='access'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal" :items="dataModal" modal="modal-access-table"/>
+    <ModalGenderTable v-if="typePage == 'gender'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal"
+      :items="dataModal" modal="modal-gender-table" />
+    <ModalUserTable v-if="typePage == 'user'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal"
+      :items="dataModal" modal="modal-users-table" />
+    <ModalTracingTable v-if="typePage == 'tracing'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal"
+      :items="dataModal" modal="modal-tracing-table" />
+    <ModalStateTable v-if="typePage == 'state'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal"
+      :items="dataModal" modal="modal-state-table" />
+    <ModalPaymentTable v-if="typePage == 'payment'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal"
+      :items="dataModal" modal="modal-payment-table" />
+    <ModalCancellationReasonTable v-if="typePage == 'cancellationReason'" :viewOnlly="viewOnlly" :event="false"
+      :tittleModal="tittleModal" :items="dataModal" modal="modal-cancellationReason-table" />
+    <ModalAccessControlTable v-if="typePage == 'access'" :viewOnlly="viewOnlly" :event="false" :tittleModal="tittleModal"
+      :items="dataModal" modal="modal-access-table" />
     <ModalCancel :tittleModal="tittleModal" :id="data_id" />
   </div>
 </template>
@@ -163,7 +120,7 @@ export default {
     },
     items: {
       type: Array,
-      default: ()=> [
+      default: () => [
         { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
         { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
         { isActive: false, age: 89, first_name: 'Geneva', last_name: 'Wilson' },
@@ -172,23 +129,23 @@ export default {
     },
     fields: {
       type: Array,
-      default: ()=> ['first_name', 'last_name', 'age']
+      default: () => ['first_name', 'last_name', 'age']
     },
     rows: {
       type: Number,
-      default: ()=> 0
+      default: () => 0
     },
     sortBy: {
       type: String,
-      default: ()=> 'first_name'
+      default: () => 'first_name'
     },
     perPage: {
       type: Number,
-      default: ()=> 15
+      default: () => 15
     },
     url: {
       type: String,
-      default: ()=> ''
+      default: () => ''
     },
     data: {
 
@@ -239,11 +196,11 @@ export default {
       let me = this
       me.allData = []
       setTimeout(() => {
-        this.$axios.get(me.url +'?page=' + this.currentPage)
-        .then(res => {
-          me.allData = res.data.data.data
-          //console.log(res);
-        })
+        this.$axios.get(me.url + '?page=' + this.currentPage)
+          .then(res => {
+            me.allData = res.data.data.data
+            //console.log(res);
+          })
         //console.log('cambio de pagina', this.currentPage)
       }, 100);
     },
@@ -261,12 +218,12 @@ export default {
         this.dataModal = item
         //console.log(this.dataModal)
         EventBus.$emit('show-modal-gender-table')
-      }else if (this.typePage == 'user'){
+      } else if (this.typePage == 'user') {
         //console.log(item)
         this.dataModal = item
         //console.log(this.dataModal)
         EventBus.$emit('show-modal-user-table')
-      }else if (this.typePage == 'tracing'){
+      } else if (this.typePage == 'tracing') {
         if (view) {
           this.tittleModal = 'Ver Registro'
         } else {
@@ -275,11 +232,11 @@ export default {
         this.dataModal = item
         //console.log(this.dataModal)
         EventBus.$emit('show-modal-tracing-table')
-      }else if (this.typePage == 'state'){
+      } else if (this.typePage == 'state') {
         this.dataModal = item
         //console.log(this.dataModal)
         EventBus.$emit('show-modal-state-table')
-      }else if (this.typePage == 'payment'){
+      } else if (this.typePage == 'payment') {
         if (view) {
           this.tittleModal = 'Ver Registro'
         } else {
@@ -288,11 +245,11 @@ export default {
         this.dataModal = item
         //console.log(this.dataModal)
         EventBus.$emit('show-modal-payment-table')
-      }else if (this.typePage == 'cancellationReason'){
+      } else if (this.typePage == 'cancellationReason') {
         this.dataModal = item
         //console.log(this.dataModal)
         EventBus.$emit('show-modal-cancellationReason-table')
-      }else if (this.typePage == 'access'){
+      } else if (this.typePage == 'access') {
         this.dataModal = item
         //console.log(this.dataModal)
         EventBus.$emit('show-modal-access-table')
@@ -305,22 +262,22 @@ export default {
       if (me.typePage == 'gender') {
         actionDispatch = 'getGenders'
         urlDispatch = `/genders-state/${id}`
-      }else if (me.typePage == 'user'){
+      } else if (me.typePage == 'user') {
         actionDispatch = 'getUsers'
         urlDispatch = `/users-state/${id}`
-      }else if (me.typePage == 'tracing'){
+      } else if (me.typePage == 'tracing') {
         actionDispatch = 'getTracing'
         urlDispatch = `/tracings-state/${id}`
-      }else if (me.typePage == 'state'){
+      } else if (me.typePage == 'state') {
         actionDispatch = 'getStates'
         urlDispatch = `/states-state/${id}`
-      }else if (me.typePage == 'payment'){
+      } else if (me.typePage == 'payment') {
         actionDispatch = 'getPayment'
         urlDispatch = `/payments-state/${id}`
-      }else if (me.typePage == 'cancellationReason'){
+      } else if (me.typePage == 'cancellationReason') {
         actionDispatch = 'getCancellationReason'
         urlDispatch = `/cancellation-reasons-state/${id}`
-      }else if (me.typePage == 'access'){
+      } else if (me.typePage == 'access') {
         actionDispatch = 'getAccessControl'
         urlDispatch = `/access-cancel/${id}`
       }

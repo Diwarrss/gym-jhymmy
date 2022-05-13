@@ -6,7 +6,7 @@
       </div>
       <div class="card-body">
         <div>
-          <button class="btn btn-primary mb-3" @click="newCancellationReason()"><i class="fas fa-plus-circle"></i> Nuevo</button>
+          <b-button size="sm" class="mb-3" variant="primary" @click="newCancellationReason()"><i class="fas fa-plus-circle"></i> Nuevo</b-button>
         </div>
         <div class="body_table pt-3">
           <TableCustom

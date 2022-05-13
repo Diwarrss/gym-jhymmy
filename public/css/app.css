@@ -10899,3 +10899,7 @@ a.text-dark:focus {
   }
 }
 
+html body label {
+  font-size: 14px !important;
+}
+

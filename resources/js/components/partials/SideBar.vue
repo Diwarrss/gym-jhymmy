@@ -7,7 +7,7 @@
       </button>
       <!-- Brand -->
       <div class="text-center">
-        <img :src="path + '/img/brand/blue.png'" class="navbar-brand-img" alt="...">
+        <img :src="path + '/img/brand/spartan-fitness-min.png'" class="navbar-brand-img" alt="...">
       </div>
       <!-- User -->
       <b-nav-item-dropdown class="pr-md-4 dropdown-custom d-md-none">
@@ -59,11 +59,11 @@
             </li>
         </ul> -->
         <!-- Divider -->
-        <!-- <hr class="my-3"> -->
+        <!-- <hr class="my-1"> -->
         <!-- Heading -->
         <div v-if="rol_id == 1">
           <h6 class="navbar-heading text-center font-weight-bold">ACCESO</h6>
-          <ul class="navbar-nav mb-md-3">
+          <ul class="navbar-nav">
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'access_control' }">
                 <i class="fas fa-calendar-check"></i> Control de Ingreso
@@ -71,11 +71,11 @@
             </li>
           </ul>
           <!-- Divider -->
-          <hr class="my-3">
+          <hr class="my-1">
         </div>
         <!-- Heading -->
         <h6 class="navbar-heading text-center font-weight-bold">ADMINISTRACIÓN</h6>
-        <ul class="navbar-nav mb-md-3">
+        <ul class="navbar-nav">
           <li class="nav-item" v-if="rol_id == 1">
             <router-link class="nav-link" :to="{ name: 'user' }">
               <i class="fas fa-users"></i> Usuarios
@@ -93,12 +93,12 @@
           </li>
         </ul>
         <!-- Divider -->
-        <hr class="my-3">
+        <hr class="my-1">
         <!-- Heading -->
         <div v-if="rol_id == 1">
           <h6 class="navbar-heading text-center font-weight-bold">CONFIGURACIÓN</h6>
           <!-- Navigation -->
-          <ul class="navbar-nav mb-md-3">
+          <ul class="navbar-nav">
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'gender' }">
                   <i class="fas fa-venus-mars"></i> Géneros
@@ -116,12 +116,12 @@
             </li>
           </ul>
           <!-- Divider -->
-          <hr class="my-3">
+          <hr class="my-1">
         </div>
         <!-- Heading -->
         <h6 class="navbar-heading text-center font-weight-bold">CUENTA</h6>
         <!-- Navigation -->
-        <ul class="navbar-nav mb-md-3">
+        <ul class="navbar-nav">
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'profile' }">
                   <i class="fas fa-user-circle"></i> Perfil

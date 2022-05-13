@@ -102,7 +102,7 @@ body
     text-align: left;
 
     color: #525f7f;
-    background-color: #f8f9fe;
+    background-color: #e9e9e9;
 }
 
 [tabindex='-1']:focus
@@ -19003,7 +19003,7 @@ textarea[resize='horizontal']
 }
 .navbar-horizontal .navbar-brand img
 {
-    height: 30px;
+  height: 55px;
 }
 
 .navbar-horizontal .navbar-dark .navbar-brand
@@ -19351,7 +19351,7 @@ textarea[resize='horizontal']
 }
 .navbar-vertical.navbar-expand-xs .navbar-brand-img
 {
-    max-height: 2.5rem;
+    max-height: 3rem;
 }
 .navbar-vertical.navbar-expand-xs .navbar-user
 {
@@ -19476,7 +19476,7 @@ textarea[resize='horizontal']
     }
     .navbar-vertical.navbar-expand-sm .navbar-brand-img
     {
-        max-height: 2.5rem;
+        max-height: 3rem;
     }
     .navbar-vertical.navbar-expand-sm .navbar-user
     {
@@ -19602,7 +19602,7 @@ textarea[resize='horizontal']
     }
     .navbar-vertical.navbar-expand-md .navbar-brand-img
     {
-        max-height: 2.5rem;
+        max-height: 3rem;
     }
     .navbar-vertical.navbar-expand-md .navbar-user
     {
@@ -19728,7 +19728,7 @@ textarea[resize='horizontal']
     }
     .navbar-vertical.navbar-expand-lg .navbar-brand-img
     {
-        max-height: 2.5rem;
+        max-height: 3rem;
     }
     .navbar-vertical.navbar-expand-lg .navbar-user
     {
@@ -19854,7 +19854,7 @@ textarea[resize='horizontal']
     }
     .navbar-vertical.navbar-expand-xl .navbar-brand-img
     {
-        max-height: 2.5rem;
+        max-height: 3rem;
     }
     .navbar-vertical.navbar-expand-xl .navbar-user
     {

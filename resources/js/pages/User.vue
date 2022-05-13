@@ -6,7 +6,7 @@
       </div>
       <div class="card-body">
         <div>
-          <button class="btn btn-primary mb-3" @click="newUser()"><i class="fas fa-plus-circle"></i> Nuevo Usuario</button>
+          <b-button size="sm" variant="primary" class="mb-3" @click="newUser()"><i class="fas fa-plus-circle"></i> Nuevo Usuario</b-button>
         </div>
         <div class="body_table pt-3">
           <TableCustom
