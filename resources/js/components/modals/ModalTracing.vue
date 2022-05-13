@@ -417,7 +417,7 @@ export default {
       const users = this.$store.state.user.users.filter(user => {
         return user.roles.find(role => role.name !== 'super_admin')
       })
-      return users
+      return users.filter(user => user.state.name == 'Activo')
     },
     errors() {
       return this.$store.state.actions.errors
