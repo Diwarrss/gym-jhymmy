@@ -78,7 +78,7 @@
         <ul class="navbar-nav">
           <li class="nav-item" v-if="rol_id == 1">
             <router-link class="nav-link" :to="{ name: 'user' }">
-              <i class="fas fa-users"></i> Usuarios
+              <i class="fas fa-users"></i> Usuarios/Clientes
             </router-link>
           </li>
           <li class="nav-item">

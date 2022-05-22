@@ -1,0 +1,14 @@
+.modal-camera {
+  .btn-take-photo {
+    width: 60px !important;
+    height: 60px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    img {
+      height: 35px;
+      object-fit: cover;
+    }
+  }
+}
