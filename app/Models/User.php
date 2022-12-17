@@ -11,57 +11,62 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRoles;
+  use HasFactory, Notifiable, HasRoles;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-        'identification',
-        'email',
-        'password',
-        'address',
-        'phone',
-        'birthdate',
-        'pin',
-        'gender_id',
-        'state_id'
-    ];
+  /**
+   * The attributes that are mass assignable.
+   *
+   * @var array
+   */
+  protected $fillable = [
+    'name',
+    'identification',
+    'email',
+    'password',
+    'address',
+    'phone',
+    'birthdate',
+    'pin',
+    'gender_id',
+    'state_id'
+  ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+  /**
+   * The attributes that should be hidden for arrays.
+   *
+   * @var array
+   */
+  protected $hidden = [
+    'password',
+    'remember_token',
+  ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+  /**
+   * The attributes that should be cast to native types.
+   *
+   * @var array
+   */
+  protected $casts = [
+    'email_verified_at' => 'datetime',
+  ];
 
-    public function gender()
-    {
-        return $this->belongsTo(\App\Models\Gender::class);
-    }
+  public function gender()
+  {
+    return $this->belongsTo(\App\Models\Gender::class);
+  }
 
-    public function state()
-    {
-        return $this->belongsTo(\App\Models\State::class);
-    }
+  public function state()
+  {
+    return $this->belongsTo(\App\Models\State::class);
+  }
 
-    public function getRoleAttribute()
-    {
-      return User::with('roles')->where( 'id', Auth::user()->id )->first();
-    }
+  public function getRoleAttribute()
+  {
+    return User::with('roles')->where('id', Auth::user()->id)->first();
+  }
+
+  public function payments()
+  {
+    return $this->hasMany(\App\Models\Payment::class);
+  }
 }

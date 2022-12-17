@@ -6,35 +6,29 @@
       :id="modal"
       no-close-on-esc
       no-close-on-backdrop
-      hide-footer>
+      hide-footer
+    >
       <template v-slot:modal-title>
-        <i
-          v-if="!viewOnlly && event"
-          class="fas fa-plus-circle"/>
-        <i
-          v-else-if="!viewOnlly && !event"
-          class="fas fa-edit"/>
-        <i
-          v-else
-          class="fas fa-eye"/>
+        <i v-if="!viewOnlly && event" class="fas fa-plus-circle" />
+        <i v-else-if="!viewOnlly && !event" class="fas fa-edit" />
+        <i v-else class="fas fa-eye" />
         {{ tittleModal }}
       </template>
-      <b-form
-      class="form-modal-tracing"
-        @submit="sendData"
-        v-if="show">
+      <b-form class="form-modal-tracing" @submit="sendData" v-if="show">
         <!-- usuario -->
-        <b-row >
+        <b-row>
           <b-col cols="md-6">
             <b-form-group
               id="groupusers"
               label="Seleccionar cliente:"
               label-for="user_id"
-              >
+            >
               <v-select
                 id="user_id"
                 v-model="form.user_id"
-                :class="{ 'is-invalid': $v.form.user_id.$error || errors.user_id}"
+                :class="{
+                  'is-invalid': $v.form.user_id.$error || errors.user_id
+                }"
                 :options="users"
                 placeholder="Seleccionar..."
                 :reduce="users => users.id"
@@ -89,8 +83,9 @@
           <b-col cols="md-6">
             <b-form-group
               id="groupname"
-              label="Fecha de Inicio:"
-              label-for="created_at">
+              label="Fecha de seguimiento:"
+              label-for="created_at"
+            >
               <!-- <b-form-input
                 id="birthdate"
                 :disabled="viewOnlly"
@@ -105,20 +100,20 @@
                 type="number"
                 v-model="form.created_at"
                 :class="{ 'is-invalid': $v.form.created_at.$error }"
-                />
+              />
               <template v-if="$v.form.created_at.$error">
-                <div class="invalid-feedback" v-if="!$v.form.created_at.required">
+                <div
+                  class="invalid-feedback"
+                  v-if="!$v.form.created_at.required"
+                >
                   Fecha
                 </div>
               </template>
             </b-form-group>
           </b-col>
           <b-col cols="md-4">
-             <!-- Espalda -->
-            <b-form-group
-              id="groupname"
-              label="Espalda (cm):"
-              label-for="back">
+            <!-- Espalda -->
+            <b-form-group id="groupname" label="Espalda (cm):" label-for="back">
               <b-form-input
                 id="back"
                 v-model="form.back"
@@ -134,11 +129,8 @@
             </b-form-group>
           </b-col>
           <b-col cols="4">
-             <!-- Pecho -->
-            <b-form-group
-              id="groupname"
-              label="Pecho (cm):"
-              label-for="chest">
+            <!-- Pecho -->
+            <b-form-group id="groupname" label="Pecho (cm):" label-for="chest">
               <b-form-input
                 id="chest"
                 v-model="form.chest"
@@ -158,7 +150,8 @@
             <b-form-group
               id="groupname"
               label="Pantorrilla (cm):"
-              label-for="calf">
+              label-for="calf"
+            >
               <b-form-input
                 id="calf"
                 v-model="form.calf"
@@ -175,10 +168,7 @@
           </b-col>
           <b-col cols="4">
             <!-- Pierna -->
-            <b-form-group
-              id="groupname"
-              label="Pierna (cm):"
-              label-for="leg">
+            <b-form-group id="groupname" label="Pierna (cm):" label-for="leg">
               <b-form-input
                 id="leg"
                 v-model="form.leg"
@@ -195,10 +185,7 @@
           </b-col>
           <b-col cols="4">
             <!-- Brazo -->
-            <b-form-group
-              id="groupname"
-              label="Brazo (cm):"
-              label-for="arm">
+            <b-form-group id="groupname" label="Brazo (cm):" label-for="arm">
               <b-form-input
                 id="arm"
                 v-model="form.arm"
@@ -218,7 +205,8 @@
             <b-form-group
               id="groupname"
               label="Cintura (cm):"
-              label-for="waist">
+              label-for="waist"
+            >
               <b-form-input
                 id="waist"
                 v-model="form.waist"
@@ -235,10 +223,7 @@
           </b-col>
           <b-col cols="4">
             <!-- Peso -->
-            <b-form-group
-              id="groupname"
-              label="Peso (kg):"
-              label-for="weight">
+            <b-form-group id="groupname" label="Peso (kg):" label-for="weight">
               <b-form-input
                 id="weight"
                 v-model="form.weight"
@@ -255,10 +240,7 @@
           </b-col>
           <b-col cols="4">
             <!-- Altura -->
-            <b-form-group
-              id="groupname"
-              label="Altura (cm):"
-              label-for="size">
+            <b-form-group id="groupname" label="Altura (cm):" label-for="size">
               <b-form-input
                 id="size"
                 v-model="form.size"
@@ -274,48 +256,50 @@
             </b-form-group>
           </b-col>
         </b-row>
-        <div
-          class="text-center">
+        <div class="text-center">
           <b-button
             v-if="event && !viewOnlly"
             :disabled="sending"
             type="submit"
-            variant="success">
+            variant="success"
+          >
             <span v-if="sending">
               <b-spinner small type="grow"></b-spinner>
-                Guardando...
+              Guardando...
             </span>
-            <span v-else>
-              <i class="fas fa-save"/> Guardar
-            </span>
+            <span v-else> <i class="fas fa-save" /> Guardar </span>
           </b-button>
           <b-button
             v-else-if="!event && !viewOnlly"
             :disabled="updating"
             type="submit"
-            variant="success">
+            variant="success"
+          >
             <span v-if="updating">
-              <b-spinner
-                small
-                label="Spinning"/> Actualizando...
+              <b-spinner small label="Spinning" /> Actualizando...
             </span>
-            <span v-else>
-              <i class="fas fa-save"/> Actualizar
-            </span>
+            <span v-else> <i class="fas fa-save" /> Actualizar </span>
           </b-button>
-          <b-button
-            variant="danger"
-            @click="hideModal"><i class="fas fa-times-circle"/> Cancelar</b-button>
+          <b-button variant="danger" @click="hideModal"
+            ><i class="fas fa-times-circle" /> Cancelar</b-button
+          >
         </div>
       </b-form>
     </b-modal>
   </div>
 </template>
 <script>
-import DatePicker from 'vue2-datepicker'
-import 'vue2-datepicker/index.css'
-import { required, minLength, maxLength, between, integer, email } from 'vuelidate/lib/validators'
-import EventBus from '../../bus'
+import DatePicker from "vue2-datepicker";
+import "vue2-datepicker/index.css";
+import {
+  required,
+  minLength,
+  maxLength,
+  between,
+  integer,
+  email
+} from "vuelidate/lib/validators";
+import EventBus from "../../bus";
 export default {
   components: {
     DatePicker
@@ -323,57 +307,57 @@ export default {
   props: {
     user: {
       type: Number,
-      default: ()=> 0
+      default: () => 0
     },
     viewOnlly: {
       type: Boolean,
-      default: ()=> false
+      default: () => false
     },
     event: {
       type: Boolean,
-      default: ()=> false
+      default: () => false
     },
     items: {
       type: Object,
-      default: ()=> {}
+      default: () => {}
     },
     tittleModal: {
       type: String,
-      default: ()=> 'Titulo'
+      default: () => "Titulo"
     },
     modal: {
       type: String,
-      default: () => ''
+      default: () => ""
     }
   },
   data() {
     return {
       // Note `isActive` is left out and will not appear in the rendered table
       states: [
-        { "id" : "1", "name" : "Activo"},
-        { "id" : "2", "name" : "Inactivo"}
+        { id: "1", name: "Activo" },
+        { id: "2", name: "Inactivo" }
       ],
-      rol_id: '',
+      rol_id: "",
       show: true,
       sending: false,
       updating: false,
       allRow: this.row,
       rows: 4,
       form: {
-        id: '',
-        user_id: '',
-        back: '',
-        chest: '',
-        calf: '',
-        leg: '',
-        created_at: '',
-        arm: '',
-        waist: '',
-        weight: '',
+        id: "",
+        user_id: "",
+        back: "",
+        chest: "",
+        calf: "",
+        leg: "",
+        created_at: "",
+        arm: "",
+        waist: "",
+        weight: "",
         //state: '',
-        size: ''
-      },
-    }
+        size: ""
+      }
+    };
   },
   validations() {
     let form = {
@@ -409,142 +393,142 @@ export default {
           required
         }
       }
-    }
-    return form
+    };
+    return form;
   },
   computed: {
     users() {
       const users = this.$store.state.user.users.filter(user => {
-        return user.roles.find(role => role.name !== 'super_admin')
-      })
-      return users.filter(user => user.state.name == 'Activo')
+        return user.roles.find(role => role.name !== "super_admin");
+      });
+      return users.filter(user => user.state.name == "Activo");
     },
     errors() {
-      return this.$store.state.actions.errors
+      return this.$store.state.actions.errors;
     }
   },
   methods: {
     hideModal() {
-      this.form.id = ''
+      this.form.id = "";
       /* this.form.user_id = null */
       //sthis.form.state = ''
-      this.form.back = ''
-      this.form.chest = ''
-      this.form.calf = ''
-      this.form.leg = ''
-      this.form.created_at = ''
-      this.form.arm = ''
-      this.form.waist = ''
-      this.form.weight = ''
-      this.form.size = ''
-      this.$bvModal.hide(this.modal)
-      this.$v.$reset()
-      EventBus.$emit('clear-data-modal')
+      this.form.back = "";
+      this.form.chest = "";
+      this.form.calf = "";
+      this.form.leg = "";
+      this.form.created_at = "";
+      this.form.arm = "";
+      this.form.waist = "";
+      this.form.weight = "";
+      this.form.size = "";
+      this.$bvModal.hide(this.modal);
+      this.$v.$reset();
+      EventBus.$emit("clear-data-modal");
     },
     sendData(evt) {
-      evt.preventDefault()
-      let me = this
-      this.$v.$touch()
+      evt.preventDefault();
+      let me = this;
+      this.$v.$touch();
       if (this.$v.$invalid) {
-        return
+        return;
       } else {
         //Crear
-        me.sending = true
+        me.sending = true;
         if (me.event) {
           let params = {
-            url: '/tracings',
+            url: "/tracings",
             data: me.form,
             files: false,
-            action: 'getTracing',
+            action: "getTracing",
             paramDispatch: true,
             actionDispatch: me.form.user_id
-          }
-          me.$store.dispatch('create', params)
+          };
+          me.$store.dispatch("create", params);
           setTimeout(() => {
             if (Object.keys(me.errors).length >= 1) {
               //validation back
-              me.sending = false
-              return
+              me.sending = false;
+              return;
             } else {
-              me.sending = false
+              me.sending = false;
               //me.$store.dispatch('config/getTracing')
-              me.hideModal()
+              me.hideModal();
             }
-          }, 300)
+          }, 300);
         } else {
-          me.updating = true
+          me.updating = true;
           //actualizar
           let params = {
             url: `/tracings/${me.form.id}`,
             data: me.form,
             files: false,
-            action: 'getTracing',
+            action: "getTracing",
             dispatchParams: true,
             actionDispatch: me.form.user_id
-          }
-          me.$store.dispatch('update', params)
+          };
+          me.$store.dispatch("update", params);
           setTimeout(() => {
             if (Object.keys(me.errors).length !== 0) {
               //validation back
-              me.updating = false
+              me.updating = false;
               //console.log('Paso el front')
-              return
+              return;
             } else {
               //console.log('errors vacio')
-              me.updating = false
+              me.updating = false;
               //me.$store.dispatch('config/getGender')
-              me.hideModal()
+              me.hideModal();
             }
-          }, 300)
+          }, 300);
         }
       }
-    },
+    }
   },
   created() {
-    EventBus.$on('show-modal-tracing-table', () => {
-      this.$bvModal.show('modal-tracing-table')
+    EventBus.$on("show-modal-tracing-table", () => {
+      this.$bvModal.show("modal-tracing-table");
       //this.$store.dispatch('getUsers')
       //console.log(this.items)
-    })
-    EventBus.$on('show-modal-tracing', (rol) => {
-      this.rol_id = rol
-      this.$bvModal.show('modal-tracing')
+    });
+    EventBus.$on("show-modal-tracing", rol => {
+      this.rol_id = rol;
+      this.$bvModal.show("modal-tracing");
       //this.$store.dispatch('getUsers')
-    })
+    });
     //this.$store.dispatch('getTracing')
   },
   watch: {
-    items(){
+    items() {
       //console.log('items')
-      this.form.id = this.items.id
-      this.form.user_id = this.items.user_id
+      this.form.id = this.items.id;
+      this.form.user_id = this.items.user_id;
       //this.form.state = this.items.state
-      this.form.back = this.items.back
-      this.form.chest = this.items.chest
-      this.form.calf =  this.items.calf
-      this.form.leg = this.items.leg
-      this.form.created_at = this.items.created_at
-      this.form.arm = this.items.arm
-      this.form.waist = this.items.waist
-      this.form.weight = this.items.weight
-      this.form.size = this.items.size
+      this.form.back = this.items.back;
+      this.form.chest = this.items.chest;
+      this.form.calf = this.items.calf;
+      this.form.leg = this.items.leg;
+      this.form.created_at = this.items.created_at;
+      this.form.arm = this.items.arm;
+      this.form.waist = this.items.waist;
+      this.form.weight = this.items.weight;
+      this.form.size = this.items.size;
     },
     user() {
-      this.form.user_id = this.user
+      this.form.user_id = this.user;
     }
-  },
-}
+  }
+};
 </script>
 <style lang="scss">
-  .form-modal-tracing {
-    .form-group {
-      .mx-datepicker {
-        width: 100%;
-        .mx-input {
-          color: #8898aa;
-          height: 46px;
-        }
+.form-modal-tracing {
+  .form-group {
+    .mx-datepicker {
+      width: 100%;
+      .mx-input {
+        color: #8898aa;
+        height: 46px;
       }
     }
   }
+}
 </style>

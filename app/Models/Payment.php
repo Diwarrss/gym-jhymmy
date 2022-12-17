@@ -7,28 +7,29 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
-    use HasFactory;
+  use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-      'value',
-      'to_date',
-      'state',
-      'from_date',
-      'user_id',
-      'creator_user_id'
-    ];
+  /**
+   * The attributes that are mass assignable.
+   *
+   * @var array
+   */
+  protected $fillable = [
+    'value',
+    'to_date',
+    'state',
+    'from_date',
+    'end_date',
+    'user_id',
+    'creator_user_id'
+  ];
 
-    public function userAdm()
-    {
-        return $this->belongsTo(\App\Models\User::class, 'creator_user_id');
-    }
-    public function userCli()
-    {
-        return $this->belongsTo(\App\Models\User::class, 'user_id');
-    }
+  public function userAdm()
+  {
+    return $this->belongsTo(\App\Models\User::class, 'creator_user_id');
+  }
+  public function userCli()
+  {
+    return $this->belongsTo(\App\Models\User::class, 'user_id');
+  }
 }
