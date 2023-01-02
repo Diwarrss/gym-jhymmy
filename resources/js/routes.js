@@ -6,7 +6,7 @@ import Gender from './pages/Gender';
 import State from './pages/State';
 import Error404 from './pages/404';
 import AccessControl from './pages/AccessControl';
-import CancellationReason from './pages/CancellationReason';
+import cancellationReason from './pages/cancellationReason';
 export default {
   mode: 'history',
   base: '/home',
@@ -58,7 +58,7 @@ export default {
     {
       path: '/cancellation_reason',
       name: 'cancellation_reason',
-      component: CancellationReason
+      component: cancellationReason
     }
   ]
 }
